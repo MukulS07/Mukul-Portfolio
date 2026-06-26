@@ -1,5 +1,11 @@
-import type { ReactNode } from "react";
+import type { ReactNode, PointerEvent as RPointerEvent } from "react";
 import { useReveal } from "@/hooks/useReveal";
+
+function handleCardMove(e: RPointerEvent<HTMLDivElement>) {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty("--gx", `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty("--gy", `${e.clientY - r.top}px`);
+}
 
 export function Section({
   id,
@@ -17,7 +23,7 @@ export function Section({
     <section
       ref={ref}
       id={id}
-      className="reveal px-5 lg:px-8 py-16 sm:py-24 border-t border-border"
+      className="reveal section-aura px-5 lg:px-8 py-16 sm:py-24 border-t border-border"
     >
       <div className="mx-auto max-w-7xl">
         <div className="flex items-end justify-between mb-10 gap-4 flex-wrap">
@@ -49,7 +55,10 @@ export function TerminalCard({
   children: ReactNode;
 }) {
   return (
-    <div className="border border-border bg-background">
+    <div
+      onPointerMove={handleCardMove}
+      className="hover-glow border border-border bg-background overflow-hidden"
+    >
       <div className="flex items-center justify-between px-5 py-3 border-b border-border font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
         <span>{title}</span>
         {status && <span className="text-accent">{status.toUpperCase()}</span>}
