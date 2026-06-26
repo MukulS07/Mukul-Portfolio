@@ -165,10 +165,6 @@
   html { scroll-behavior: smooth; }
 }
 
-@utility font-mono {
-  font-family: var(--font-mono);
-}
-
 @utility glass-panel {
   background: color-mix(in oklab, var(--surface) 60%, transparent);
   backdrop-filter: blur(12px);
@@ -232,5 +228,4 @@
 }
 @utility animate-pulse-ring {
   animation: pulse-ring 2s ease-out infinite;
-  }
 }
