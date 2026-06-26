@@ -16,6 +16,7 @@ import { Footer } from "@/components/portfolio/Sections";
 import { BackgroundFX } from "@/components/portfolio/BackgroundFX";
 import { CursorSpotlight } from "@/components/portfolio/CursorSpotlight";
 import { WireframeSphere } from "@/components/portfolio/WireframeSphere";
+import { TelemetryHUD } from "@/components/portfolio/TelemetryHUD";
 
 function NotFoundComponent() {
   return (
@@ -139,6 +140,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <Footer />
+        <TelemetryHUD />
       </div>
     </QueryClientProvider>
   );
