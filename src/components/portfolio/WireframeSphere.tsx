@@ -81,20 +81,32 @@ export function WireframeSphere() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let start = performance.now();
 
-    // mouse-driven rotation offsets (smoothed)
+    // mouse-driven rotation offsets (critically-damped spring smoothing)
     let targetMX = 0, targetMY = 0;
     let mx = 0, my = 0;
+    let vx = 0, vy = 0; // velocity for spring
+    let lastT = performance.now();
     const onMove = (e: MouseEvent) => {
       targetMX = (e.clientX / window.innerWidth - 0.5) * 2;  // -1..1
       targetMY = (e.clientY / window.innerHeight - 0.5) * 2;
     };
     window.addEventListener("mousemove", onMove);
 
+    // spring constants — low stiffness + near-critical damping = fluid trail
+    const STIFFNESS = 40;
+    const DAMPING = 9;
+
     const draw = (now: number) => {
       const elapsed = (now - start) / 1000;
-      // ease toward mouse target
-      mx += (targetMX - mx) * 0.06;
-      my += (targetMY - my) * 0.06;
+      const dt = Math.min(0.05, (now - lastT) / 1000);
+      lastT = now;
+      // spring toward target for buttery, non-snappy follow
+      const axf = (targetMX - mx) * STIFFNESS - vx * DAMPING;
+      const ayf = (targetMY - my) * STIFFNESS - vy * DAMPING;
+      vx += axf * dt;
+      vy += ayf * dt;
+      mx += vx * dt;
+      my += vy * dt;
       const ay = reduce ? 0.3 : elapsed * 0.12 + mx * 1.2;
       const ax = reduce ? 0.2 : elapsed * 0.05 + my * 0.9;
       const cosY = Math.cos(ay), sinY = Math.sin(ay);
