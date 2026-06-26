@@ -355,11 +355,37 @@
   &:hover::after  { animation: glitch-1 1.6s steps(6) infinite reverse; }
 }
 
+/* ---------- Chromatic aberration ---------- */
+@keyframes chroma-drift {
+  0%, 100% { text-shadow:
+      -1px 0 0 color-mix(in oklab, oklch(0.7 0.22 25) 80%, transparent),
+       1px 0 0 color-mix(in oklab, oklch(0.78 0.18 195) 80%, transparent); }
+  50%      { text-shadow:
+      -2px 0 0 color-mix(in oklab, oklch(0.7 0.22 25) 80%, transparent),
+       2px 0 0 color-mix(in oklab, oklch(0.78 0.18 195) 80%, transparent); }
+}
+@utility chroma {
+  animation: chroma-drift 4.5s ease-in-out infinite;
+}
+
+/* ---------- Section reveal RGB-split transition ---------- */
+@keyframes section-rgb-split {
+  0%   { opacity: 0; transform: translateY(20px) skewX(-2deg);
+         filter: blur(8px) drop-shadow(6px 0 0 oklch(0.7 0.22 25 / 0.6)) drop-shadow(-6px 0 0 oklch(0.78 0.18 195 / 0.6)); }
+  60%  { filter: blur(2px) drop-shadow(2px 0 0 oklch(0.7 0.22 25 / 0.5)) drop-shadow(-2px 0 0 oklch(0.78 0.18 195 / 0.5)); }
+  100% { opacity: 1; transform: translateY(0) skewX(0);
+         filter: blur(0) drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent); }
+}
+.reveal.in-view {
+  animation: section-rgb-split 1.1s cubic-bezier(.2,.7,.2,1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal, .heatmap-cell { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
   .grid-bg-animated, .animate-orb-a, .animate-orb-b, .animate-scan-sweep, .animate-noise,
   .animate-marquee, .animate-marquee-slow, .animate-cursor, .animate-pulse-ring, .animate-accent-pulse,
   .text-shimmer { animation: none !important; }
+  .chroma { animation: none !important; text-shadow: none !important; }
 }
 
 /* ---------- Card hover spotlight (per-card pointer glow) ---------- */
