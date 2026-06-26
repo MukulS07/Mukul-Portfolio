@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 
-const links = [
-  { label: "HOME", href: "#home" },
-  { label: "ABOUT", href: "#about" },
-  { label: "EXPERIENCE", href: "#experience" },
-  { label: "PROJECTS", href: "#projects" },
-  { label: "RESEARCH", href: "#research" },
-  { label: "SKILLS", href: "#skills" },
-  { label: "CONTACT", href: "#contact" },
+const links: { label: string; to: string }[] = [
+  { label: "HOME", to: "/" },
+  { label: "ABOUT", to: "/about" },
+  { label: "EXPERIENCE", to: "/experience" },
+  { label: "PROJECTS", to: "/projects" },
+  { label: "RESEARCH", to: "/research" },
+  { label: "SKILLS", to: "/skills" },
+  { label: "CONTACT", to: "/contact" },
 ];
 
 export function Nav() {
@@ -15,19 +16,21 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur border-b border-border">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 h-14 flex items-center justify-between gap-4 font-mono text-[11px] tracking-[0.18em]">
-        <a href="#home" className="font-serif-display text-2xl text-foreground leading-none">
+        <Link to="/" className="font-serif-display text-2xl text-foreground leading-none">
           MS<span className="text-accent">.</span>
-        </a>
+        </Link>
 
         <nav className="hidden md:flex items-center gap-7 text-muted-foreground">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
+            <Link
+              key={l.to}
+              to={l.to}
+              activeOptions={{ exact: true }}
+              activeProps={{ className: "text-foreground" }}
               className="hover:text-foreground transition"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -58,14 +61,14 @@ export function Nav() {
       {open && (
         <div className="md:hidden border-t border-border bg-background font-mono text-xs tracking-[0.18em]">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
+            <Link
+              key={l.to}
+              to={l.to}
               onClick={() => setOpen(false)}
               className="block px-5 py-3 border-b border-border text-muted-foreground hover:text-foreground"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </div>
       )}
