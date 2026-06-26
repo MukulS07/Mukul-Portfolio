@@ -17,6 +17,7 @@ import { BackgroundFX } from "@/components/portfolio/BackgroundFX";
 import { CursorSpotlight } from "@/components/portfolio/CursorSpotlight";
 import { WireframeSphere } from "@/components/portfolio/WireframeSphere";
 import { TelemetryHUD } from "@/components/portfolio/TelemetryHUD";
+import { HUDFrame } from "@/components/portfolio/HUDFrame";
 
 function NotFoundComponent() {
   return (
@@ -133,6 +134,7 @@ function RootComponent() {
         <BackgroundFX />
         <WireframeSphere />
         <CursorSpotlight />
+        <HUDFrame />
         <Nav />
         <StatusBar />
         <main>
