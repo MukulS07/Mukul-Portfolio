@@ -31,7 +31,10 @@ export function Section({
             <div className="font-mono text-[10px] tracking-[0.28em] text-muted-foreground">
               // {label}
             </div>
-            <h2 className="mt-3 font-serif-display text-foreground text-4xl sm:text-5xl leading-[0.95]">
+            <h2
+              data-text={title}
+              className="glitch chroma mt-3 font-serif-display text-foreground text-4xl sm:text-5xl leading-[0.95]"
+            >
               {title}
             </h2>
           </div>
