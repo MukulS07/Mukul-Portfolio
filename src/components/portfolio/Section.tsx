@@ -12,19 +12,19 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="px-4 py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl">
+    <section id={id} className="px-5 lg:px-8 py-16 sm:py-24 border-t border-border">
+      <div className="mx-auto max-w-7xl">
         <div className="flex items-end justify-between mb-10 gap-4 flex-wrap">
           <div>
-            <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-cyan-accent">
-              <span className="text-muted-foreground">$</span> cat {label}
+            <div className="font-mono text-[10px] tracking-[0.28em] text-muted-foreground">
+              // {label}
             </div>
-            <h2 className="mt-3 font-sans text-3xl sm:text-4xl font-semibold tracking-tight text-foreground">
+            <h2 className="mt-3 font-serif-display text-foreground text-4xl sm:text-5xl leading-[0.95]">
               {title}
             </h2>
           </div>
-          <div className="font-mono text-xs text-dim hidden sm:block">
-            // section · {id}
+          <div className="font-mono text-[10px] tracking-[0.28em] text-dim hidden sm:block">
+            SECTION · {id.toUpperCase()}
           </div>
         </div>
         {children}
@@ -43,21 +43,12 @@ export function TerminalCard({
   children: ReactNode;
 }) {
   return (
-    <div className="glass-panel overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-black/30 font-mono text-xs">
-        <div className="flex items-center gap-2">
-          <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-amber-warn/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-green-live/70" />
-          <span className="ml-3 text-muted-foreground">{title}</span>
-        </div>
-        {status && (
-          <span className="text-[10px] uppercase tracking-[0.2em] text-cyan-accent">
-            {status}
-          </span>
-        )}
+    <div className="border border-border bg-background">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-border font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
+        <span>{title}</span>
+        {status && <span className="text-accent">{status.toUpperCase()}</span>}
       </div>
-      <div className="p-5 sm:p-6">{children}</div>
+      <div className="p-6 sm:p-8">{children}</div>
     </div>
   );
 }
