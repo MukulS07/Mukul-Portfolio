@@ -385,6 +385,7 @@
   .grid-bg-animated, .animate-orb-a, .animate-orb-b, .animate-scan-sweep, .animate-noise,
   .animate-marquee, .animate-marquee-slow, .animate-cursor, .animate-pulse-ring, .animate-accent-pulse,
   .text-shimmer { animation: none !important; }
+  .chroma { animation: none !important; text-shadow: none !important; }
 }
 
 /* ---------- Card hover spotlight (per-card pointer glow) ---------- */
