@@ -70,7 +70,11 @@ function GithubHeatmap() {
   return (
     <div className="grid grid-rows-7 grid-flow-col gap-[3px]" style={{ gridAutoColumns: "10px" }}>
       {cells.map((c, i) => (
-        <span key={i} className={`h-[10px] w-[10px] ${shade[c]}`} />
+        <span
+          key={i}
+          className={`heatmap-cell h-[10px] w-[10px] ${shade[c]}`}
+          style={{ animationDelay: `${(i % 26) * 18 + Math.floor(i / 26) * 30}ms` }}
+        />
       ))}
     </div>
   );
@@ -98,7 +102,9 @@ function Radar() {
             stroke="currentColor" className="text-white/10" strokeWidth={1} />
         );
       })}
-      <path d={path} fill="currentColor" className="text-accent/20" stroke="currentColor" strokeWidth={1.25} />
+      <path d={path} fill="currentColor" className="text-accent/20" stroke="currentColor" strokeWidth={1.25}>
+        <animate attributeName="opacity" values="0.55;1;0.55" dur="4s" repeatCount="indefinite" />
+      </path>
       {pts.map(([x, y], i) => (
         <circle key={i} cx={x} cy={y} r={2} className="text-accent fill-current" />
       ))}
