@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Nav } from "@/components/portfolio/Nav";
+import { Nav, StatusBar } from "@/components/portfolio/Nav";
 import { Hero } from "@/components/portfolio/Hero";
 import { About, Skills, Projects, Research, Experience, Contact, Footer } from "@/components/portfolio/Sections";
 
@@ -19,6 +19,7 @@ function Index() {
   return (
     <div className="min-h-screen">
       <Nav />
+      <StatusBar />
       <main>
         <Hero />
         <About />
