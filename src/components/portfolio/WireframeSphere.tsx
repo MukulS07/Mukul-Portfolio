@@ -81,10 +81,22 @@ export function WireframeSphere() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let start = performance.now();
 
+    // mouse-driven rotation offsets (smoothed)
+    let targetMX = 0, targetMY = 0;
+    let mx = 0, my = 0;
+    const onMove = (e: MouseEvent) => {
+      targetMX = (e.clientX / window.innerWidth - 0.5) * 2;  // -1..1
+      targetMY = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    window.addEventListener("mousemove", onMove);
+
     const draw = (now: number) => {
       const elapsed = (now - start) / 1000;
-      const ay = reduce ? 0.3 : elapsed * 0.12;
-      const ax = reduce ? 0.2 : elapsed * 0.05;
+      // ease toward mouse target
+      mx += (targetMX - mx) * 0.06;
+      my += (targetMY - my) * 0.06;
+      const ay = reduce ? 0.3 : elapsed * 0.12 + mx * 1.2;
+      const ax = reduce ? 0.2 : elapsed * 0.05 + my * 0.9;
       const cosY = Math.cos(ay), sinY = Math.sin(ay);
       const cosX = Math.cos(ax), sinX = Math.sin(ax);
 
@@ -142,6 +154,7 @@ export function WireframeSphere() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", onMove);
     };
   }, []);
 
