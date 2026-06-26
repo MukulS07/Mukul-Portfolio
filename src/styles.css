@@ -319,6 +319,42 @@
 }
 @utility animate-accent-pulse { animation: accent-pulse 2.4s ease-in-out infinite; }
 
+/* ---------- HUD scan beams ---------- */
+@keyframes scan-x {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+@keyframes scan-y {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+@utility animate-scan-x { animation: scan-x 6s linear infinite; }
+@utility animate-scan-y { animation: scan-y 11s linear infinite; }
+
+/* ---------- Glitch heading hover ---------- */
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+  20%      { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 1px); }
+  40%      { clip-path: inset(50% 0 20% 0); transform: translate(2px, -1px); }
+  60%      { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 2px); }
+  80%      { clip-path: inset(70% 0 5% 0); transform: translate(1px, -2px); }
+}
+@utility glitch {
+  position: relative;
+  &::before, &::after {
+    content: attr(data-text);
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .25s ease;
+  }
+  &:hover::before, &:hover::after { opacity: .9; }
+  &::before { color: color-mix(in oklab, var(--accent) 80%, white); transform: translate(1px, 0); mix-blend-mode: screen; }
+  &::after  { color: oklch(0.7 0.18 25); transform: translate(-1px, 0); mix-blend-mode: screen; }
+  &:hover::before { animation: glitch-1 1.2s steps(6) infinite; }
+  &:hover::after  { animation: glitch-1 1.6s steps(6) infinite reverse; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal, .heatmap-cell { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
   .grid-bg-animated, .animate-orb-a, .animate-orb-b, .animate-scan-sweep, .animate-noise,
