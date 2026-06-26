@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useReveal } from "@/hooks/useReveal";
 
 export function Section({
   id,
@@ -11,8 +12,13 @@ export function Section({
   title: string;
   children: ReactNode;
 }) {
+  const ref = useReveal<HTMLElement>();
   return (
-    <section id={id} className="px-5 lg:px-8 py-16 sm:py-24 border-t border-border">
+    <section
+      ref={ref}
+      id={id}
+      className="reveal px-5 lg:px-8 py-16 sm:py-24 border-t border-border"
+    >
       <div className="mx-auto max-w-7xl">
         <div className="flex items-end justify-between mb-10 gap-4 flex-wrap">
           <div>

@@ -231,3 +231,97 @@
 @utility animate-pulse-ring {
   animation: pulse-ring 2s ease-out infinite;
 }
+
+/* ---------- Ambient background motion ---------- */
+@keyframes grid-drift {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 64px 64px, 64px 64px; }
+}
+@utility grid-bg-animated {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 4%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px, 64px 64px;
+  animation: grid-drift 22s linear infinite;
+}
+
+@keyframes orb-float-a {
+  0%, 100% { transform: translate3d(-10%, -10%, 0) scale(1); }
+  50%      { transform: translate3d(8%, 6%, 0) scale(1.15); }
+}
+@keyframes orb-float-b {
+  0%, 100% { transform: translate3d(10%, 8%, 0) scale(1.1); }
+  50%      { transform: translate3d(-6%, -8%, 0) scale(0.95); }
+}
+@utility animate-orb-a { animation: orb-float-a 18s ease-in-out infinite; }
+@utility animate-orb-b { animation: orb-float-b 24s ease-in-out infinite; }
+
+@keyframes scan-sweep {
+  0%   { transform: translateY(-30vh); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(120vh); opacity: 0; }
+}
+@utility animate-scan-sweep { animation: scan-sweep 9s linear infinite; }
+
+@keyframes noise-shift {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-4%, 2%); }
+  40%  { transform: translate(3%, -3%); }
+  60%  { transform: translate(-2%, 4%); }
+  80%  { transform: translate(4%, -2%); }
+  100% { transform: translate(0, 0); }
+}
+@utility animate-noise { animation: noise-shift 1.2s steps(6) infinite; }
+
+/* ---------- Reveal on scroll ---------- */
+@keyframes reveal-up {
+  0%   { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+  100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+.reveal { opacity: 0; }
+.reveal.in-view {
+  animation: reveal-up 0.9s cubic-bezier(.2,.7,.2,1) both;
+}
+
+/* ---------- Heatmap stagger pop ---------- */
+@keyframes cell-pop {
+  0%   { opacity: 0; transform: scale(.4); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.heatmap-cell {
+  animation: cell-pop .5s cubic-bezier(.2,.8,.2,1) both;
+}
+
+/* ---------- Text shimmer ---------- */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@utility text-shimmer {
+  background: linear-gradient(90deg,
+    var(--foreground) 0%,
+    var(--foreground) 40%,
+    color-mix(in oklab, var(--accent) 80%, var(--foreground)) 50%,
+    var(--foreground) 60%,
+    var(--foreground) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+/* ---------- Glow accent dot ---------- */
+@keyframes accent-pulse {
+  0%, 100% { text-shadow: 0 0 0 transparent; }
+  50%      { text-shadow: 0 0 18px color-mix(in oklab, var(--accent) 80%, transparent); }
+}
+@utility animate-accent-pulse { animation: accent-pulse 2.4s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .heatmap-cell { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  .grid-bg-animated, .animate-orb-a, .animate-orb-b, .animate-scan-sweep, .animate-noise,
+  .animate-marquee, .animate-marquee-slow, .animate-cursor, .animate-pulse-ring, .animate-accent-pulse,
+  .text-shimmer { animation: none !important; }
+}
