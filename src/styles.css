@@ -190,8 +190,6 @@
 
 @utility scanlines {
   position: relative;
-}
-@utility scanlines {
   &::after {
     content: "";
     position: absolute;
