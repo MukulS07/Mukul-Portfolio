@@ -261,15 +261,10 @@ export function Projects() {
     <Section id="projects" label="projects/" title="// shipped & in production">
       <div className="grid lg:grid-cols-2 gap-6">
         {projects.map((p) => (
-          <article key={p.num} className="glass-panel overflow-hidden group hover:border-accent/40 transition">
-            <header className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-black/30 font-mono text-xs">
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-warn/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
-                <span className="ml-3 text-muted-foreground">project · {p.num}</span>
-              </div>
-              <span className={"px-2 py-0.5 border rounded text-[10px] uppercase tracking-[0.18em] " + statusColor[p.status]}>
+          <article key={p.num} className="border border-border bg-background group hover:border-accent/50 transition">
+            <header className="flex items-center justify-between px-5 py-3 border-b border-border font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
+              <span>PROJECT · {p.num}</span>
+              <span className={"px-2 py-0.5 border text-[10px] tracking-[0.22em] " + statusColor[p.status]}>
                 {p.status}
               </span>
             </header>
