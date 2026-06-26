@@ -11,6 +11,11 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Nav, StatusBar } from "@/components/portfolio/Nav";
+import { Footer } from "@/components/portfolio/Sections";
+import { BackgroundFX } from "@/components/portfolio/BackgroundFX";
+import { CursorSpotlight } from "@/components/portfolio/CursorSpotlight";
+import { WireframeSphere } from "@/components/portfolio/WireframeSphere";
 
 function NotFoundComponent() {
   return (
@@ -123,8 +128,18 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="min-h-screen relative">
+        <BackgroundFX />
+        <WireframeSphere />
+        <CursorSpotlight />
+        <Nav />
+        <StatusBar />
+        <main>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </QueryClientProvider>
   );
 }
