@@ -3,6 +3,7 @@ import { Nav, StatusBar } from "@/components/portfolio/Nav";
 import { Hero } from "@/components/portfolio/Hero";
 import { About, Skills, Projects, Research, Experience, Contact, Footer } from "@/components/portfolio/Sections";
 import { BackgroundFX } from "@/components/portfolio/BackgroundFX";
+import { CursorSpotlight } from "@/components/portfolio/CursorSpotlight";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,6 +21,7 @@ function Index() {
   return (
     <div className="min-h-screen relative">
       <BackgroundFX />
+      <CursorSpotlight />
       <Nav />
       <StatusBar />
       <main>
