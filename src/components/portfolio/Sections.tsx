@@ -7,19 +7,19 @@ export function About() {
         <TerminalCard title="~/bio.txt" status="readme">
           <div className="font-mono text-sm space-y-3 leading-relaxed">
             <p>
-              <span className="text-cyan-accent">$</span> whoami
+              <span className="text-accent">$</span> whoami
             </p>
             <p className="text-foreground">
               Final-year B.Tech CSE (Cyber Security) @ LPU, Punjab.
             </p>
             <p className="text-muted-foreground">
               Published researcher — DASGRI Congress 2026. Built
-              <span className="text-cyan-accent"> EcoGeoGuard</span> (AI-IoT landslide
-              platform) and <span className="text-cyan-accent">INVENTROX</span> (AI
+              <span className="text-accent"> EcoGeoGuard</span> (AI-IoT landslide
+              platform) and <span className="text-accent">INVENTROX</span> (AI
               business OS for SMEs). Obsessed with secure, cloud-native systems.
             </p>
             <p className="text-muted-foreground">
-              <span className="text-cyan-accent">$</span> focus
+              <span className="text-accent">$</span> focus
               <br />
               <span className="text-foreground">
                 → cyber security · cloud architecture · AI / IoT systems
@@ -48,7 +48,7 @@ export function About() {
                 (t) => (
                   <span
                     key={t}
-                    className="px-2.5 py-1 rounded border border-border text-muted-foreground hover:text-cyan-accent hover:border-cyan-accent transition"
+                    className="px-2.5 py-1 rounded border border-border text-muted-foreground hover:text-accent hover:border-accent transition"
                   >
                     #{t}
                   </span>
@@ -128,7 +128,7 @@ function Bars({ level }: { level: number }) {
           key={i}
           className={
             "h-1.5 w-3 rounded-sm " +
-            (i < level ? "bg-cyan-accent" : "bg-white/10")
+            (i < level ? "bg-accent" : "bg-white/10")
           }
         />
       ))}
@@ -146,7 +146,7 @@ export function Skills() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         {skillGroups.map((g) => (
           <div key={g.name} className="glass-panel p-5">
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-accent mb-4">
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent mb-4">
               ── {g.name} ──
             </div>
             <ul className="space-y-3 font-mono text-sm">
@@ -167,7 +167,7 @@ export function Skills() {
             <div key={dup} className="flex shrink-0">
               {ticker.map((t, i) => (
                 <span key={`${dup}-${i}`} className="px-5">
-                  <span className="text-cyan-accent">·</span> {t}
+                  <span className="text-accent">·</span> {t}
                 </span>
               ))}
             </div>
@@ -251,8 +251,8 @@ const projects: Project[] = [
 ];
 
 const statusColor: Record<Project["status"], string> = {
-  live: "text-green-live border-green-live/40",
-  shipped: "text-cyan-accent border-cyan-accent/40",
+  live: "text-accent border-accent/40",
+  shipped: "text-accent border-accent/40",
   research: "text-amber-warn border-amber-warn/40",
 };
 
@@ -261,15 +261,10 @@ export function Projects() {
     <Section id="projects" label="projects/" title="// shipped & in production">
       <div className="grid lg:grid-cols-2 gap-6">
         {projects.map((p) => (
-          <article key={p.num} className="glass-panel overflow-hidden group hover:border-cyan-accent/40 transition">
-            <header className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-black/30 font-mono text-xs">
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-warn/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-green-live/70" />
-                <span className="ml-3 text-muted-foreground">project · {p.num}</span>
-              </div>
-              <span className={"px-2 py-0.5 border rounded text-[10px] uppercase tracking-[0.18em] " + statusColor[p.status]}>
+          <article key={p.num} className="border border-border bg-background group hover:border-accent/50 transition">
+            <header className="flex items-center justify-between px-5 py-3 border-b border-border font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
+              <span>PROJECT · {p.num}</span>
+              <span className={"px-2 py-0.5 border text-[10px] tracking-[0.22em] " + statusColor[p.status]}>
                 {p.status}
               </span>
             </header>
@@ -318,7 +313,7 @@ export function Projects() {
                       href={l.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-cyan-accent hover:underline underline-offset-4"
+                      className="text-accent hover:underline underline-offset-4"
                     >
                       [{l.label}]
                     </a>
@@ -339,11 +334,11 @@ export function Research() {
       <div className="glass-panel overflow-hidden">
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-black/30 font-mono text-xs">
           <span className="text-muted-foreground">research · published</span>
-          <span className="text-green-live">accepted</span>
+          <span className="text-accent">accepted</span>
         </div>
         <div className="p-6 sm:p-10 grid md:grid-cols-3 gap-6 items-center">
           <div className="md:col-span-2">
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cyan-accent">
+            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
               DASGRI Congress 2026 · April 2026
             </div>
             <h3 className="mt-3 font-sans text-2xl sm:text-3xl font-semibold text-foreground leading-tight">
@@ -365,11 +360,11 @@ export function Research() {
             </div>
             <div className="border border-border rounded-md p-3 bg-black/20">
               <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">status</div>
-              <div className="mt-1 text-green-live">accepted · oral</div>
+              <div className="mt-1 text-accent">accepted · oral</div>
             </div>
             <a
               href="#contact"
-              className="block text-center px-3 py-2.5 rounded-md bg-cyan-accent text-primary-foreground hover:opacity-90"
+              className="block text-center px-3 py-2.5 rounded-md bg-accent text-primary-foreground hover:opacity-90"
             >
               [paper →]
             </a>
@@ -427,8 +422,8 @@ export function Experience() {
           <ul className="space-y-6">
             {timeline.map((t) => (
               <li key={t.title} className="pl-10 relative">
-                <span className="absolute left-2 top-1.5 h-2.5 w-2.5 rounded-full bg-cyan-accent ring-4 ring-background" />
-                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-accent">
+                <span className="absolute left-2 top-1.5 h-2.5 w-2.5 rounded-full bg-accent ring-4 ring-background" />
+                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
                   {t.when}
                 </div>
                 <div className="mt-1 font-sans text-lg font-semibold text-foreground">
@@ -438,7 +433,7 @@ export function Experience() {
                 <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
                   {t.bullets.map((b) => (
                     <li key={b}>
-                      <span className="text-cyan-accent font-mono">→</span> {b}
+                      <span className="text-accent font-mono">→</span> {b}
                     </li>
                   ))}
                 </ul>
@@ -484,9 +479,9 @@ export function Contact() {
             <Row k="location" v="Jaipur, IN · IST" />
           </div>
           <div className="mt-6 font-mono text-xs text-muted-foreground border-t border-border pt-4">
-            <span className="text-cyan-accent">$</span> echo "Available for full-time
+            <span className="text-accent">$</span> echo "Available for full-time
             roles in Cyber Security, Cloud, Full-Stack & AI/ML"
-            <span className="text-cyan-accent animate-cursor">▌</span>
+            <span className="text-accent animate-cursor">▌</span>
           </div>
         </TerminalCard>
 
@@ -515,13 +510,13 @@ export function Contact() {
                 name="message"
                 rows={4}
                 required
-                className="w-full bg-black/40 border border-border rounded-md px-3 py-2 text-sm text-foreground placeholder:text-dim focus:outline-none focus:border-cyan-accent focus:ring-1 focus:ring-cyan-accent resize-none"
+                className="w-full bg-black/40 border border-border rounded-md px-3 py-2 text-sm text-foreground placeholder:text-dim focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent resize-none"
                 placeholder="// tell me what you're building..."
               />
             </div>
             <button
               type="submit"
-              className="w-full px-4 py-2.5 rounded-md bg-cyan-accent text-primary-foreground hover:opacity-90 transition"
+              className="w-full px-4 py-2.5 rounded-md bg-accent text-primary-foreground hover:opacity-90 transition"
             >
               [transmit →]
             </button>
@@ -536,7 +531,7 @@ function Row({ k, v, href }: { k: string; v: string; href?: string }) {
   const inner = (
     <>
       <span className="text-muted-foreground w-20 inline-block">{k}</span>
-      <span className="text-foreground hover:text-cyan-accent transition">{v}</span>
+      <span className="text-foreground hover:text-accent transition">{v}</span>
     </>
   );
   return href ? (
@@ -569,7 +564,7 @@ function Field({
         type={type}
         required
         placeholder={placeholder}
-        className="w-full bg-black/40 border border-border rounded-md px-3 py-2 text-sm text-foreground placeholder:text-dim focus:outline-none focus:border-cyan-accent focus:ring-1 focus:ring-cyan-accent"
+        className="w-full bg-black/40 border border-border rounded-md px-3 py-2 text-sm text-foreground placeholder:text-dim focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
       />
     </div>
   );
@@ -580,10 +575,10 @@ export function Footer() {
     <footer className="border-t border-border mt-10">
       <div className="mx-auto max-w-6xl px-4 py-8 flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-muted-foreground">
         <div>
-          <span className="text-cyan-accent">$</span> echo "© {new Date().getFullYear()} Mukul Sharma · built from a terminal"
+          <span className="text-accent">$</span> echo "© {new Date().getFullYear()} Mukul Sharma · built from a terminal"
         </div>
         <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-green-live animate-pulse" />
+          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
           system · operational
         </div>
       </div>
