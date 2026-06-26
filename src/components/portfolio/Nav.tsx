@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { FXToggle } from "./FXToggle";
 
 const links: { label: string; to: string }[] = [
   { label: "HOME", to: "/" },
@@ -35,6 +36,7 @@ export function Nav() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
+          <FXToggle />
           <div className="flex items-center gap-2 px-3 py-1.5 border border-border text-muted-foreground">
             <span>RECRUITER MODE</span>
             <span className="inline-block h-4 w-7 rounded-full border border-border relative">
