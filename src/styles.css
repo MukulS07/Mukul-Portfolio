@@ -405,6 +405,147 @@ body.fx-off .reveal.in-view { animation: reveal-up 0.7s cubic-bezier(.2,.7,.2,1)
 }
 body.fx-off .holo::after { display: none !important; }
 
+/* ============================================================
+ * IRON MAN — MK-VII theme overrides
+ * ============================================================ */
+body.theme-ironman {
+  --background: oklch(0.04 0.02 30);
+  --foreground: oklch(0.96 0.03 80);
+  --panel: oklch(0.07 0.04 30);
+  --surface: oklch(0.11 0.06 30);
+  --dim: oklch(0.55 0.08 60);
+  --card: oklch(0.07 0.04 30);
+  --card-foreground: oklch(0.96 0.03 80);
+  --popover: oklch(0.07 0.04 30);
+  --popover-foreground: oklch(0.96 0.03 80);
+  --primary: oklch(0.68 0.22 30);          /* hot suit red */
+  --primary-foreground: oklch(0.08 0.02 30);
+  --secondary: oklch(0.12 0.05 30);
+  --secondary-foreground: oklch(0.96 0.03 80);
+  --muted: oklch(0.12 0.05 30);
+  --muted-foreground: oklch(0.72 0.08 70);
+  --accent: oklch(0.85 0.18 75);           /* suit gold */
+  --accent-foreground: oklch(0.08 0.02 30);
+  --destructive: oklch(0.68 0.22 30);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.85 0.18 75 / 0.22);
+  --input: oklch(0.85 0.18 75 / 0.22);
+  --ring: oklch(0.78 0.2 220);             /* arc-reactor blue */
+  --green-live: oklch(0.78 0.2 220);
+  --amber-warn: oklch(0.85 0.18 75);
+}
+body.theme-ironman {
+  background:
+    radial-gradient(ellipse at 50% -10%, oklch(0.78 0.2 220 / 0.18), transparent 55%),
+    radial-gradient(ellipse at 50% 110%, oklch(0.68 0.22 30 / 0.22), transparent 55%),
+    var(--color-background);
+}
+/* Crisper holo scanlines + reactor pulse in iron-man mode */
+body.theme-ironman .holo::after {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0, transparent 2px,
+    color-mix(in oklab, var(--ring) 26%, transparent) 2px,
+    color-mix(in oklab, var(--ring) 26%, transparent) 3px
+  );
+}
+
+/* ---------- Suit-up transformation overlay (one-shot) ---------- */
+@keyframes mk-flash {
+  0%   { opacity: 0; }
+  10%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes mk-reactor-pop {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  30%  { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(60); opacity: 0; }
+}
+@keyframes mk-ring-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes mk-readout-in {
+  0%   { opacity: 0; transform: translateY(8px); letter-spacing: 0.6em; }
+  60%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-8px); letter-spacing: 0.22em; }
+}
+.mk-transform {
+  position: fixed; inset: 0; z-index: 100; pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, oklch(0.78 0.2 220 / 0.35), transparent 60%),
+              oklch(0.04 0.02 30 / 0.55);
+  animation: mk-flash 1.8s ease-out forwards;
+}
+.mk-reactor {
+  position: absolute; top: 50%; left: 50%;
+  width: 28px; height: 28px; border-radius: 999px;
+  background: radial-gradient(circle, oklch(0.95 0.05 220) 0%, oklch(0.78 0.2 220) 50%, transparent 70%);
+  box-shadow: 0 0 60px 20px oklch(0.78 0.2 220 / 0.7);
+  animation: mk-reactor-pop 1.4s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.mk-rings { position: absolute; inset: 0; }
+.mk-rings span {
+  position: absolute; top: 50%; left: 50%;
+  border: 1px solid oklch(0.85 0.18 75 / 0.7);
+  border-radius: 999px;
+  animation: mk-ring-spin 1.6s linear forwards;
+}
+.mk-rings span:nth-child(1) { width: 280px; height: 280px; border-style: dashed; }
+.mk-rings span:nth-child(2) { width: 420px; height: 420px; border-top-color: transparent; border-bottom-color: transparent; }
+.mk-rings span:nth-child(3) { width: 600px; height: 600px; border-left-color: transparent; border-right-color: transparent; opacity: .5; }
+.mk-readout {
+  position: absolute; left: 50%; top: calc(50% + 220px); transform: translateX(-50%);
+  display: grid; gap: 4px; text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.22em;
+  color: oklch(0.85 0.18 75);
+  text-shadow: 0 0 12px oklch(0.78 0.2 220 / 0.6);
+  animation: mk-readout-in 1.6s ease-out forwards;
+}
+body.fx-off .mk-transform { animation-duration: 0.6s; }
+body.fx-off .mk-rings, body.fx-off .mk-readout { display: none; }
+
+/* ---------- JARVIS orb + panel ---------- */
+@keyframes jarvis-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes jarvis-throb {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.78 0.2 220 / 0.55), inset 0 0 14px oklch(0.78 0.2 220 / 0.6); }
+  50%      { box-shadow: 0 0 0 12px oklch(0.78 0.2 220 / 0), inset 0 0 20px oklch(0.78 0.2 220 / 0.9); }
+}
+.jarvis-orb {
+  position: fixed;
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.95 0.05 220) 0%, oklch(0.5 0.18 220) 45%, oklch(0.15 0.06 220) 75%),
+    oklch(0.05 0.02 30);
+  border: 1px solid oklch(0.85 0.18 75 / 0.6);
+  animation: jarvis-throb 2.4s ease-in-out infinite;
+  cursor: pointer;
+}
+.jarvis-orb::before {
+  content: "";
+  position: absolute; inset: -6px;
+  border-radius: 999px;
+  border: 1px dashed oklch(0.85 0.18 75 / 0.55);
+  animation: jarvis-spin 8s linear infinite;
+}
+.jarvis-panel {
+  background: linear-gradient(180deg,
+    oklch(0.05 0.02 30 / 0.95),
+    oklch(0.04 0.02 30 / 0.95));
+  border: 1px solid oklch(0.85 0.18 75 / 0.45);
+  box-shadow:
+    0 0 0 1px oklch(0.78 0.2 220 / 0.2),
+    0 20px 60px -10px oklch(0.78 0.2 220 / 0.45),
+    inset 0 0 30px oklch(0.78 0.2 220 / 0.08);
+  backdrop-filter: blur(8px);
+}
+body.fx-off .jarvis-orb { animation: none; }
+body.fx-off .jarvis-orb::before { animation: none; }
+
+/* ---------- Crawl banner accents ---------- */
+.crawl-banner { box-shadow: inset 0 0 24px color-mix(in oklab, var(--accent) 10%, transparent); }
+body.fx-off .crawl-banner .animate-marquee { animation-duration: 90s; }
+
 /* ---------- Section reveal RGB-split transition ---------- */
 @keyframes section-rgb-split {
   0%   { opacity: 0; transform: translateY(20px) skewX(-2deg);
