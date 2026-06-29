@@ -19,6 +19,7 @@ import { WireframeSphere } from "@/components/portfolio/WireframeSphere";
 import { TelemetryHUD } from "@/components/portfolio/TelemetryHUD";
 import { HUDFrame } from "@/components/portfolio/HUDFrame";
 import { Jarvis } from "@/components/portfolio/Jarvis";
+import { IronManHUD } from "@/components/portfolio/IronManHUD";
 
 function NotFoundComponent() {
   return (
@@ -136,6 +137,7 @@ function RootComponent() {
         <WireframeSphere />
         <CursorSpotlight />
         <HUDFrame />
+        <IronManHUD />
         <Nav />
         <StatusBar />
         <main>
