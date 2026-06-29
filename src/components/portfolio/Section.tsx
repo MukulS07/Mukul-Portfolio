@@ -1,5 +1,6 @@
 import type { ReactNode, PointerEvent as RPointerEvent } from "react";
 import { useReveal } from "@/hooks/useReveal";
+import { CrawlBanner } from "./CrawlBanner";
 
 function handleCardMove(e: RPointerEvent<HTMLDivElement>) {
   const r = e.currentTarget.getBoundingClientRect();
@@ -12,11 +13,13 @@ export function Section({
   label,
   title,
   children,
+  crawl,
 }: {
   id: string;
   label: string;
   title: string;
   children: ReactNode;
+  crawl?: string;
 }) {
   const ref = useReveal<HTMLElement>();
   return (
@@ -42,6 +45,12 @@ export function Section({
             SECTION · {id.toUpperCase()}
           </div>
         </div>
+        <CrawlBanner
+          text={
+            crawl ??
+            `INCOMING TRANSMISSION · ${label.toUpperCase()} · ${title.toUpperCase()} · STATUS NOMINAL · STAND BY`
+          }
+        />
         {children}
       </div>
     </section>

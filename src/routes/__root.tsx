@@ -18,6 +18,7 @@ import { CursorSpotlight } from "@/components/portfolio/CursorSpotlight";
 import { WireframeSphere } from "@/components/portfolio/WireframeSphere";
 import { TelemetryHUD } from "@/components/portfolio/TelemetryHUD";
 import { HUDFrame } from "@/components/portfolio/HUDFrame";
+import { Jarvis } from "@/components/portfolio/Jarvis";
 
 function NotFoundComponent() {
   return (
@@ -143,6 +144,7 @@ function RootComponent() {
         </main>
         <Footer />
         <TelemetryHUD />
+        <Jarvis />
       </div>
     </QueryClientProvider>
   );
