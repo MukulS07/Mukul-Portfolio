@@ -1,174 +1,224 @@
 # 🌐 Mukul Sharma — Cyber Security · Cloud · AI/IoT Portfolio
 
-```
-=============================================================================
-███╗   ███╗██╗   ██╗██╗  ██╗██╗   ██╗██╗     ██████╗  ██████╗ ██████╗ ████████╗
-████╗ ████║██║   ██║██║ ██╔╝██║   ██║██║     ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝
-██╔████╔██║██║   ██║█████╔╝ ██║   ██║██║     ██████╔╝██║   ██║██████╔╝   ██║
-██║╚██╔╝██║██║   ██║██╔═██╗ ██║   ██║██║     ██╔═══╝ ██║   ██║██╔══██╗   ██║
-██║ ╚═╝ ██║╚██████╔╝██║  ██╗╚██████╔╝███████╗██║     ╚██████╔╝██║  ██║   ██║
-╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝
-=============================================================================
+<p align="center">
+  <strong>An immersive, terminal-inspired, futuristic dashboard showcasing enterprise security, cloud architecture, and AI-IoT solutions.</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React 19">
+  <img src="https://img.shields.io/badge/TanStack-Start-FF4154?style=flat-square&logo=react" alt="TanStack Start">
+  <img src="https://img.shields.io/badge/Vite-v8-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite v8">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=flat-square&logo=tailwind-css" alt="Tailwind CSS v4">
+  <img src="https://img.shields.io/badge/Bun-v1.x-FBF0DF?style=flat-square&logo=bun&logoColor=black" alt="Bun">
+  <img src="https://img.shields.io/badge/Platform-Cloud--Native-232F3E?style=flat-square&logo=amazon-aws" alt="Cloud Native">
+</p>
+
+---
+
+```xml
++=============================================================================+
+| ███╗   ███╗██╗   ██╗██╗  ██╗██╗   ██╗██╗     ██████╗  ██████╗ ██████╗ ████████╗ |
+| ████╗ ████║██║   ██║██║ ██╔╝██║   ██║██║     ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝ |
+| ██╔████╔██║██║   ██║█████╔╝ ██║   ██║██║     ██████╔╝██║   ██║██████╔╝   ██║    |
+| ██║╚██╔╝██║██║   ██║██╔═██╗ ██║   ██║██║     ██╔═══╝ ██║   ██║██╔══██╗   ██║    |
+| ██║ ╚═╝ ██║╚██████╔╝██║  ██╗╚██████╔╝███████╗██║     ╚██████╔╝██║  ██║   ██║    |
+| ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝    |
++=============================================================================+
              [SYSTEM: NOMINAL] // [THEME: CYBERPUNK HUD ACTIVE]
 ```
 
-Welcome to the codebase of **Mukul Sharma's Portfolio** — an immersive, terminal-inspired, futuristic dashboard showcasing engineering skills across Cyber Security, Cloud Architecture, AI/ML, and IoT systems.
+## 🌌 Core Concept & Immersive Design
+
+This application represents the virtual nerve center of **Mukul Sharma's** engineering ecosystem. Transcending typical flat portfolio designs, it boots into a high-fidelity **interactive dashboard** reminiscent of tactical cyber consoles and aerospace flight interfaces. The design marries raw developer productivity telemetry with cinematic, real-time interactivity.
 
 ---
 
-## ⚡ Key Features of the Portfolio UI
+## ⚡ Key Experience Portals
 
-- **⚡ Loading Boot Sequence**: A simulated hardware initialization check compiling system logs, loading local environments, and authenticating security levels.
-- **🛡️ Avengers Mode**: A S.H.I.E.L.D.-themed secret mode that switches the terminal interface to a holographic Stark-Tech layout, booting J.A.R.V.I.S. HUD alerts and customized Director archives.
-- **📈 Telemetry HUD**: Fixed monitoring interface featuring live FPS calculation, real-time scroll tracker, cursor coordinate tracking, and a dynamic audio spectrum visualizer.
-- **🌀 Wireframe Matrix**: An interactive, rotating 3D wireframe globe indicating active server grids and node connectivity.
+### 🖥️ Simulated Boot Sequence
 
----
+On cold launch, the system executes an automated hardware validation sequence. It mocks kernel level allocation checks, scans local configurations, validates environmental variables, and processes cryptographic handshakes before granting user access.
 
-## 👨‍💻 About Mukul Sharma
+- **Core File:** [LoadingScreen.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/LoadingScreen.tsx)
 
-- **Education**: B.Tech in Computer Science & Engineering (Specialization in **Cyber Security**) at **Lovely Professional University (LPU)**, Punjab (2022 – 2026).
-- **Primary Focus**: Cloud Architecture, IoT Node Fusion, Predictive Machine Learning, and Enterprise Application Security.
-- **Leadership**: Former CEO of **Student Organisation SAPPHIRE** at LPU, leading a 20+ member committee executing university-wide tech and management initiatives.
+### 🛡️ Avengers Protocol (S.H.I.E.L.D. HUD Mode)
 
----
+For authorized personnel, a secret toggle engages **Avengers Mode**, restructuring the interface into a holographic, high-contrast Stark-Tech heads-up display. Complete with custom JARVIS system alerts, audio sound effects, and classified dossier access.
 
-## 🛠️ The Tech Stack & Architecture
+- **Core File:** [Sections.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/Sections.tsx)
 
-This application is built with modern web technologies:
+### 📊 Real-time Telemetry Grid
 
-- **Framework**: [TanStack Start](https://tanstack.com/router/v1/docs/start/overview) (React 19 + Vite 8) for SSR (Server-Side Rendering) capabilities.
-- **Routing**: [TanStack Router](https://tanstack.com/router/v1) for robust file-based client-side and server-side routing.
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) for micro-animations, glassmorphic UI panels, scanlines, and glow filters.
-- **State Management**: [TanStack Query v5](https://tanstack.com/query/v5) (React Query) for caching and asynchronous state hydration.
-- **Icons**: [Lucide React](https://lucide.dev/) for holographic vectors.
-- **Package Management**: [Bun](https://bun.sh/) for ultra-fast installs and build execution.
+The screen is continuously monitored by a diagnostic HUD providing real-time data:
 
----
+- **Cursor Vector:** Live coordinate maps (`X` / `Y`) showing current cursor vectors.
+- **Refresh Velocity:** Dynamic UI render FPS analyzer.
+- **Scroll Tracking:** Percentage based vertical displacement vector.
+- **Spectrum Visualizer:** Live interactive audio feedback bars.
 
-## 🚀 Featured Projects & Research
+* **Core File:** [FXToggle.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/FXToggle.tsx)
 
-### 1. **EcoGeoGuard — AI-IoT Landslide Prediction & Smart Agriculture**
+### 🌀 3D Wireframe Node Matrix
 
-- _Scope_: Personal Research Project & Paper (Accepted & Presented orally at **DASGRI Congress 2026**).
-- _Overview_: Real-time multi-sensor telemetry fusion (vibration, tilt, rainfall, soil moisture) feeding into a serverless machine learning risk-assessment pipeline.
-- _Stack_: Python, ML (Algorithms), AWS Lambda, DynamoDB, API Gateway, LoRa, Next.js.
-- _Performance_: Under 3-minute emergency SMS/App alert latency with `0.94` F1 ML prediction accuracy.
-
-### 2. **INVENTROX — AI Business Operating System**
-
-- _Scope_: SME SaaS Product.
-- _Overview_: Consolidated ERP suite built for Indian SMEs, packaging smart POS, GST invoicing, automated CRM, analytics, and an interactive plain-language AI assistant.
-- _Stack_: Next.js, Node.js, Express, MongoDB Atlas, GenAI LLM APIs.
-
-### 3. **Space Galactus**
-
-- _Scope_: LPU Academic Team Project (Team of 3).
-- _Overview_: 2D top-down physics-based space arcade shooter. Includes wave spawners, escalation logic, boss-battle loops, and ScriptableObject weapon inventories.
-- _Stack_: Unity 6, C#, 2D Physics engine, Unity New Input System.
-
-### 4. **AYUSH VR Herbal Garden (SIH)**
-
-- _Scope_: Smart India Hackathon.
-- _Overview_: Virtual Reality simulation for interactive Ayurvedic botany education.
-- _Stack_: Unity 3D, Oculus SDK, Blender, Node.js, Express, MongoDB.
+A rotating vector-based 3D globe visualization showing active globally-distributed servers. Built using high-performance mathematical projections.
 
 ---
 
-## 🔧 Dev Setup & Local Launch
+## 👨‍💻 Engineering Profile
 
-Ensure you have [Bun](https://bun.sh/) or Node.js installed.
+### Education & Honors
 
-### 1. Clone & Setup
+- **Degree:** B.Tech in Computer Science & Engineering (Specialization in **Cyber Security**)
+- **Institution:** Lovely Professional University (LPU), Punjab (2022 – 2026)
+- **Leadership Role:** Former CEO of **Student Organisation SAPPHIRE**, directing a cross-functional team of 20+ operators managing university-level operations, events, and tech deployment.
+
+### Core Expertise
+
+- Cloud Infrastructure Design (AWS Architectures, Serverless Engine Pipelines)
+- Cryptographic Security Systems & Threat Analysis
+- Dynamic React UI/UX Design & Immersive Frontend Engineering
+- Distributed Machine Learning & Sensor Telemetry Integration (IoT)
+
+---
+
+## 🛠️ System Architecture & Stack
+
+| Layer               | Technology                                                                               | Purpose                                                                   |
+| :------------------ | :--------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ |
+| **Framework**       | [TanStack Start](https://tanstack.com/router/v1/docs/start/overview) (React 19 + Vite 8) | Server-Side Rendering (SSR) & Server Action Execution                     |
+| **Routing**         | [TanStack Router](https://tanstack.com/router/v1)                                        | Fully type-safe file-system based routing and layouts                     |
+| **Styling**         | [Tailwind CSS v4](https://tailwindcss.com/)                                              | Real-time GPU-accelerated glow filters, glassmorphism, and keyframe scans |
+| **State & Cache**   | [TanStack Query v5](https://tanstack.com/query/v5)                                       | High-speed server state syncing, caching, and background data hydration   |
+| **Icons**           | [Lucide React](https://lucide.dev/)                                                      | High-precision futuristic vector components                               |
+| **Runtime & Build** | [Bun](https://bun.sh/)                                                                   | Blazing fast script execution, locking, and module compilation            |
+
+---
+
+## 🚀 Selected Research & Engineering Work
+
+### 1. EcoGeoGuard — AI-IoT Landslide Prediction & Smart Agriculture
+
+> **Status:** Accepted and Presented orally at **DASGRI Congress 2026**
+
+A cloud-native machine learning workflow designed to process multi-sensor telemetry (soil moisture, rainfall volume, tri-axial vibration, and tilt metrics). Operates on low-power LoRa gateway transmitters.
+
+- **Engine Stack:** Python, AWS Lambda, DynamoDB, API Gateway, Next.js, LoRa
+- **Performance Metrics:** Real-time SMS/App emergency trigger alert latency of `< 3 minutes` with an `0.94` F1 ML prediction accuracy.
+
+### 2. INVENTROX — AI-Powered Business Operating System
+
+An enterprise-grade SaaS platform built for modern SMEs. Integrates automated tax/GST billing calculators, dynamic inventory monitors, CRM databases, and an integrated generative AI business advisor.
+
+- **Engine Stack:** Next.js, Node.js, Express, MongoDB Atlas, LLM APIs
+
+### 3. AYUSH VR Herbal Garden (SIH)
+
+A fully immersive virtual reality simulation designed for interactive botanical research and education, featuring custom 3D model rigs.
+
+- **Engine Stack:** Unity 3D, Oculus SDK, Blender, Node.js, Express, MongoDB
+
+### 4. Space Galactus (Team of 3)
+
+A fast-paced 2D top-down physics-based space action game utilizing advanced object pooling techniques, custom state machines, and weapon inventory frameworks.
+
+- **Engine Stack:** Unity 6, C#, 2D Physics engine, Unity New Input System
+
+---
+
+## 📡 Directory Structure & System Files
+
+A structured map of the system workspace:
+
+- [public/](file:///m:/WEBSITES/Mukul-Portfolio/public) — _Global static resources, documents, and video recordings_
+  - [cv.pdf](file:///m:/WEBSITES/Mukul-Portfolio/public/cv.pdf) — _Professional Resume / CV_
+  - [videooutput/](file:///m:/WEBSITES/Mukul-Portfolio/public/videooutput) — _Recorded system previews and demonstrations_
+- [src/](file:///m:/WEBSITES/Mukul-Portfolio/src) — _Core application code_
+  - [assets/](file:///m:/WEBSITES/Mukul-Portfolio/src/assets) — _Images, backgrounds, and graphical resources_
+  - [components/](file:///m:/WEBSITES/Mukul-Portfolio/src/components) — _React interface components_
+    - [portfolio/](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio) — _Cyberpunk HUD, Spectrum, and sound logic_
+      - [FXToggle.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/FXToggle.tsx) — _Interactive filters & telemetry toggle_
+      - [LoadingScreen.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/LoadingScreen.tsx) — _Boot sequences & status mockup_
+      - [Sections.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/Sections.tsx) — _Main interactive panels & theme control_
+    - [ui/](file:///m:/WEBSITES/Mukul-Portfolio/src/components/ui) — _Primitive button grids and layouts_
+  - [hooks/](file:///m:/WEBSITES/Mukul-Portfolio/src/hooks) — _State monitors & listener hooks_
+  - [lib/](file:///m:/WEBSITES/Mukul-Portfolio/src/lib) — _Utilities, telemetry mathematics, and constants_
+  - [routes/](file:///m:/WEBSITES/Mukul-Portfolio/src/routes) — _TanStack Start file routing system_
+    - [__root.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/routes/__root.tsx) — _Core app wrapper & telemetry shell_
+    - [index.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/routes/index.tsx) — _System landing console_
+    - [resume.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/routes/resume.tsx) — _Professional resume page_
+  - [server.ts](file:///m:/WEBSITES/Mukul-Portfolio/src/server.ts) — _SSR build configuration with Nitro integration_
+  - [start.ts](file:///m:/WEBSITES/Mukul-Portfolio/src/start.ts) — _Hydration startup hook_
+  - [styles.css](file:///m:/WEBSITES/Mukul-Portfolio/src/styles.css) — _Animation variables, neon styles, scanlines_
+- [package.json](file:///m:/WEBSITES/Mukul-Portfolio/package.json) — _Engine dependencies and run scripts_
+- [tsconfig.json](file:///m:/WEBSITES/Mukul-Portfolio/tsconfig.json) — _Compiler configurations_
+- [vite.config.ts](file:///m:/WEBSITES/Mukul-Portfolio/vite.config.ts) — _Vite build system configurations_
+
+---
+
+## 🔧 Installation & Deployment Protocols
+
+Follow these instructions to run a local instance of the dashboard.
+
+### 1. Prerequisites
+
+Ensure you have [Bun](https://bun.sh/) (recommended for peak performance) or [Node.js](https://nodejs.org/) installed on your machine.
+
+### 2. Initialization & Cloning
 
 ```bash
 # Clone the repository
 git clone https://github.com/mukulsharmams007/Mukul-Portfolio.git
 cd Mukul-Portfolio
 
-# Install dependencies using Bun (recommended) or npm
+# Install dependencies using Bun
 bun install
-# or
-npm install
 ```
 
-### 2. Live Development Server
+### 3. Launching Development Console
 
-Launch the local Hot-Module-Replacement (HMR) server:
+Run the Hot-Module-Replacement (HMR) local development server:
 
 ```bash
 bun run dev
-# or
-npm run dev
 ```
 
-Open your browser to `http://localhost:3000` (or specified terminal port).
+Once initialized, the local port will be exposed. Access the system console at `http://localhost:3000`.
 
-### 3. Lint & Code Formatting
+### 4. Code Standards & Diagnostics
 
-Verify code quality and automatically clean files:
+Verify build stability and ensure strict formatting compliance:
 
 ```bash
-# Lint check
+# Run lint analysis
 bun run lint
 
-# Prettier format
+# Apply Prettier formatting
 bun run format
 ```
 
-### 4. Compile & Build Production
+### 5. Compiling Optimized Production Build
 
-Build the optimized application bundle powered by Vite & Nitro Server:
+Produce a highly optimized production bundle using the Vite compiler and Nitro server engine:
 
 ```bash
+# Compile and package assets
 bun run build
-# or
-npm run build
-```
 
-Preview the production server locally:
-
-```bash
+# Preview production build locally
 bun run preview
-# or
-npm run preview
 ```
 
 ---
 
-## 📡 Directory Structure
+## 🔗 Connected Ecosystems
 
-```
-├── .tanstack/             # TanStack Router cache and build files
-├── public/                # Static public assets (fonts, video telemetry output)
-├── src/
-│   ├── assets/            # CSS, images, and visual components
-│   ├── components/        # React Components
-│   │   ├── portfolio/     # Custom holographic UI components (HUD, Spectrum, FX)
-│   │   └── ui/            # Reusable primitive UI buttons, overlays
-│   ├── hooks/             # Custom React state hooks
-│   ├── lib/               # Utility functions, helpers, and error handlers
-│   ├── routes/            # File-based TanStack Start routes page system
-│   │   ├── __root.tsx     # Base App Shell layout wrapper
-│   │   ├── index.tsx      # Main terminal entry-point route
-│   │   └── ...            # Secondary routes (about, projects, contact, resume)
-│   ├── server.ts          # SSR build entry point with custom Nitro integration
-│   ├── start.ts           # Client hydration start script
-│   └── styles.css         # Styling system & custom neon keyframe animations
-├── package.json           # App scripts and core dependencies
-├── tsconfig.json          # TypeScript compilation settings
-└── vite.config.ts         # Lovable & TanStack compilation settings
-```
-
----
-
-## 🌐 Connected Ecosystems
-
-This project is connected directly to **[Lovable.dev](https://lovable.dev)**.
+This application is actively connected to **[Lovable.dev](https://lovable.dev)**.
 
 > [!WARNING]
 > Do **not** amend, squash, or force-push commits to the primary deployment branches of this repository as it will overwrite and disconnect project history synchronized in the Lovable design editor. Keep the branch history linear and consistent.
 
 ---
 
-_Created by [Mukul Sharma](mailto:mukulsharmaworks@gmail.com). Powered by Cyber Security, Cloud-Native architecture, and a love for immersive UI._
+<p align="center">
+  <sub>Designed & Developed by <a href="mailto:mukulsharmaworks@gmail.com">Mukul Sharma</a>. Protected by Modern Web Protocols and a passion for immersive human-computer interfaces.</sub>
+</p>
