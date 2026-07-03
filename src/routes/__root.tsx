@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -18,6 +19,7 @@ import { CursorSpotlight } from "@/components/portfolio/CursorSpotlight";
 import { WireframeSphere } from "@/components/portfolio/WireframeSphere";
 import { TelemetryHUD } from "@/components/portfolio/TelemetryHUD";
 import { HUDFrame } from "@/components/portfolio/HUDFrame";
+import { LoadingScreen } from "@/components/portfolio/LoadingScreen";
 
 function NotFoundComponent() {
   return (
@@ -127,10 +129,23 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useRouterState({ select: (s) => s.location });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("avengers-mode") === "1";
+      document.body.classList.toggle("avengers", stored);
+
+      const storedFx = localStorage.getItem("fx-enabled");
+      const enabled = storedFx === null ? true : storedFx === "1";
+      document.body.classList.toggle("fx-off", !enabled);
+    }
+  }, [location.pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen relative">
+        <LoadingScreen />
         <BackgroundFX />
         <WireframeSphere />
         <CursorSpotlight />

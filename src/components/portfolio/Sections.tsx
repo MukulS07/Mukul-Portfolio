@@ -1,4 +1,6 @@
 import { Section, TerminalCard } from "./Section";
+import { ProjectVideo } from "./ProjectVideo";
+import { Github, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 
 export function About() {
   return (
@@ -188,6 +190,7 @@ type Project = {
   stats?: { k: string; v: string }[];
   links: { label: string; href: string }[];
   status: "live" | "shipped" | "research";
+  video?: string;
 };
 
 const projects: Project[] = [
@@ -197,6 +200,7 @@ const projects: Project[] = [
     type: "Personal Research Project",
     period: "Dec 2025 – May 2026",
     status: "live",
+    video: "/videooutput/My Video.mp4",
     description:
       "End-to-end AI-IoT system for real-time landslide prediction and smart agriculture. Multi-sensor fusion (soil moisture, tilt, vibration, rainfall) feeds an ML pipeline outputting a 0–1 risk score every 30s. Three role dashboards: Farmer, Gov, Admin. Alerts via SMS, app, alarms.",
     stats: [
@@ -216,6 +220,7 @@ const projects: Project[] = [
     type: "Personal Product",
     period: "2026",
     status: "live",
+    video: "/videooutput/My Video-1.mp4",
     description:
       "AI-powered Business OS for Indian SMEs — replaces 4–6 fragmented tools with one platform. Smart inventory, lightning POS, GST invoicing, built-in CRM, live analytics, and an AI assistant for plain-language business queries.",
     stats: [
@@ -276,6 +281,8 @@ export function Projects() {
               <div className="mt-1 font-mono text-xs text-muted-foreground">
                 {p.type} <span className="text-dim">·</span> {p.period}
               </div>
+
+              <ProjectVideo src={p.video} title={p.title} />
 
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                 {p.description}
@@ -362,12 +369,6 @@ export function Research() {
               <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">status</div>
               <div className="mt-1 text-accent">accepted · oral</div>
             </div>
-            <a
-              href="#contact"
-              className="block text-center px-3 py-2.5 rounded-md bg-accent text-primary-foreground hover:opacity-90"
-            >
-              [paper →]
-            </a>
           </div>
         </div>
       </div>
@@ -470,20 +471,22 @@ export function Contact() {
   return (
     <Section id="contact" label="contact" title="> contact --mukul">
       <div className="grid lg:grid-cols-5 gap-6">
-        <TerminalCard title="~/contact.sh" status="open to roles">
-          <div className="font-mono text-sm space-y-2.5">
-            <Row k="email" v="mukulsharmaworks@gmail.com" href="mailto:mukulsharmaworks@gmail.com" />
-            <Row k="github" v="github.com/mukulsharmams007" href="https://github.com/mukulsharmams007" />
-            <Row k="linkedin" v="linkedin.com/in/mukul-sharma-514634214" href="https://linkedin.com/in/mukul-sharma-514634214" />
-            <Row k="mobile" v="+91-7737360788" href="tel:+917737360788" />
-            <Row k="location" v="Jaipur, IN · IST" />
-          </div>
-          <div className="mt-6 font-mono text-xs text-muted-foreground border-t border-border pt-4">
-            <span className="text-accent">$</span> echo "Available for full-time
-            roles in Cyber Security, Cloud, Full-Stack & AI/ML"
-            <span className="text-accent animate-cursor">▌</span>
-          </div>
-        </TerminalCard>
+        <div className="lg:col-span-3">
+          <TerminalCard title="~/contact.sh" status="open to roles">
+            <div className="font-mono text-sm space-y-1">
+              <Row k="email" v="mukulsharmaworks@gmail.com" href="mailto:mukulsharmaworks@gmail.com" />
+              <Row k="github" v="github.com/mukulsharmams007" href="https://github.com/mukulsharmams007" />
+              <Row k="linkedin" v="linkedin.com/in/mukul-sharma-514634214" href="https://www.linkedin.com/in/mukul-sharma-514634214/" />
+              <Row k="mobile" v="+91-7737360788" href="tel:+917737360788" />
+              <Row k="location" v="Jaipur, IN · IST" />
+            </div>
+            <div className="mt-6 font-mono text-xs text-muted-foreground border-t border-border pt-4">
+              <span className="text-accent">$</span> echo "Available for full-time
+              roles in Cyber Security, Cloud, Full-Stack & AI/ML"
+              <span className="text-accent animate-cursor">▌</span>
+            </div>
+          </TerminalCard>
+        </div>
 
         <div className="lg:col-span-2">
           <form
@@ -528,12 +531,26 @@ export function Contact() {
 }
 
 function Row({ k, v, href }: { k: string; v: string; href?: string }) {
+  const Icon = {
+    email: Mail,
+    github: Github,
+    linkedin: Linkedin,
+    mobile: Phone,
+    location: MapPin,
+  }[k];
+
   const inner = (
-    <>
-      <span className="text-muted-foreground w-20 inline-block">{k}</span>
-      <span className="text-foreground hover:text-accent transition">{v}</span>
-    </>
+    <div className="grid grid-cols-[115px_1fr] gap-4 py-2 px-3 -mx-3 rounded hover:bg-white/[0.03] transition-colors items-center group cursor-pointer">
+      <span className="text-muted-foreground flex items-center gap-2 select-none">
+        {Icon && <Icon size={14} className="text-muted-foreground group-hover:text-accent transition-colors" />}
+        <span>{k}</span>
+      </span>
+      <span className="text-foreground group-hover:text-accent transition-colors break-all font-mono">
+        {v}
+      </span>
+    </div>
   );
+
   return href ? (
     <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="block">
       {inner}

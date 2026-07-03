@@ -9,11 +9,40 @@ const links: { label: string; to: string }[] = [
   { label: "PROJECTS", to: "/projects" },
   { label: "RESEARCH", to: "/research" },
   { label: "SKILLS", to: "/skills" },
+  { label: "RESUME", to: "/resume" },
   { label: "CONTACT", to: "/contact" },
 ];
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const [avengers, setAvengers] = useState(false);
+  const [fxEnabled, setFxEnabled] = useState(true);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("avengers-mode") === "1";
+    setAvengers(stored);
+    document.body.classList.toggle("avengers", stored);
+
+    const storedFx = localStorage.getItem("fx-enabled");
+    const enabled = storedFx === null ? true : storedFx === "1";
+    setFxEnabled(enabled);
+    document.body.classList.toggle("fx-off", !enabled);
+  }, []);
+
+  const toggleAvengers = () => {
+    const next = !avengers;
+    setAvengers(next);
+    localStorage.setItem("avengers-mode", next ? "1" : "");
+    document.body.classList.toggle("avengers", next);
+  };
+
+  const toggleFX = () => {
+    const next = !fxEnabled;
+    setFxEnabled(next);
+    localStorage.setItem("fx-enabled", next ? "1" : "0");
+    document.body.classList.toggle("fx-off", !next);
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur border-b border-border">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 h-14 flex items-center justify-between gap-4 font-mono text-[11px] tracking-[0.18em]">
@@ -21,30 +50,47 @@ export function Nav() {
           MS<span className="text-accent">.</span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-7 text-muted-foreground">
-          {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              activeOptions={{ exact: true }}
-              activeProps={{ className: "text-foreground" }}
-              className="hover:text-foreground transition"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
+        {!avengers && (
+          <nav className="hidden md:flex items-center gap-7 text-muted-foreground">
+            {links.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                activeOptions={{ exact: true }}
+                activeProps={{ className: "text-foreground" }}
+                className="hover:text-foreground transition"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+        )}
 
         <div className="hidden md:flex items-center gap-3">
-          <FXToggle />
-          <div className="flex items-center gap-2 px-3 py-1.5 border border-border text-muted-foreground">
-            <span>RECRUITER MODE</span>
-            <span className="inline-block h-4 w-7 rounded-full border border-border relative">
-              <span className="absolute left-0.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full bg-muted-foreground" />
+          <FXToggle on={fxEnabled} onToggle={toggleFX} />
+          <button
+            onClick={toggleAvengers}
+            className="flex items-center gap-2 px-3 py-1.5 border border-border text-muted-foreground hover:text-foreground hover:border-accent transition font-mono text-[11px] tracking-[0.18em]"
+            title="Toggle Avengers Theme"
+          >
+            <span>AVENGER MODE</span>
+            <span
+              className={`inline-block h-4 w-7 rounded-full border border-border relative transition-colors ${
+                avengers ? "bg-accent/20 border-accent" : ""
+              }`}
+            >
+              <span
+                className={`absolute top-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full transition-all ${
+                  avengers ? "left-3 bg-accent shadow-[0_0_8px_var(--accent)]" : "left-0.5 bg-muted-foreground"
+                }`}
+              />
             </span>
-          </div>
+            <span className={avengers ? "text-accent" : ""}>{avengers ? "ON" : "OFF"}</span>
+          </button>
           <a
             href="/cv.pdf"
+            target="_blank"
+            rel="noreferrer"
             className="px-3 py-1.5 border border-foreground text-foreground hover:bg-foreground hover:text-background transition"
           >
             RESUME
@@ -62,7 +108,7 @@ export function Nav() {
 
       {open && (
         <div className="md:hidden border-t border-border bg-background font-mono text-xs tracking-[0.18em]">
-          {links.map((l) => (
+          {!avengers && links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
@@ -72,6 +118,35 @@ export function Nav() {
               {l.label}
             </Link>
           ))}
+          {/* Mobile Toggles Panel */}
+          <div className="flex flex-col gap-3 px-5 py-4 border-b border-border bg-black/20">
+            <div className="flex items-center justify-between text-muted-foreground">
+              <span>SYSTEM FX</span>
+              <FXToggle on={fxEnabled} onToggle={toggleFX} />
+            </div>
+            <div className="flex items-center justify-between text-muted-foreground">
+              <span>AVENGER MODE</span>
+              <button
+                onClick={toggleAvengers}
+                className="flex items-center gap-2 px-3 py-1.5 border border-border text-[11px]"
+              >
+                <span
+                  className={`inline-block h-4 w-7 rounded-full border border-border relative transition-colors ${
+                    avengers ? "bg-accent/20 border-accent" : ""
+                  }`}
+                >
+                  <span
+                    className={`absolute top-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full transition-all ${
+                      avengers ? "left-3 bg-accent" : "left-0.5 bg-muted-foreground"
+                    }`}
+                  />
+                </span>
+                <span className={avengers ? "text-accent font-semibold" : ""}>
+                  {avengers ? "ON" : "OFF"}
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </header>

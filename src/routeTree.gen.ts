@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SkillsRouteImport } from './routes/skills'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ExperienceRouteImport } from './routes/experience'
@@ -26,6 +27,11 @@ const SkillsRoute = SkillsRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumeRoute = ResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResearchRoute = ResearchRouteImport.update({
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/experience': typeof ExperienceRoute
   '/projects': typeof ProjectsRoute
   '/research': typeof ResearchRoute
+  '/resume': typeof ResumeRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills': typeof SkillsRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/experience': typeof ExperienceRoute
   '/projects': typeof ProjectsRoute
   '/research': typeof ResearchRoute
+  '/resume': typeof ResumeRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills': typeof SkillsRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/experience': typeof ExperienceRoute
   '/projects': typeof ProjectsRoute
   '/research': typeof ResearchRoute
+  '/resume': typeof ResumeRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills': typeof SkillsRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/experience'
     | '/projects'
     | '/research'
+    | '/resume'
     | '/sitemap.xml'
     | '/skills'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/experience'
     | '/projects'
     | '/research'
+    | '/resume'
     | '/sitemap.xml'
     | '/skills'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/experience'
     | '/projects'
     | '/research'
+    | '/resume'
     | '/sitemap.xml'
     | '/skills'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   ExperienceRoute: typeof ExperienceRoute
   ProjectsRoute: typeof ProjectsRoute
   ResearchRoute: typeof ResearchRoute
+  ResumeRoute: typeof ResumeRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SkillsRoute: typeof SkillsRoute
 }
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resume': {
+      id: '/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof ResumeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/research': {
@@ -202,9 +222,20 @@ const rootRouteChildren: RootRouteChildren = {
   ExperienceRoute: ExperienceRoute,
   ProjectsRoute: ProjectsRoute,
   ResearchRoute: ResearchRoute,
+  ResumeRoute: ResumeRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SkillsRoute: SkillsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

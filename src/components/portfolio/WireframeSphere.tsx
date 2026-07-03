@@ -97,6 +97,11 @@ export function WireframeSphere() {
     const DAMPING = 9;
 
     const draw = (now: number) => {
+      if (document.body.classList.contains("fx-off")) {
+        ctx.clearRect(0, 0, w, h);
+        raf = requestAnimationFrame(draw);
+        return;
+      }
       const elapsed = (now - start) / 1000;
       const dt = Math.min(0.05, (now - lastT) / 1000);
       lastT = now;
@@ -135,13 +140,17 @@ export function WireframeSphere() {
         };
       });
 
+      // Get current theme accent color dynamically
+      const accentColor = window.getComputedStyle(canvas).getPropertyValue("--accent").trim() || "oklch(0.82 0.18 235)";
+
       // edges
+      ctx.strokeStyle = accentColor;
       for (const [a, b] of edges) {
         const pa = proj[a], pb = proj[b];
         const zAvg = (pa.z + pb.z) / 2;
         const front = (zAvg + 1) / 2; // 0..1
         const alpha = 0.08 + front * 0.35;
-        ctx.strokeStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
+        ctx.globalAlpha = alpha;
         ctx.lineWidth = 0.6 + front * 0.4;
         ctx.beginPath();
         ctx.moveTo(pa.x, pa.y);
@@ -150,14 +159,18 @@ export function WireframeSphere() {
       }
 
       // vertex dots
+      ctx.fillStyle = accentColor;
       for (const p of proj) {
         const front = (p.z + 1) / 2;
         const a = 0.15 + front * 0.55;
-        ctx.fillStyle = `rgba(255,255,255,${a.toFixed(3)})`;
+        ctx.globalAlpha = a;
         ctx.beginPath();
         ctx.arc(p.x, p.y, 1.1 + front * 0.7, 0, Math.PI * 2);
         ctx.fill();
       }
+      
+      // Reset alpha
+      ctx.globalAlpha = 1.0;
 
       raf = requestAnimationFrame(draw);
     };

@@ -1,30 +1,15 @@
-import { useEffect, useState } from "react";
+interface FXToggleProps {
+  on: boolean;
+  onToggle: () => void;
+}
 
-const KEY = "fx-enabled";
-
-export function FXToggle() {
-  const [on, setOn] = useState(true);
-
-  useEffect(() => {
-    const stored = localStorage.getItem(KEY);
-    const enabled = stored === null ? true : stored === "1";
-    setOn(enabled);
-    document.body.classList.toggle("fx-off", !enabled);
-  }, []);
-
-  const toggle = () => {
-    const next = !on;
-    setOn(next);
-    localStorage.setItem(KEY, next ? "1" : "0");
-    document.body.classList.toggle("fx-off", !next);
-  };
-
+export function FXToggle({ on, onToggle }: FXToggleProps) {
   return (
     <button
-      onClick={toggle}
+      onClick={onToggle}
       aria-pressed={on}
       title="Toggle glitch & chromatic aberration"
-      className="hidden md:flex items-center gap-2 px-3 py-1.5 border border-border text-muted-foreground hover:text-foreground hover:border-accent transition font-mono text-[11px] tracking-[0.18em]"
+      className="flex items-center gap-2 px-3 py-1.5 border border-border text-muted-foreground hover:text-foreground hover:border-accent transition font-mono text-[11px] tracking-[0.18em]"
     >
       <span>FX</span>
       <span

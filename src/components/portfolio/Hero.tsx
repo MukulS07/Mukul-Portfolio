@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import portrait from "@/assets/portrait.jpg";
+import { ProjectVideo } from "./ProjectVideo";
+import { Link } from "@tanstack/react-router";
 
 const roles = [
   "Security Engineer",
@@ -9,8 +11,8 @@ const roles = [
 ];
 
 const stats: { label: string; value: string }[] = [
-  { label: "LINES OF CODE", value: "1.2M+" },
-  { label: "CGPA", value: "8.41" },
+  { label: "LINES OF CODE", value: "1.5K" },
+  { label: "CGPA", value: "7.25" },
   { label: "GITHUB REPOS", value: "24" },
   { label: "AWS SERVICES", value: "10+" },
 ];
@@ -125,11 +127,34 @@ function Radar() {
 
 export function Hero() {
   const [roleIdx, setRoleIdx] = useState(0);
+  const [repoCount, setRepoCount] = useState("24");
+
   useEffect(() => {
     const id = setInterval(() => setRoleIdx((i) => (i + 1) % roles.length), 2200);
     return () => clearInterval(id);
   }, []);
+
+  useEffect(() => {
+    fetch("https://api.github.com/users/mukulsharmams007")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && typeof data.public_repos === "number") {
+          setRepoCount(String(data.public_repos));
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch GitHub repos count:", err);
+      });
+  }, []);
+
   const commits = useCountUp(412);
+
+  const dynamicStats = [
+    { label: "LINES OF CODE", value: "1.5K" },
+    { label: "CGPA", value: "7.25" },
+    { label: "GITHUB REPOS", value: repoCount },
+    { label: "AWS SERVICES", value: "10+" },
+  ];
 
   return (
     <section id="home" className="relative">
@@ -137,34 +162,73 @@ export function Hero() {
         {/* ROW 1: Identity + stats */}
         <div className="grid lg:grid-cols-12 gap-px bg-border border border-border">
           {/* Identity card */}
-          <div className="lg:col-span-8 bg-background p-6 sm:p-10 grid sm:grid-cols-5 gap-6 sm:gap-10 items-start">
-            <div className="sm:col-span-3">
-              <div className="font-mono text-[10px] tracking-[0.28em] text-muted-foreground">
-                IDENTITY · 01
+          <div className="lg:col-span-8 bg-background p-6 sm:p-10 grid sm:grid-cols-5 gap-6 sm:gap-10 items-start relative overflow-hidden group/shield-identity">
+
+
+            <div className="sm:col-span-3 z-10">
+              <div className="font-mono text-[10px] tracking-[0.28em] text-muted-foreground flex justify-between">
+                <span>IDENTITY · 01</span>
+                <span className="hidden avengers-shield-title text-accent font-semibold">S.H.I.E.L.D. AGENT ACCESS</span>
               </div>
               <h1 className="mt-8 font-serif-display text-foreground leading-[0.92] text-6xl sm:text-7xl lg:text-[88px]">
                 Mukul
                 <br />
                 <span className="pl-10">Sharma<span className="text-accent">.</span></span>
               </h1>
-              <div className="mt-12 font-mono text-[10px] tracking-[0.28em] text-muted-foreground">
-                CURRENTLY
+              <div className="font-mono text-[10px] tracking-[0.28em] text-muted-foreground mt-12 flex justify-between">
+                <span>CURRENTLY</span>
+                <span className="hidden avengers-clearance text-destructive font-bold">CLEARANCE: LEVEL 10</span>
               </div>
               <div className="mt-2 font-mono text-sm text-foreground">
                 {roles[roleIdx]}
                 <span className="text-accent animate-cursor">▌</span>
               </div>
+
+              {/* Bio & HUD Telemetry block to fill vertical empty space */}
+              <p className="mt-8 font-mono text-[11px] leading-relaxed text-muted-foreground max-w-sm tracking-wide">
+                Specializing in secure cloud infrastructure, threat modeling, and building intelligent IoT hardware. 
+                Bridging the gap between cyber security protocols and embedded physical systems.
+              </p>
+
+              <div className="mt-8 grid grid-cols-2 gap-y-4 gap-x-6 border-t border-border/40 pt-6 max-w-sm font-mono text-[10px] tracking-wider text-muted-foreground">
+                <div>
+                  <span className="text-accent">// LOCATION</span>
+                  <div className="text-foreground mt-0.5">JAIPUR, INDIA</div>
+                </div>
+                <div>
+                  <span className="text-accent">// SYSTEM_STATUS</span>
+                  <div className="text-foreground mt-0.5 flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
+                    ONLINE
+                  </div>
+                </div>
+                <div>
+                  <span className="text-accent">// CORE_STACK</span>
+                  <div className="text-foreground mt-0.5">PYTHON / AWS / TS</div>
+                </div>
+                <div>
+                  <span className="text-accent">// DISCIPLINE</span>
+                  <div className="text-foreground mt-0.5">DEVSECOPS / IOT</div>
+                </div>
+              </div>
             </div>
 
             {/* Portrait card */}
-            <div className="sm:col-span-2">
-              <div className="border border-border bg-background p-3 max-w-[260px] mx-auto sm:ml-auto">
+            <div className="sm:col-span-2 z-10 w-full">
+              <div className="border border-border bg-background p-3 max-w-[260px] mx-auto sm:ml-auto relative group/shield-card overflow-hidden">
+                {/* Red/Gold laser scanner sweep overlay */}
+                <div className="absolute left-3 right-3 top-3 bottom-12 pointer-events-none overflow-hidden z-20 hidden avengers-scan-line">
+                  <div className="w-full h-[3px] bg-accent shadow-[0_0_12px_var(--accent)] animate-scanner-sweep" />
+                </div>
+
                 <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground mb-2">
                   <span className="flex items-center gap-1.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-                    <span className="text-accent">LIVE</span>
+                    <span className="text-accent normal-live-text">LIVE</span>
+                    <span className="text-accent hidden avengers-active-text">ACTIVE_ID</span>
                   </span>
-                  <span>OP · 01</span>
+                  <span className="normal-op-text">OP · 01</span>
+                  <span className="hidden avengers-id-text">AGENT // SH-99182</span>
                 </div>
                 <div className="relative aspect-[4/5] overflow-hidden bg-surface">
                   <img
@@ -174,9 +238,11 @@ export function Hero() {
                     height={896}
                     className="h-full w-full object-cover grayscale contrast-[1.05]"
                   />
+
                 </div>
-                <div className="mt-2 font-mono text-[10px] tracking-[0.22em] text-muted-foreground text-right">
-                  MS · 2026
+                <div className="mt-2 font-mono text-[10px] tracking-[0.22em] text-muted-foreground text-right flex justify-between items-center">
+                  <span className="hidden avengers-level-text text-accent font-bold">CLASSIFIED</span>
+                  <span className="normal-level-text w-full text-right">MS · 2026</span>
                 </div>
               </div>
             </div>
@@ -184,7 +250,7 @@ export function Hero() {
 
           {/* Stats column */}
           <div className="lg:col-span-4 grid grid-cols-2 gap-px bg-border">
-            {stats.map((s) => (
+            {dynamicStats.map((s) => (
               <div key={s.label} className="bg-background">
                 <StatTile {...s} />
               </div>
@@ -207,6 +273,9 @@ export function Hero() {
               <div className="font-mono text-xs text-muted-foreground mt-1">
                 AI-IoT Landslide Prediction Platform
               </div>
+              
+              <ProjectVideo src="/videooutput/My Video.mp4" title="EcoGeoGuard" />
+
               <div className="mt-4 flex flex-wrap gap-1.5 font-mono text-[11px]">
                 {["Python", "AWS Lambda", "DynamoDB", "LoRa", "Next.js"].map((t) => (
                   <span key={t} className="px-2 py-0.5 border border-border text-muted-foreground">{t}</span>
@@ -332,9 +401,9 @@ export function Hero() {
             <a href="#projects" className="mt-5 border border-foreground bg-foreground text-background py-4 px-3 font-mono text-[11px] tracking-[0.22em] flex items-center justify-between hover:opacity-90">
               <span>VIEW<br />WORK</span><span>→</span>
             </a>
-            <a href="/cv.pdf" className="mt-2 border border-border py-4 px-3 font-mono text-[11px] tracking-[0.22em] text-foreground hover:border-foreground">
-              DOWNLOAD<br />CV
-            </a>
+            <Link to="/resume" className="mt-2 border border-border py-4 px-3 font-mono text-[11px] tracking-[0.22em] text-foreground hover:border-foreground block text-left">
+              VIEW<br />RESUME
+            </Link>
             <div className="mt-2 border border-border py-4 px-3 font-mono text-[11px] tracking-[0.22em] text-muted-foreground flex items-center justify-between">
               <span>⌘ COMMAND<br />PALETTE</span><span className="text-foreground">⌘K</span>
             </div>

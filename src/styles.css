@@ -118,38 +118,195 @@
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.02 0.01 250);
+  --foreground: oklch(0.95 0.02 230);
+  --panel: oklch(0.04 0.02 250);
+  --surface: oklch(0.08 0.03 250);
+  --dim: oklch(0.42 0.05 230);
+  --card: oklch(0.05 0.02 250);
+  --card-foreground: oklch(0.95 0.02 230);
+  --popover: oklch(0.05 0.02 250);
+  --popover-foreground: oklch(0.95 0.02 230);
+  --primary: oklch(0.88 0.14 230);
+  --primary-foreground: oklch(0.05 0.02 250);
+  --secondary: oklch(0.10 0.03 250);
+  --secondary-foreground: oklch(0.95 0.02 230);
+  --muted: oklch(0.10 0.03 250);
+  --muted-foreground: oklch(0.66 0.06 230);
+  --accent: oklch(0.82 0.18 235);
+  --accent-foreground: oklch(0.05 0.02 250);
+  --destructive: oklch(0.65 0.26 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.82 0.18 235 / 0.18);
+  --input: oklch(0.82 0.18 235 / 0.22);
+  --ring: oklch(0.82 0.18 235);
+  --cyan-accent: oklch(0.88 0.14 230);
+  --green-live: oklch(0.82 0.18 235);
+  --amber-warn: oklch(0.84 0.18 85);
+  --sidebar: oklch(0.17 0.018 250);
+  --sidebar-foreground: oklch(0.93 0.015 240);
+  --sidebar-primary: oklch(0.82 0.16 210);
+  --sidebar-primary-foreground: oklch(0.13 0.015 250);
+  --sidebar-accent: oklch(0.22 0.02 250);
+  --sidebar-accent-foreground: oklch(0.93 0.015 240);
+}
+
+body.avengers {
+  --background: oklch(0.02 0.01 20);
+  --foreground: oklch(0.95 0.05 85);
+  --card: oklch(0.06 0.02 20);
+  --panel: oklch(0.05 0.02 20);
+  --surface: oklch(0.08 0.03 20);
+  --accent: oklch(0.84 0.18 85); /* Stark Arc-Reactor Gold */
+  --border: oklch(0.84 0.18 85 / 0.22);
+  --input: oklch(0.84 0.18 85 / 0.15);
+  --ring: oklch(0.84 0.18 85);
+  --green-live: oklch(0.84 0.18 85);
+  --cyan-accent: oklch(0.84 0.18 85);
+  --dim: oklch(0.48 0.06 85);
+  --muted-foreground: oklch(0.72 0.04 85);
+  
+  /* Iron Man Crimson highlights */
+  --destructive: oklch(0.62 0.23 25);
+  --destructive-foreground: oklch(0.98 0.02 25);
+
+  /* Deep Stark metallic red vignette */
+  background: radial-gradient(circle at center, oklch(0.07 0.02 25), oklch(0.02 0.01 20)) !important;
+}
+
+/* Concentric rotating Stark HUD circles behind all elements */
+body.avengers::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: 90vw;
+  max-width: 900px;
+  max-height: 900px;
+  border: 2px dashed oklch(0.84 0.18 85 / 0.05);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -9;
+  animation: spin-slow 22s linear infinite;
+}
+
+body.avengers::after {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: 60vw;
+  max-width: 600px;
+  max-height: 600px;
+  border: 1px double oklch(0.62 0.23 25 / 0.06);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -9;
+  animation: spin-reverse 14s linear infinite;
+}
+
+@keyframes spin-slow {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+/* Speed up core background grid animations */
+body.avengers .grid-bg-animated {
+  animation: grid-drift 10s linear infinite !important;
+}
+
+body.avengers .animate-scan-sweep {
+  animation: scan-sweep 4.5s linear infinite !important;
+}
+
+body.avengers .animate-orb-a {
+  animation: orb-float-a 9s ease-in-out infinite !important;
+}
+
+body.avengers .animate-orb-b {
+  animation: orb-float-b 12s ease-in-out infinite !important;
+}
+
+body.avengers .holo::after {
+  animation: holo-flicker 1.6s ease-in-out infinite !important;
+}
+
+/* Stark Reactor pulse on main title headers */
+body.avengers h1 {
+  text-shadow: 0 0 15px oklch(0.84 0.18 85 / 0.25);
+  animation: avengers-text-pulse 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes avengers-text-pulse {
+  0% { opacity: 0.95; filter: drop-shadow(0 0 2px var(--accent)); }
+  100% { opacity: 1; filter: drop-shadow(0 0 10px var(--accent)); }
+}
+
+/* Gentle pulse on all cards/panels */
+body.avengers .glass-panel,
+body.avengers .border-border,
+body.avengers article {
+  animation: avengers-border-pulse 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes avengers-border-pulse {
+  0% { border-color: oklch(0.84 0.18 85 / 0.12); }
+  100% { border-color: oklch(0.84 0.18 85 / 0.35); box-shadow: 0 0 12px oklch(0.84 0.18 85 / 0.04); }
+}
+
+/* Translucent console-style glass panels */
+body.avengers .glass-panel {
+  background: rgba(15, 10, 10, 0.6) !important;
+  border-color: oklch(0.84 0.18 85 / 0.25) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6), inset 0 0 12px oklch(0.62 0.23 25 / 0.1) !important;
+}
+
+/* Stark HUD themed inputs */
+body.avengers input,
+body.avengers textarea,
+body.avengers select {
+  background-color: rgba(15, 10, 10, 0.75) !important;
+  border: 1px solid oklch(0.84 0.18 85 / 0.25) !important;
+  border-radius: 4px !important;
+  color: oklch(0.95 0.05 85) !important;
+  box-shadow: inset 0 0 8px oklch(0.62 0.23 25 / 0.15) !important;
+  font-family: var(--font-mono) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+body.avengers input:focus,
+body.avengers textarea:focus,
+body.avengers select:focus {
+  outline: none !important;
+  border-color: oklch(0.84 0.18 85) !important;
+  box-shadow: 
+    0 0 15px oklch(0.84 0.18 85 / 0.25), 
+    inset 0 0 8px oklch(0.62 0.23 25 / 0.25) !important;
+  background-color: rgba(25, 12, 12, 0.85) !important;
+}
+
+/* Cyberpunk-diagnostic glowing form buttons */
+body.avengers button[type="submit"],
+body.avengers .bg-accent {
+  background-color: var(--accent) !important;
+  color: oklch(0.05 0.02 250) !important;
+  box-shadow: 0 0 15px oklch(0.84 0.18 85 / 0.35) !important;
+  transition: all 0.2s ease-out !important;
+}
+
+body.avengers button[type="submit"]:hover,
+body.avengers .bg-accent:hover {
+  box-shadow: 0 0 25px oklch(0.84 0.18 85 / 0.55) !important;
+  transform: scale(1.02);
 }
 
 @layer base {
@@ -377,6 +534,11 @@ body.fx-off .chroma { animation: none !important; text-shadow: none !important; 
 body.fx-off .glitch::before,
 body.fx-off .glitch::after { content: none !important; animation: none !important; }
 body.fx-off .reveal.in-view { animation: reveal-up 0.7s cubic-bezier(.2,.7,.2,1) both !important; }
+body.fx-off .grid-bg-animated { animation: none !important; }
+body.fx-off .animate-orb-a,
+body.fx-off .animate-orb-b,
+body.fx-off .animate-scan-sweep { animation: none !important; display: none !important; }
+body.fx-off canvas { display: none !important; }
 
 /* ---------- Star Wars hologram flicker overlay ---------- */
 @keyframes holo-flicker {
@@ -404,4 +566,324 @@ body.fx-off .reveal.in-view { animation: reveal-up 0.7s cubic-bezier(.2,.7,.2,1)
   }
 }
 body.fx-off .holo::after { display: none !important; }
+
+/* ---------- Video Player Overlays ---------- */
+@utility bg-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    rgba(0, 0, 0, 0.4) 2px,
+    rgba(0, 0, 0, 0.4) 4px
+  );
+}
+
+@utility bg-radial-vignette {
+  background: radial-gradient(
+    circle,
+    transparent 50%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@utility animate-fade-in {
+  animation: fade-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ---------- S.H.I.E.L.D. ID Card Custom Elements ---------- */
+@keyframes shield-scanner-sweep {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(220px); }
+}
+
+body.avengers .animate-scanner-sweep {
+  animation: shield-scanner-sweep 3s ease-in-out infinite;
+}
+
+body.avengers .avengers-scan-line { display: block !important; }
+body.avengers .avengers-level-text { display: inline-block !important; }
+body.avengers .normal-level-text { display: none !important; }
+body.avengers .avengers-watermark { display: block !important; }
+body.avengers .avengers-shield-title { display: inline-block !important; }
+body.avengers .avengers-clearance { display: inline-block !important; }
+body.avengers .normal-live-text { display: none !important; }
+body.avengers .avengers-active-text { display: inline-block !important; }
+body.avengers .normal-op-text { display: none !important; }
+body.avengers .avengers-id-text { display: inline-block !important; }
+
+/* ---------- Section-wise Avengers Theme Overrides ---------- */
+
+/* Global section setups */
+body.avengers section.reveal {
+  position: relative !important;
+  overflow: hidden !important;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 1. ABOUT SECTION: Captain America Theme */
+body.avengers #about {
+  --accent: oklch(0.70 0.15 240); /* Captain America Blue */
+  --border: oklch(0.70 0.15 240 / 0.25);
+  --ring: oklch(0.70 0.15 240);
+  background: radial-gradient(circle at center, oklch(0.06 0.03 240), oklch(0.02 0.01 20)) !important;
+}
+
+body.avengers #about::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  border: 12px double oklch(0.62 0.23 25 / 0.1); /* Patriot Red ring */
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(0.70 0.15 240 / 0.04) 40%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  box-shadow: 0 0 50px oklch(0.70 0.15 240 / 0.05);
+}
+
+body.avengers #about::after {
+  content: "★";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 80px;
+  color: oklch(0.95 0.05 240 / 0.06);
+  pointer-events: none;
+  z-index: 0;
+  text-shadow: 0 0 25px oklch(0.95 0.05 240 / 0.15);
+}
+
+/* Patriot red-white-blue gradient border for Cap's terminal card */
+body.avengers #about .hover-glow {
+  border-image: linear-gradient(135deg, oklch(0.62 0.23 25 / 0.6), oklch(0.95 0.05 85 / 0.6), oklch(0.70 0.15 240 / 0.6)) 1 !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 0 10px oklch(0.70 0.15 240 / 0.05) !important;
+}
+
+
+/* 2. EXPERIENCE & SKILLS SECTIONS: Thor Theme */
+body.avengers #experience,
+body.avengers #skills {
+  --accent: oklch(0.80 0.18 200); /* Lightning Cyan-Blue */
+  --border: oklch(0.80 0.18 200 / 0.25);
+  --ring: oklch(0.80 0.18 200);
+  background: radial-gradient(circle at center, oklch(0.06 0.03 200), oklch(0.02 0.01 20)) !important;
+}
+
+@keyframes lightning-flash {
+  0%, 93%, 97%, 100% { opacity: 0.02; filter: brightness(1); }
+  94%, 96% { opacity: 0.22; filter: brightness(2.2) drop-shadow(0 0 25px oklch(0.80 0.18 200)); }
+  95% { opacity: 0.05; }
+}
+
+body.avengers #experience::before,
+body.avengers #skills::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, oklch(0.80 0.18 200 / 0.15) 50%, transparent 60%);
+  background-size: 200% 200%;
+  pointer-events: none;
+  z-index: 0;
+  animation: lightning-flash 6s ease-in-out infinite;
+}
+
+body.avengers #experience .hover-glow:hover,
+body.avengers #skills .hover-glow:hover {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 20px oklch(0.80 0.18 200 / 0.3) !important;
+}
+
+
+/* 3. PROJECTS & RESEARCH SECTIONS: Hulk / Gamma Radiation Theme */
+body.avengers #projects,
+body.avengers #research {
+  --accent: oklch(0.85 0.22 140); /* Radioactive Gamma Green */
+  --border: oklch(0.85 0.22 140 / 0.25);
+  --ring: oklch(0.85 0.22 140);
+  background: radial-gradient(circle at center, oklch(0.06 0.03 140), oklch(0.02 0.01 20)) !important;
+}
+
+body.avengers #projects::before,
+body.avengers #research::before {
+  content: "⚠️ RADIATION HAZARD // CORE PROTOCOL ACTIVE";
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  color: oklch(0.85 0.22 140 / 0.4);
+  pointer-events: none;
+  z-index: 5;
+  animation: text-blink-slow 1.5s steps(2) infinite;
+}
+
+@keyframes text-blink-slow {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.8; }
+}
+
+body.avengers #projects .hover-glow,
+body.avengers #research .hover-glow {
+  background: rgba(10, 15, 10, 0.6) !important;
+  border-color: oklch(0.85 0.22 140 / 0.22) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.65), inset 0 0 15px oklch(0.85 0.22 140 / 0.08) !important;
+}
+
+body.avengers #projects .hover-glow:hover,
+body.avengers #research .hover-glow:hover {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 25px oklch(0.85 0.22 140 / 0.35) !important;
+}
+
+
+/* 4. CONTACT SECTION: Iron Man / Stark Secure Theme */
+body.avengers #contact {
+  --accent: oklch(0.84 0.18 85); /* Stark Gold */
+  --border: oklch(0.84 0.18 85 / 0.25);
+  --ring: oklch(0.84 0.18 85);
+  background: radial-gradient(circle at center, oklch(0.06 0.03 25), oklch(0.02 0.01 20)) !important;
+}
+
+body.avengers #contact::before {
+  content: "STARK COMMUNICATIONS NET // TRACE SECURE";
+  position: absolute;
+  bottom: 20px;
+  left: 25px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  color: oklch(0.84 0.18 85 / 0.45);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* 5. RESUME SECTION: Black Widow / Nick Fury Stealth S.H.I.E.L.D. Theme */
+body.avengers #resume-page {
+  --accent: oklch(0.75 0.05 250); /* Sleek Silver/Chrome */
+  --border: oklch(0.75 0.05 250 / 0.22);
+  --ring: oklch(0.75 0.05 250);
+  background: radial-gradient(circle at center, oklch(0.08 0.01 250), oklch(0.02 0.01 20)) !important;
+}
+
+body.avengers #resume-page::before {
+  content: "S.H.I.E.L.D. SECURE DATABASE // CLEARANCE LEVEL 10 ACCESS";
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  color: oklch(0.75 0.05 250 / 0.45);
+  pointer-events: none;
+  z-index: 5;
+}
+
+body.avengers #resume-page .hover-glow {
+  background: rgba(15, 15, 15, 0.6) !important;
+  border-image: linear-gradient(135deg, oklch(0.75 0.05 250 / 0.6), oklch(0.62 0.23 25 / 0.3), oklch(0.75 0.05 250 / 0.6)) 1 !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.65), inset 0 0 15px oklch(0.75 0.05 250 / 0.08) !important;
+}
+
+/* ---------- Print Styles for Resume ---------- */
+@media print {
+  /* Reset document for printing */
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: "Inter", sans-serif !important;
+    font-size: 10.5pt !important;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Hide interactive/ambient components */
+  header, footer, nav, button,
+  .no-print, .print-hide,
+  .telemetry-hud, .hud-frame, .cursor-spotlight,
+  .background-fx, .wireframe-sphere,
+  #loading-screen, .loading-screen {
+    display: none !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* Unset grid background and neon colors */
+  * {
+    background: transparent !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    border-color: #d1d5db !important;
+  }
+
+  /* Ensure page breaks avoid breaking inside sections */
+  .resume-section {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin-bottom: 12pt !important;
+  }
+
+  .page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
+  /* Format links to be subtle and standard */
+  a {
+    text-decoration: none !important;
+    color: #000000 !important;
+    border-bottom: 1px dotted #000000 !important;
+  }
+
+  /* Force print background graphics off */
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ---------- Satellite Earth Drift Animation ---------- */
+@keyframes earth-drift {
+  0% {
+    transform: scale(1.0) translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.16) translate(-3%, -1.5%) rotate(2deg);
+  }
+  100% {
+    transform: scale(1.0) translate(0, 0) rotate(0deg);
+  }
+}
+
+.animate-earth-drift {
+  animation: earth-drift 18s ease-in-out infinite !important;
+  will-change: transform;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(-50%, -50%) translateY(0px) rotate(-15deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-6px) rotate(-12deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) translateY(0px) rotate(-15deg);
+  }
+}
+
+
 
