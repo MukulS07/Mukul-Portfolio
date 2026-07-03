@@ -8,7 +8,8 @@ export function CursorSpotlight() {
     let raf = 0;
     let tx = window.innerWidth / 2;
     let ty = window.innerHeight / 2;
-    let x = tx, y = ty;
+    let x = tx,
+      y = ty;
     const onMove = (e: PointerEvent) => {
       tx = e.clientX;
       ty = e.clientY;

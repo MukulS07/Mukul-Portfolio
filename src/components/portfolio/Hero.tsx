@@ -3,12 +3,7 @@ import portrait from "@/assets/portrait.jpg";
 import { ProjectVideo } from "./ProjectVideo";
 import { Link } from "@tanstack/react-router";
 
-const roles = [
-  "Security Engineer",
-  "Cloud Architect",
-  "AI/IoT Builder",
-  "Full-Stack Developer",
-];
+const roles = ["Security Engineer", "Cloud Architect", "AI/IoT Builder", "Full-Stack Developer"];
 
 const stats: { label: string; value: string }[] = [
   { label: "LINES OF CODE", value: "1.5K" },
@@ -18,17 +13,64 @@ const stats: { label: string; value: string }[] = [
 ];
 
 const ticker = [
-  "Python", "AWS Lambda", "DynamoDB", "Next.js", "Node.js", "React",
-  "Flutter", "Unity 6", "C#", "IAM", "CI/CD", "MongoDB", "Figma",
-  "Salesforce", "IoT", "LoRa", "TypeScript", "Express", "MySQL", "Blender",
+  "Python",
+  "AWS Lambda",
+  "DynamoDB",
+  "Next.js",
+  "Node.js",
+  "React",
+  "Flutter",
+  "Unity 6",
+  "C#",
+  "IAM",
+  "CI/CD",
+  "MongoDB",
+  "Figma",
+  "Salesforce",
+  "IoT",
+  "LoRa",
+  "TypeScript",
+  "Express",
+  "MySQL",
+  "Blender",
 ];
 
 const events: { t: string; tag: string; tagColor: string; msg: string; note: string }[] = [
-  { t: "06:53:01", tag: "DESIGN", tagColor: "text-accent", msg: "iter  portfolio · v2", note: "+cockpit +grid" },
-  { t: "06:52:59", tag: "CI",     tagColor: "text-amber-warn", msg: "pass  ecogeoguard#218", note: "12 checks ✓" },
-  { t: "06:52:43", tag: "AWS",    tagColor: "text-foreground", msg: "deploy lambda · landslide-risk", note: "rt 0.18s" },
-  { t: "06:51:10", tag: "AI",     tagColor: "text-muted-foreground", msg: "infer ml-pipeline-v3", note: "f1 0.94" },
-  { t: "06:48:02", tag: "IOT",    tagColor: "text-accent", msg: "ingest node-187 telemetry", note: "ok" },
+  {
+    t: "06:53:01",
+    tag: "DESIGN",
+    tagColor: "text-accent",
+    msg: "iter  portfolio · v2",
+    note: "+cockpit +grid",
+  },
+  {
+    t: "06:52:59",
+    tag: "CI",
+    tagColor: "text-amber-warn",
+    msg: "pass  ecogeoguard#218",
+    note: "12 checks ✓",
+  },
+  {
+    t: "06:52:43",
+    tag: "AWS",
+    tagColor: "text-foreground",
+    msg: "deploy lambda · landslide-risk",
+    note: "rt 0.18s",
+  },
+  {
+    t: "06:51:10",
+    tag: "AI",
+    tagColor: "text-muted-foreground",
+    msg: "infer ml-pipeline-v3",
+    note: "f1 0.94",
+  },
+  {
+    t: "06:48:02",
+    tag: "IOT",
+    tagColor: "text-accent",
+    msg: "ingest node-187 telemetry",
+    note: "ok",
+  },
 ];
 
 function useCountUp(target: number, duration = 1400) {
@@ -51,9 +93,7 @@ function useCountUp(target: number, duration = 1400) {
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
     <div className="border border-border p-5 sm:p-6 min-h-[110px] flex flex-col justify-between">
-      <div className="text-[10px] tracking-[0.22em] text-muted-foreground font-mono">
-        {label}
-      </div>
+      <div className="text-[10px] tracking-[0.22em] text-muted-foreground font-mono">{label}</div>
       <div className="font-serif-display text-4xl sm:text-5xl text-foreground leading-none">
         {value}
       </div>
@@ -84,9 +124,24 @@ function GithubHeatmap() {
 
 function Radar() {
   // Mock proficiency radar inspired by the reference
-  const axes = ["PY", "AWS", "TS", "C#", "JAVA", "NEXT", "REACT", "DOCKER", "IOT", "ML", "MONGO", "FLUTTER"];
+  const axes = [
+    "PY",
+    "AWS",
+    "TS",
+    "C#",
+    "JAVA",
+    "NEXT",
+    "REACT",
+    "DOCKER",
+    "IOT",
+    "ML",
+    "MONGO",
+    "FLUTTER",
+  ];
   const vals = [0.95, 0.9, 0.8, 0.7, 0.65, 0.85, 0.8, 0.55, 0.7, 0.75, 0.7, 0.6];
-  const cx = 110, cy = 110, R = 90;
+  const cx = 110,
+    cy = 110,
+    R = 90;
   const pts = vals.map((v, i) => {
     const a = (i / axes.length) * Math.PI * 2 - Math.PI / 2;
     return [cx + Math.cos(a) * R * v, cy + Math.sin(a) * R * v] as const;
@@ -95,16 +150,39 @@ function Radar() {
   return (
     <svg viewBox="0 0 220 220" className="w-full max-w-[260px]">
       {[0.25, 0.5, 0.75, 1].map((s) => (
-        <circle key={s} cx={cx} cy={cy} r={R * s} fill="none" stroke="currentColor" className="text-white/10" strokeWidth={1} />
+        <circle
+          key={s}
+          cx={cx}
+          cy={cy}
+          r={R * s}
+          fill="none"
+          stroke="currentColor"
+          className="text-white/10"
+          strokeWidth={1}
+        />
       ))}
       {axes.map((_, i) => {
         const a = (i / axes.length) * Math.PI * 2 - Math.PI / 2;
         return (
-          <line key={i} x1={cx} y1={cy} x2={cx + Math.cos(a) * R} y2={cy + Math.sin(a) * R}
-            stroke="currentColor" className="text-white/10" strokeWidth={1} />
+          <line
+            key={i}
+            x1={cx}
+            y1={cy}
+            x2={cx + Math.cos(a) * R}
+            y2={cy + Math.sin(a) * R}
+            stroke="currentColor"
+            className="text-white/10"
+            strokeWidth={1}
+          />
         );
       })}
-      <path d={path} fill="currentColor" className="text-accent/20" stroke="currentColor" strokeWidth={1.25}>
+      <path
+        d={path}
+        fill="currentColor"
+        className="text-accent/20"
+        stroke="currentColor"
+        strokeWidth={1.25}
+      >
         <animate attributeName="opacity" values="0.55;1;0.55" dur="4s" repeatCount="indefinite" />
       </path>
       {pts.map(([x, y], i) => (
@@ -115,8 +193,15 @@ function Radar() {
         const lx = cx + Math.cos(a) * (R + 14);
         const ly = cy + Math.sin(a) * (R + 14);
         return (
-          <text key={label} x={lx} y={ly} fontSize={8} textAnchor="middle" dominantBaseline="middle"
-            className="fill-muted-foreground font-mono">
+          <text
+            key={label}
+            x={lx}
+            y={ly}
+            fontSize={8}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            className="fill-muted-foreground font-mono"
+          >
             {label}
           </text>
         );
@@ -163,21 +248,25 @@ export function Hero() {
         <div className="grid lg:grid-cols-12 gap-px bg-border border border-border">
           {/* Identity card */}
           <div className="lg:col-span-8 bg-background p-6 sm:p-10 grid sm:grid-cols-5 gap-6 sm:gap-10 items-start relative overflow-hidden group/shield-identity">
-
-
             <div className="sm:col-span-3 z-10">
               <div className="font-mono text-[10px] tracking-[0.28em] text-muted-foreground flex justify-between">
                 <span>IDENTITY · 01</span>
-                <span className="hidden avengers-shield-title text-accent font-semibold">S.H.I.E.L.D. AGENT ACCESS</span>
+                <span className="hidden avengers-shield-title text-accent font-semibold">
+                  S.H.I.E.L.D. AGENT ACCESS
+                </span>
               </div>
               <h1 className="mt-8 font-serif-display text-foreground leading-[0.92] text-6xl sm:text-7xl lg:text-[88px]">
                 Mukul
                 <br />
-                <span className="pl-10">Sharma<span className="text-accent">.</span></span>
+                <span className="pl-10">
+                  Sharma<span className="text-accent">.</span>
+                </span>
               </h1>
               <div className="font-mono text-[10px] tracking-[0.28em] text-muted-foreground mt-12 flex justify-between">
                 <span>CURRENTLY</span>
-                <span className="hidden avengers-clearance text-destructive font-bold">CLEARANCE: LEVEL 10</span>
+                <span className="hidden avengers-clearance text-destructive font-bold">
+                  CLEARANCE: LEVEL 10
+                </span>
               </div>
               <div className="mt-2 font-mono text-sm text-foreground">
                 {roles[roleIdx]}
@@ -186,8 +275,9 @@ export function Hero() {
 
               {/* Bio & HUD Telemetry block to fill vertical empty space */}
               <p className="mt-8 font-mono text-[11px] leading-relaxed text-muted-foreground max-w-sm tracking-wide">
-                Specializing in secure cloud infrastructure, threat modeling, and building intelligent IoT hardware. 
-                Bridging the gap between cyber security protocols and embedded physical systems.
+                Specializing in secure cloud infrastructure, threat modeling, and building
+                intelligent IoT hardware. Bridging the gap between cyber security protocols and
+                embedded physical systems.
               </p>
 
               <div className="mt-8 grid grid-cols-2 gap-y-4 gap-x-6 border-t border-border/40 pt-6 max-w-sm font-mono text-[10px] tracking-wider text-muted-foreground">
@@ -238,10 +328,11 @@ export function Hero() {
                     height={896}
                     className="h-full w-full object-cover grayscale contrast-[1.05]"
                   />
-
                 </div>
                 <div className="mt-2 font-mono text-[10px] tracking-[0.22em] text-muted-foreground text-right flex justify-between items-center">
-                  <span className="hidden avengers-level-text text-accent font-bold">CLASSIFIED</span>
+                  <span className="hidden avengers-level-text text-accent font-bold">
+                    CLASSIFIED
+                  </span>
                   <span className="normal-level-text w-full text-right">MS · 2026</span>
                 </div>
               </div>
@@ -266,19 +357,21 @@ export function Hero() {
                   BUILDING
                 </span>
               </div>
-              <div className="mt-4 font-mono text-xs text-muted-foreground">~/projects/ecogeoguard-v2</div>
-              <div className="mt-2 font-serif-display text-2xl text-foreground">
-                EcoGeoGuard
+              <div className="mt-4 font-mono text-xs text-muted-foreground">
+                ~/projects/ecogeoguard-v2
               </div>
+              <div className="mt-2 font-serif-display text-2xl text-foreground">EcoGeoGuard</div>
               <div className="font-mono text-xs text-muted-foreground mt-1">
                 AI-IoT Landslide Prediction Platform
               </div>
-              
+
               <ProjectVideo src="/videooutput/My Video.mp4" title="EcoGeoGuard" />
 
               <div className="mt-4 flex flex-wrap gap-1.5 font-mono text-[11px]">
                 {["Python", "AWS Lambda", "DynamoDB", "LoRa", "Next.js"].map((t) => (
-                  <span key={t} className="px-2 py-0.5 border border-border text-muted-foreground">{t}</span>
+                  <span key={t} className="px-2 py-0.5 border border-border text-muted-foreground">
+                    {t}
+                  </span>
                 ))}
               </div>
             </div>
@@ -299,7 +392,9 @@ export function Hero() {
             <tbody>
               {events.map((e, i) => (
                 <tr key={i} className="border-b border-border last:border-0">
-                  <td className="px-5 sm:px-6 py-2.5 text-muted-foreground w-28 tabular-nums">{e.t}</td>
+                  <td className="px-5 sm:px-6 py-2.5 text-muted-foreground w-28 tabular-nums">
+                    {e.t}
+                  </td>
                   <td className={`py-2.5 w-20 ${e.tagColor}`}>{e.tag}</td>
                   <td className="py-2.5 text-foreground">{e.msg}</td>
                   <td className="px-5 sm:px-6 py-2.5 text-muted-foreground text-right">{e.note}</td>
@@ -398,17 +493,37 @@ export function Hero() {
             <div className="font-mono text-[10px] tracking-[0.22em] text-muted-foreground text-center">
               MAKE A MOVE
             </div>
-            <a href="#projects" className="mt-5 border border-foreground bg-foreground text-background py-4 px-3 font-mono text-[11px] tracking-[0.22em] flex items-center justify-between hover:opacity-90">
-              <span>VIEW<br />WORK</span><span>→</span>
+            <a
+              href="#projects"
+              className="mt-5 border border-foreground bg-foreground text-background py-4 px-3 font-mono text-[11px] tracking-[0.22em] flex items-center justify-between hover:opacity-90"
+            >
+              <span>
+                VIEW
+                <br />
+                WORK
+              </span>
+              <span>→</span>
             </a>
-            <Link to="/resume" className="mt-2 border border-border py-4 px-3 font-mono text-[11px] tracking-[0.22em] text-foreground hover:border-foreground block text-left">
-              VIEW<br />RESUME
+            <Link
+              to="/resume"
+              className="mt-2 border border-border py-4 px-3 font-mono text-[11px] tracking-[0.22em] text-foreground hover:border-foreground block text-left"
+            >
+              VIEW
+              <br />
+              RESUME
             </Link>
             <div className="mt-2 border border-border py-4 px-3 font-mono text-[11px] tracking-[0.22em] text-muted-foreground flex items-center justify-between">
-              <span>⌘ COMMAND<br />PALETTE</span><span className="text-foreground">⌘K</span>
+              <span>
+                ⌘ COMMAND
+                <br />
+                PALETTE
+              </span>
+              <span className="text-foreground">⌘K</span>
             </div>
             <div className="mt-auto pt-6 font-mono text-[10px] tracking-[0.22em] text-dim text-center">
-              ↓ SCROLL FOR<br/>THE LONG FORM
+              ↓ SCROLL FOR
+              <br />
+              THE LONG FORM
             </div>
           </div>
         </div>

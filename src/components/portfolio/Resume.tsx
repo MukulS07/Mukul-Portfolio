@@ -85,32 +85,43 @@ export function Resume() {
             <div>
               <ul className="space-y-1.5 text-xs text-muted-foreground print:text-black print:text-[9pt]">
                 <li>
-                  <strong className="text-foreground print:text-black">Cyber Security:</strong> Network Security, IAM, Cloud Security (AWS), Secure Architecture, Ethical Hacking (learning)
+                  <strong className="text-foreground print:text-black">Cyber Security:</strong>{" "}
+                  Network Security, IAM, Cloud Security (AWS), Secure Architecture, Ethical Hacking
+                  (learning)
                 </li>
                 <li>
-                  <strong className="text-foreground print:text-black">AI & ML:</strong> ML Algorithms, AI-IoT, LLM/GenAI APIs, Prompt Engineering
+                  <strong className="text-foreground print:text-black">AI & ML:</strong> ML
+                  Algorithms, AI-IoT, LLM/GenAI APIs, Prompt Engineering
                 </li>
                 <li>
-                  <strong className="text-foreground print:text-black">Mobile & UX:</strong> Flutter (AI-integrated apps), UI/UX Design, Figma
+                  <strong className="text-foreground print:text-black">Mobile & UX:</strong> Flutter
+                  (AI-integrated apps), UI/UX Design, Figma
                 </li>
                 <li>
-                  <strong className="text-foreground print:text-black">Languages:</strong> Python (primary), Java, C, C++
+                  <strong className="text-foreground print:text-black">Languages:</strong> Python
+                  (primary), Java, C, C++
                 </li>
               </ul>
             </div>
             <div>
               <ul className="space-y-1.5 text-xs text-muted-foreground print:text-black print:text-[9pt]">
                 <li>
-                  <strong className="text-foreground print:text-black">Cloud & DevOps:</strong> AWS (Lambda, DynamoDB, API Gateway, Amplify, SNS, SQS, Step Functions, CodePipeline, CloudWatch, IAM), CI/CD, NGINX
+                  <strong className="text-foreground print:text-black">Cloud & DevOps:</strong> AWS
+                  (Lambda, DynamoDB, API Gateway, Amplify, SNS, SQS, Step Functions, CodePipeline,
+                  CloudWatch, IAM), CI/CD, NGINX
                 </li>
                 <li>
-                  <strong className="text-foreground print:text-black">Web / Backend:</strong> Node.js, React, Next.js, Express.js, MongoDB Atlas, MySQL
+                  <strong className="text-foreground print:text-black">Web / Backend:</strong>{" "}
+                  Node.js, React, Next.js, Express.js, MongoDB Atlas, MySQL
                 </li>
                 <li>
-                  <strong className="text-foreground print:text-black">Tools:</strong> Git, GitHub, VS Code, IntelliJ, Salesforce CLI, Unity 3D, Blender
+                  <strong className="text-foreground print:text-black">Tools:</strong> Git, GitHub,
+                  VS Code, IntelliJ, Salesforce CLI, Unity 3D, Blender
                 </li>
                 <li>
-                  <strong className="text-foreground print:text-black">Soft Skills:</strong> Problem-Solving, Team Leadership, Project Management, Adaptability, Logical Thinking
+                  <strong className="text-foreground print:text-black">Soft Skills:</strong>{" "}
+                  Problem-Solving, Team Leadership, Project Management, Adaptability, Logical
+                  Thinking
                 </li>
               </ul>
             </div>
@@ -133,14 +144,27 @@ export function Resume() {
                   Jun 2026 – Present
                 </span>
               </div>
-              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">Personal Project</p>
+              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">
+                Personal Project
+              </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
-                <li>Developed a full-stack AI-powered inventory management platform for SMEs featuring inventory tracking, purchase management, supplier records, and analytics dashboards.</li>
-                <li>Integrated AI-assisted demand prediction, smart stock alerts, automated service reminders, and weather-aware notifications using cloud APIs.</li>
-                <li>Implemented secure authentication, responsive UI, REST APIs, and scalable backend architecture with cloud deployment support.</li>
+                <li>
+                  Developed a full-stack AI-powered inventory management platform for SMEs featuring
+                  inventory tracking, purchase management, supplier records, and analytics
+                  dashboards.
+                </li>
+                <li>
+                  Integrated AI-assisted demand prediction, smart stock alerts, automated service
+                  reminders, and weather-aware notifications using cloud APIs.
+                </li>
+                <li>
+                  Implemented secure authentication, responsive UI, REST APIs, and scalable backend
+                  architecture with cloud deployment support.
+                </li>
               </ul>
               <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS, Firebase, REST APIs
+                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, Node.js,
+                Express.js, MongoDB Atlas, Python, AWS, Firebase, REST APIs
               </div>
             </div>
 
@@ -154,14 +178,29 @@ export function Resume() {
                   Apr 2026 – Present
                 </span>
               </div>
-              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">Academic Project</p>
+              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">
+                Academic Project
+              </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
-                <li>Designed and developed a full-stack web platform that delivers AI-powered landslide risk prediction, smart farming insights, real-time weather updates, and government scheme recommendations for farmers and local communities.</li>
-                <li>Built secure authentication, interactive dashboards, AI chatbot assistance, live sensor data visualization, and cloud-based APIs to provide actionable recommendations and emergency alerts.</li>
-                <li>Developed a scalable cloud architecture with responsive UI, real-time data processing, and modular backend services to support future IoT device integration and predictive analytics.</li>
+                <li>
+                  Designed and developed a full-stack web platform that delivers AI-powered
+                  landslide risk prediction, smart farming insights, real-time weather updates, and
+                  government scheme recommendations for farmers and local communities.
+                </li>
+                <li>
+                  Built secure authentication, interactive dashboards, AI chatbot assistance, live
+                  sensor data visualization, and cloud-based APIs to provide actionable
+                  recommendations and emergency alerts.
+                </li>
+                <li>
+                  Developed a scalable cloud architecture with responsive UI, real-time data
+                  processing, and modular backend services to support future IoT device integration
+                  and predictive analytics.
+                </li>
               </ul>
               <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS, Firebase, REST APIs, AI/ML
+                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, Node.js,
+                Express.js, MongoDB Atlas, Python, AWS, Firebase, REST APIs, AI/ML
               </div>
             </div>
 
@@ -178,14 +217,29 @@ export function Resume() {
                   Dec 2025 – May 2026
                 </span>
               </div>
-              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">Personal Research Project</p>
+              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">
+                Personal Research Project
+              </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
-                <li>Designed and built an end-to-end AI-IoT system that predicts landslides and monitors agricultural parameters using real-time multi-sensor data fusion through an ML pipeline.</li>
-                <li>Engineered real-time alert delivery via SMS, mobile app, and physical alarms; handled edge computing on hardware and cloud processing on AWS (Lambda, DynamoDB, API Gateway).</li>
-                <li>Research paper accepted at DASGRI Congress 2026 — first experience writing and submitting a peer-reviewed paper, learning to structure experiments and results clearly.</li>
+                <li>
+                  Designed and built an end-to-end AI-IoT system that predicts landslides and
+                  monitors agricultural parameters using real-time multi-sensor data fusion through
+                  an ML pipeline.
+                </li>
+                <li>
+                  Engineered real-time alert delivery via SMS, mobile app, and physical alarms;
+                  handled edge computing on hardware and cloud processing on AWS (Lambda, DynamoDB,
+                  API Gateway).
+                </li>
+                <li>
+                  Research paper accepted at DASGRI Congress 2026 — first experience writing and
+                  submitting a peer-reviewed paper, learning to structure experiments and results
+                  clearly.
+                </li>
               </ul>
               <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> Python, ML Algorithms, AWS (Lambda, DynamoDB, API Gateway), IoT, LoRa/GSM
+                <strong className="text-accent print:text-black">// Tech:</strong> Python, ML
+                Algorithms, AWS (Lambda, DynamoDB, API Gateway), IoT, LoRa/GSM
               </div>
             </div>
 
@@ -199,13 +253,24 @@ export function Resume() {
                   Feb 2025
                 </span>
               </div>
-              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">Personal Cloud Project</p>
+              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">
+                Personal Cloud Project
+              </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
-                <li>Built a complete serverless web app from scratch — Lambda for backend logic, DynamoDB for storage, Amplify for the frontend, Step Functions for workflow automation.</li>
-                <li>Implemented SNS/SQS for async messaging, established a CI/CD pipeline via CodePipeline, and applied IAM least-privilege policies with CloudWatch observability dashboards.</li>
+                <li>
+                  Built a complete serverless web app from scratch — Lambda for backend logic,
+                  DynamoDB for storage, Amplify for the frontend, Step Functions for workflow
+                  automation.
+                </li>
+                <li>
+                  Implemented SNS/SQS for async messaging, established a CI/CD pipeline via
+                  CodePipeline, and applied IAM least-privilege policies with CloudWatch
+                  observability dashboards.
+                </li>
               </ul>
               <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> AWS (10+ services), Node.js, Python, Linux, NGINX, Apache
+                <strong className="text-accent print:text-black">// Tech:</strong> AWS (10+
+                services), Node.js, Python, Linux, NGINX, Apache
               </div>
             </div>
 
@@ -219,13 +284,22 @@ export function Resume() {
                   Sep 2024
                 </span>
               </div>
-              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">Smart India Hackathon</p>
+              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">
+                Smart India Hackathon
+              </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
-                <li>Built an immersive VR experience for learning about medicinal plants — botanical names, habitats, cultivation, and medicinal uses — as part of a hackathon team.</li>
-                <li>Developed a full Node.js/Express/MongoDB Atlas backend deployed on Vercel via Next.js; learned Unity 3D and Oculus SDK under hackathon time pressure.</li>
+                <li>
+                  Built an immersive VR experience for learning about medicinal plants — botanical
+                  names, habitats, cultivation, and medicinal uses — as part of a hackathon team.
+                </li>
+                <li>
+                  Developed a full Node.js/Express/MongoDB Atlas backend deployed on Vercel via
+                  Next.js; learned Unity 3D and Oculus SDK under hackathon time pressure.
+                </li>
               </ul>
               <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, Node.js, Express.js, MongoDB Atlas, Unity 3D, Blender, Oculus SDK, Vercel
+                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, Node.js,
+                Express.js, MongoDB Atlas, Unity 3D, Blender, Oculus SDK, Vercel
               </div>
             </div>
           </div>
@@ -246,7 +320,8 @@ export function Resume() {
               </span>
             </div>
             <p className="text-xs text-muted-foreground mt-1 print:text-black print:text-[9pt]">
-              Mukul Sharma et al. · <span className="text-accent print:text-black">Accepted at DASGRI Congress 2026</span>
+              Mukul Sharma et al. ·{" "}
+              <span className="text-accent print:text-black">Accepted at DASGRI Congress 2026</span>
             </p>
           </div>
         </section>
@@ -262,12 +337,23 @@ export function Resume() {
                 <span className="text-foreground font-semibold print:text-black print:text-[9.5pt]">
                   DevOps with Cloud Computing Using AWS Services
                 </span>
-                <span className="text-accent print:text-black print:font-normal">Jan 2025 – Feb 2025</span>
+                <span className="text-accent print:text-black print:font-normal">
+                  Jan 2025 – Feb 2025
+                </span>
               </div>
-              <p className="text-dim text-[11px] print:text-black print:text-[9pt] print:italic">Programming Pathsala</p>
+              <p className="text-dim text-[11px] print:text-black print:text-[9pt] print:italic">
+                Programming Pathsala
+              </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-1 space-y-0.5 print:text-black print:text-[9pt]">
-                <li>Built and deployed a serverless website hands-on using 10+ AWS services including Lambda, Step Functions, DynamoDB, Amplify, SNS, SQS, CloudWatch, IAM, EventBridge, and CodePipeline.</li>
-                <li>Event-driven patterns learned here — Lambda triggers, SQS queues, Step Functions — directly shaped the architecture of the EcoGeoGuard cloud backend.</li>
+                <li>
+                  Built and deployed a serverless website hands-on using 10+ AWS services including
+                  Lambda, Step Functions, DynamoDB, Amplify, SNS, SQS, CloudWatch, IAM, EventBridge,
+                  and CodePipeline.
+                </li>
+                <li>
+                  Event-driven patterns learned here — Lambda triggers, SQS queues, Step Functions —
+                  directly shaped the architecture of the EcoGeoGuard cloud backend.
+                </li>
               </ul>
             </div>
 
@@ -276,12 +362,23 @@ export function Resume() {
                 <span className="text-foreground font-semibold print:text-black print:text-[9.5pt]">
                   Salesforce Developer Catalyst Plus
                 </span>
-                <span className="text-accent print:text-black print:font-normal">Jun 2025 – Jul 2025</span>
+                <span className="text-accent print:text-black print:font-normal">
+                  Jun 2025 – Jul 2025
+                </span>
               </div>
-              <p className="text-dim text-[11px] print:text-black print:text-[9pt] print:italic">Trailblazer Connect (Rank Mountaineer · 29 badges · 25225 points)</p>
+              <p className="text-dim text-[11px] print:text-black print:text-[9pt] print:italic">
+                Trailblazer Connect (Rank Mountaineer · 29 badges · 25225 points)
+              </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-1 space-y-0.5 print:text-black print:text-[9pt]">
-                <li>Completed the full Trailmix series covering Apex programming, Lightning Web Components (LWC), data modelling, and REST API integration with hands-on challenges throughout.</li>
-                <li>Gained experience with declarative automation tools — Flows, Process Builder, and Validation Rules — alongside the programmatic Apex development track.</li>
+                <li>
+                  Completed the full Trailmix series covering Apex programming, Lightning Web
+                  Components (LWC), data modelling, and REST API integration with hands-on
+                  challenges throughout.
+                </li>
+                <li>
+                  Gained experience with declarative automation tools — Flows, Process Builder, and
+                  Validation Rules — alongside the programmatic Apex development track.
+                </li>
               </ul>
             </div>
           </div>
@@ -331,7 +428,10 @@ export function Resume() {
               </span>
             </div>
             <p className="text-muted-foreground mt-2 print:text-black print:text-[9pt]">
-              Led a 20+ member student-run organisation under LPU's Department of Student Organisations — oversaw event planning, member management, and inter-department coordination. Developed leadership, communication, and organisational skills by managing diverse teams and representing the organisation at university-level events.
+              Led a 20+ member student-run organisation under LPU's Department of Student
+              Organisations — oversaw event planning, member management, and inter-department
+              coordination. Developed leadership, communication, and organisational skills by
+              managing diverse teams and representing the organisation at university-level events.
             </p>
           </div>
         </section>
@@ -352,8 +452,12 @@ export function Resume() {
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-accent print:text-black print:font-normal">Aug 2022 – Present</span>
-                <div className="text-dim text-[11px] print:text-black print:text-[9pt]">Punjab, India</div>
+                <span className="text-accent print:text-black print:font-normal">
+                  Aug 2022 – Present
+                </span>
+                <div className="text-dim text-[11px] print:text-black print:text-[9pt]">
+                  Punjab, India
+                </div>
               </div>
             </div>
 
@@ -367,8 +471,12 @@ export function Resume() {
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-accent print:text-black print:font-normal">April 2020 – March 2022</span>
-                <div className="text-dim text-[11px] print:text-black print:text-[9pt]">Bapu Nagar, Bhilwara</div>
+                <span className="text-accent print:text-black print:font-normal">
+                  April 2020 – March 2022
+                </span>
+                <div className="text-dim text-[11px] print:text-black print:text-[9pt]">
+                  Bapu Nagar, Bhilwara
+                </div>
               </div>
             </div>
           </div>

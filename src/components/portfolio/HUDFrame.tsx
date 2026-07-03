@@ -12,10 +12,7 @@ export function HUDFrame() {
         "bottom-3 left-3 border-l border-b",
         "bottom-3 right-3 border-r border-b",
       ].map((c) => (
-        <span
-          key={c}
-          className={`absolute h-4 w-4 border-foreground/40 ${c}`}
-        />
+        <span key={c} className={`absolute h-4 w-4 border-foreground/40 ${c}`} />
       ))}
 
       {/* top + bottom crosshair ticks */}

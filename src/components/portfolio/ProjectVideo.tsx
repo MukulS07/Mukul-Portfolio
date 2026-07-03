@@ -21,11 +21,14 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
     video.loop = true; // Enforce native looping property
 
     if (!isModalOpen) {
-      video.play().then(() => {
-        setIsPlaying(true);
-      }).catch(err => {
-        console.log("Autoplay pending interaction:", err);
-      });
+      video
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((err) => {
+          console.log("Autoplay pending interaction:", err);
+        });
     } else {
       video.pause();
       setIsPlaying(false);
@@ -45,11 +48,14 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
     const video = videoRef.current;
     if (video) {
       video.currentTime = 0;
-      video.play().then(() => {
-        setIsPlaying(true);
-      }).catch(err => {
-        console.log("Loop play failed:", err);
-      });
+      video
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((err) => {
+          console.log("Loop play failed:", err);
+        });
     }
   };
 
@@ -100,7 +106,7 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
     const video = modalVideoRef.current;
     if (video) {
       video.currentTime = 0;
-      video.play().catch(err => {
+      video.play().catch((err) => {
         console.log("Modal loop play failed:", err);
       });
     }
@@ -108,7 +114,7 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
 
   return (
     <>
-      <div 
+      <div
         className="mt-4 relative aspect-video border border-border bg-black/40 overflow-hidden group/video rounded-sm cursor-pointer hover:border-accent/40 transition-colors duration-300"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -116,10 +122,10 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
       >
         {/* Retro scanline effect (uses custom CSS class) */}
         <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-15 mix-blend-overlay z-10" />
-        
+
         {/* Glow vignette */}
         <div className="absolute inset-0 pointer-events-none bg-radial-vignette opacity-20 z-10" />
- 
+
         <video
           ref={videoRef}
           src={src}
@@ -134,8 +140,10 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
         {/* HUD top bar */}
         <div className="absolute top-0 inset-x-0 bg-black/75 px-3 py-1.5 flex justify-between items-center font-mono text-[9px] tracking-wider text-muted-foreground border-b border-border/40 z-20 transition-opacity duration-300 group-hover/video:opacity-100 opacity-80">
           <span className="flex items-center gap-1.5">
-            <span className={`h-1.5 w-1.5 rounded-full ${isPlaying ? 'bg-accent animate-pulse' : 'bg-amber-warn'}`} />
-            FEED // {isPlaying ? 'STREAMING' : 'STANDBY'}
+            <span
+              className={`h-1.5 w-1.5 rounded-full ${isPlaying ? "bg-accent animate-pulse" : "bg-amber-warn"}`}
+            />
+            FEED // {isPlaying ? "STREAMING" : "STANDBY"}
           </span>
           <span className="text-dim">REC.01 // {title.toUpperCase()}</span>
         </div>
@@ -175,11 +183,11 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
 
       {/* Cyberpunk Modal Player */}
       {isModalOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in"
           onClick={closeModal}
         >
-          <div 
+          <div
             className="relative w-full max-w-4xl border border-accent/30 bg-background shadow-[0_0_50px_rgba(var(--accent),0.1)] flex flex-col"
             onClick={(e) => e.stopPropagation()} // Prevent close on clicking inner content
           >
@@ -189,7 +197,7 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
                 <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
                 SYSTEM_FEED // {title.toUpperCase()} // RESOLUTION_1080P
               </span>
-              <button 
+              <button
                 onClick={closeModal}
                 className="text-muted-foreground hover:text-accent border border-border hover:border-accent/40 p-1 transition-colors"
                 aria-label="Close modal"

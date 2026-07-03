@@ -7,7 +7,10 @@ export const Route = createFileRoute("/research")({
       { title: "Research — Mukul Sharma" },
       { name: "description", content: "Published research: EcoGeoGuard at DASGRI Congress 2026." },
       { property: "og:title", content: "Research — Mukul Sharma" },
-      { property: "og:description", content: "DASGRI Congress 2026 — AI-IoT landslide prediction." },
+      {
+        property: "og:description",
+        content: "DASGRI Congress 2026 — AI-IoT landslide prediction.",
+      },
     ],
   }),
   component: () => <Research />,

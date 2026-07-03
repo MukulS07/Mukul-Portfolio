@@ -20,12 +20,15 @@ export function TelemetryHUD() {
 
   // FPS + spectrum
   useEffect(() => {
-    let raf = 0, frames = 0, last = performance.now();
+    let raf = 0,
+      frames = 0,
+      last = performance.now();
     const tick = (now: number) => {
       frames++;
       if (now - last >= 1000) {
         setFps(Math.round((frames * 1000) / (now - last)));
-        frames = 0; last = now;
+        frames = 0;
+        last = now;
       }
       const el = barsRef.current;
       if (el) {
@@ -113,9 +116,16 @@ export function TelemetryHUD() {
             <span className="tabular-nums">{fps}fps</span>
           </div>
           <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 tabular-nums text-muted-foreground">
-            <span>CUR</span><span className="text-foreground text-right">{coords.x.toString().padStart(4, "0")},{coords.y.toString().padStart(4, "0")}</span>
-            <span>SCR</span><span className="text-foreground text-right">{scroll.toString().padStart(3, "0")}%</span>
-            <span>RTE</span><span className="text-foreground text-right truncate">{route}</span>
+            <span>CUR</span>
+            <span className="text-foreground text-right">
+              {coords.x.toString().padStart(4, "0")},{coords.y.toString().padStart(4, "0")}
+            </span>
+            <span>SCR</span>
+            <span className="text-foreground text-right">
+              {scroll.toString().padStart(3, "0")}%
+            </span>
+            <span>RTE</span>
+            <span className="text-foreground text-right truncate">{route}</span>
           </div>
           <div className="mt-1.5 pt-1.5 border-t border-border space-y-0.5">
             {logs.map((l, i) => (

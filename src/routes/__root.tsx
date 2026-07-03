@@ -87,10 +87,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Mukul Sharma — Cyber Security · Cloud · AI/IoT Builder" },
-      { name: "description", content: "Portfolio of Mukul Sharma — B.Tech CSE (Cyber Security) at LPU. Published researcher, AWS cloud architect, builder of EcoGeoGuard & INVENTROX." },
+      {
+        name: "description",
+        content:
+          "Portfolio of Mukul Sharma — B.Tech CSE (Cyber Security) at LPU. Published researcher, AWS cloud architect, builder of EcoGeoGuard & INVENTROX.",
+      },
       { name: "author", content: "Mukul Sharma" },
       { property: "og:title", content: "Mukul Sharma — Cyber Security · Cloud · AI/IoT" },
-      { property: "og:description", content: "Builder of secure cloud-native systems. EcoGeoGuard, INVENTROX, DASGRI 2026 publication." },
+      {
+        property: "og:description",
+        content:
+          "Builder of secure cloud-native systems. EcoGeoGuard, INVENTROX, DASGRI 2026 publication.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

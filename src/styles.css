@@ -84,9 +84,9 @@
   --popover-foreground: oklch(0.95 0.02 230);
   --primary: oklch(0.88 0.14 230);
   --primary-foreground: oklch(0.05 0.02 250);
-  --secondary: oklch(0.10 0.03 250);
+  --secondary: oklch(0.1 0.03 250);
   --secondary-foreground: oklch(0.95 0.02 230);
-  --muted: oklch(0.10 0.03 250);
+  --muted: oklch(0.1 0.03 250);
   --muted-foreground: oklch(0.66 0.06 230);
   /* Lightsaber blue */
   --accent: oklch(0.82 0.18 235);
@@ -129,9 +129,9 @@
   --popover-foreground: oklch(0.95 0.02 230);
   --primary: oklch(0.88 0.14 230);
   --primary-foreground: oklch(0.05 0.02 250);
-  --secondary: oklch(0.10 0.03 250);
+  --secondary: oklch(0.1 0.03 250);
   --secondary-foreground: oklch(0.95 0.02 230);
-  --muted: oklch(0.10 0.03 250);
+  --muted: oklch(0.1 0.03 250);
   --muted-foreground: oklch(0.66 0.06 230);
   --accent: oklch(0.82 0.18 235);
   --accent-foreground: oklch(0.05 0.02 250);
@@ -165,13 +165,17 @@ body.avengers {
   --cyan-accent: oklch(0.84 0.18 85);
   --dim: oklch(0.48 0.06 85);
   --muted-foreground: oklch(0.72 0.04 85);
-  
+
   /* Iron Man Crimson highlights */
   --destructive: oklch(0.62 0.23 25);
   --destructive-foreground: oklch(0.98 0.02 25);
 
   /* Deep Stark metallic red vignette */
-  background: radial-gradient(circle at center, oklch(0.07 0.02 25), oklch(0.02 0.01 20)) !important;
+  background: radial-gradient(
+    circle at center,
+    oklch(0.07 0.02 25),
+    oklch(0.02 0.01 20)
+  ) !important;
 }
 
 /* Concentric rotating Stark HUD circles behind all elements */
@@ -210,13 +214,21 @@ body.avengers::after {
 }
 
 @keyframes spin-slow {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 @keyframes spin-reverse {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(-360deg); }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
 }
 
 /* Speed up core background grid animations */
@@ -247,8 +259,14 @@ body.avengers h1 {
 }
 
 @keyframes avengers-text-pulse {
-  0% { opacity: 0.95; filter: drop-shadow(0 0 2px var(--accent)); }
-  100% { opacity: 1; filter: drop-shadow(0 0 10px var(--accent)); }
+  0% {
+    opacity: 0.95;
+    filter: drop-shadow(0 0 2px var(--accent));
+  }
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px var(--accent));
+  }
 }
 
 /* Gentle pulse on all cards/panels */
@@ -259,15 +277,22 @@ body.avengers article {
 }
 
 @keyframes avengers-border-pulse {
-  0% { border-color: oklch(0.84 0.18 85 / 0.12); }
-  100% { border-color: oklch(0.84 0.18 85 / 0.35); box-shadow: 0 0 12px oklch(0.84 0.18 85 / 0.04); }
+  0% {
+    border-color: oklch(0.84 0.18 85 / 0.12);
+  }
+  100% {
+    border-color: oklch(0.84 0.18 85 / 0.35);
+    box-shadow: 0 0 12px oklch(0.84 0.18 85 / 0.04);
+  }
 }
 
 /* Translucent console-style glass panels */
 body.avengers .glass-panel {
   background: rgba(15, 10, 10, 0.6) !important;
   border-color: oklch(0.84 0.18 85 / 0.25) !important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6), inset 0 0 12px oklch(0.62 0.23 25 / 0.1) !important;
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.6),
+    inset 0 0 12px oklch(0.62 0.23 25 / 0.1) !important;
 }
 
 /* Stark HUD themed inputs */
@@ -288,8 +313,8 @@ body.avengers textarea:focus,
 body.avengers select:focus {
   outline: none !important;
   border-color: oklch(0.84 0.18 85) !important;
-  box-shadow: 
-    0 0 15px oklch(0.84 0.18 85 / 0.25), 
+  box-shadow:
+    0 0 15px oklch(0.84 0.18 85 / 0.25),
     inset 0 0 8px oklch(0.62 0.23 25 / 0.25) !important;
   background-color: rgba(25, 12, 12, 0.85) !important;
 }
@@ -320,7 +345,9 @@ body.avengers .bg-accent:hover {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @utility glass-panel {
@@ -331,8 +358,16 @@ body.avengers .bg-accent:hover {
 
 @utility grid-bg {
   background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--foreground) 3%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 3%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    );
   background-size: 64px 64px;
 }
 
@@ -367,8 +402,12 @@ body.avengers .bg-accent:hover {
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 @utility animate-marquee {
   animation: marquee 40s linear infinite;
@@ -378,16 +417,26 @@ body.avengers .bg-accent:hover {
 }
 
 @keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
 @utility animate-cursor {
   animation: blink 1s steps(1) infinite;
 }
 
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--green-live) 60%, transparent); }
-  100% { box-shadow: 0 0 0 14px color-mix(in oklab, var(--green-live) 0%, transparent); }
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--green-live) 60%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 14px color-mix(in oklab, var(--green-live) 0%, transparent);
+  }
 }
 @utility animate-pulse-ring {
   animation: pulse-ring 2s ease-out infinite;
@@ -395,77 +444,157 @@ body.avengers .bg-accent:hover {
 
 /* ---------- Ambient background motion ---------- */
 @keyframes grid-drift {
-  0%   { background-position: 0 0, 0 0; }
-  100% { background-position: 64px 64px, 64px 64px; }
+  0% {
+    background-position:
+      0 0,
+      0 0;
+  }
+  100% {
+    background-position:
+      64px 64px,
+      64px 64px;
+  }
 }
 @utility grid-bg-animated {
   background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--foreground) 4%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 4%, transparent) 1px, transparent 1px);
-  background-size: 64px 64px, 64px 64px;
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--foreground) 4%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--foreground) 4%, transparent) 1px,
+      transparent 1px
+    );
+  background-size:
+    64px 64px,
+    64px 64px;
   animation: grid-drift 22s linear infinite;
 }
 
 @keyframes orb-float-a {
-  0%, 100% { transform: translate3d(-10%, -10%, 0) scale(1); }
-  50%      { transform: translate3d(8%, 6%, 0) scale(1.15); }
+  0%,
+  100% {
+    transform: translate3d(-10%, -10%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(8%, 6%, 0) scale(1.15);
+  }
 }
 @keyframes orb-float-b {
-  0%, 100% { transform: translate3d(10%, 8%, 0) scale(1.1); }
-  50%      { transform: translate3d(-6%, -8%, 0) scale(0.95); }
+  0%,
+  100% {
+    transform: translate3d(10%, 8%, 0) scale(1.1);
+  }
+  50% {
+    transform: translate3d(-6%, -8%, 0) scale(0.95);
+  }
 }
-@utility animate-orb-a { animation: orb-float-a 18s ease-in-out infinite; }
-@utility animate-orb-b { animation: orb-float-b 24s ease-in-out infinite; }
+@utility animate-orb-a {
+  animation: orb-float-a 18s ease-in-out infinite;
+}
+@utility animate-orb-b {
+  animation: orb-float-b 24s ease-in-out infinite;
+}
 
 @keyframes scan-sweep {
-  0%   { transform: translateY(-30vh); opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { transform: translateY(120vh); opacity: 0; }
+  0% {
+    transform: translateY(-30vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120vh);
+    opacity: 0;
+  }
 }
-@utility animate-scan-sweep { animation: scan-sweep 9s linear infinite; }
+@utility animate-scan-sweep {
+  animation: scan-sweep 9s linear infinite;
+}
 
 @keyframes noise-shift {
-  0%   { transform: translate(0, 0); }
-  20%  { transform: translate(-4%, 2%); }
-  40%  { transform: translate(3%, -3%); }
-  60%  { transform: translate(-2%, 4%); }
-  80%  { transform: translate(4%, -2%); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-4%, 2%);
+  }
+  40% {
+    transform: translate(3%, -3%);
+  }
+  60% {
+    transform: translate(-2%, 4%);
+  }
+  80% {
+    transform: translate(4%, -2%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
-@utility animate-noise { animation: noise-shift 1.2s steps(6) infinite; }
+@utility animate-noise {
+  animation: noise-shift 1.2s steps(6) infinite;
+}
 
 /* ---------- Reveal on scroll ---------- */
 @keyframes reveal-up {
-  0%   { opacity: 0; transform: translateY(24px); filter: blur(6px); }
-  100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
-.reveal { opacity: 0; }
+.reveal {
+  opacity: 0;
+}
 .reveal.in-view {
-  animation: reveal-up 0.9s cubic-bezier(.2,.7,.2,1) both;
+  animation: reveal-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 /* ---------- Heatmap stagger pop ---------- */
 @keyframes cell-pop {
-  0%   { opacity: 0; transform: scale(.4); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 .heatmap-cell {
-  animation: cell-pop .5s cubic-bezier(.2,.8,.2,1) both;
+  animation: cell-pop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 /* ---------- Text shimmer ---------- */
 @keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 @utility text-shimmer {
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     var(--foreground) 0%,
     var(--foreground) 40%,
     color-mix(in oklab, var(--accent) 80%, var(--foreground)) 50%,
     var(--foreground) 60%,
-    var(--foreground) 100%);
+    var(--foreground) 100%
+  );
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -475,97 +604,180 @@ body.avengers .bg-accent:hover {
 
 /* ---------- Glow accent dot ---------- */
 @keyframes accent-pulse {
-  0%, 100% { text-shadow: 0 0 0 transparent; }
-  50%      { text-shadow: 0 0 18px color-mix(in oklab, var(--accent) 80%, transparent); }
+  0%,
+  100% {
+    text-shadow: 0 0 0 transparent;
+  }
+  50% {
+    text-shadow: 0 0 18px color-mix(in oklab, var(--accent) 80%, transparent);
+  }
 }
-@utility animate-accent-pulse { animation: accent-pulse 2.4s ease-in-out infinite; }
+@utility animate-accent-pulse {
+  animation: accent-pulse 2.4s ease-in-out infinite;
+}
 
 /* ---------- HUD scan beams ---------- */
 @keyframes scan-x {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 @keyframes scan-y {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
 }
-@utility animate-scan-x { animation: scan-x 6s linear infinite; }
-@utility animate-scan-y { animation: scan-y 11s linear infinite; }
+@utility animate-scan-x {
+  animation: scan-x 6s linear infinite;
+}
+@utility animate-scan-y {
+  animation: scan-y 11s linear infinite;
+}
 
 /* ---------- Glitch heading hover ---------- */
 @keyframes glitch-1 {
-  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
-  20%      { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 1px); }
-  40%      { clip-path: inset(50% 0 20% 0); transform: translate(2px, -1px); }
-  60%      { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 2px); }
-  80%      { clip-path: inset(70% 0 5% 0); transform: translate(1px, -2px); }
+  0%,
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-2px, 1px);
+  }
+  40% {
+    clip-path: inset(50% 0 20% 0);
+    transform: translate(2px, -1px);
+  }
+  60% {
+    clip-path: inset(10% 0 70% 0);
+    transform: translate(-1px, 2px);
+  }
+  80% {
+    clip-path: inset(70% 0 5% 0);
+    transform: translate(1px, -2px);
+  }
 }
 @utility glitch {
   position: relative;
-  &::before, &::after {
+  &::before,
+  &::after {
     content: attr(data-text);
-    position: absolute; inset: 0;
+    position: absolute;
+    inset: 0;
     pointer-events: none;
     opacity: 0;
-    transition: opacity .25s ease;
+    transition: opacity 0.25s ease;
   }
-  &:hover::before, &:hover::after { opacity: .9; }
-  &::before { color: color-mix(in oklab, var(--accent) 80%, white); transform: translate(1px, 0); mix-blend-mode: screen; }
-  &::after  { color: oklch(0.7 0.18 25); transform: translate(-1px, 0); mix-blend-mode: screen; }
-  &:hover::before { animation: glitch-1 1.2s steps(6) infinite; }
-  &:hover::after  { animation: glitch-1 1.6s steps(6) infinite reverse; }
+  &:hover::before,
+  &:hover::after {
+    opacity: 0.9;
+  }
+  &::before {
+    color: color-mix(in oklab, var(--accent) 80%, white);
+    transform: translate(1px, 0);
+    mix-blend-mode: screen;
+  }
+  &::after {
+    color: oklch(0.7 0.18 25);
+    transform: translate(-1px, 0);
+    mix-blend-mode: screen;
+  }
+  &:hover::before {
+    animation: glitch-1 1.2s steps(6) infinite;
+  }
+  &:hover::after {
+    animation: glitch-1 1.6s steps(6) infinite reverse;
+  }
 }
 
 /* ---------- Chromatic aberration ---------- */
 @keyframes chroma-drift {
-  0%, 100% { text-shadow:
+  0%,
+  100% {
+    text-shadow:
       -1px 0 0 color-mix(in oklab, oklch(0.7 0.22 25) 80%, transparent),
-       1px 0 0 color-mix(in oklab, oklch(0.78 0.18 195) 80%, transparent); }
-  50%      { text-shadow:
+      1px 0 0 color-mix(in oklab, oklch(0.78 0.18 195) 80%, transparent);
+  }
+  50% {
+    text-shadow:
       -2px 0 0 color-mix(in oklab, oklch(0.7 0.22 25) 80%, transparent),
-       2px 0 0 color-mix(in oklab, oklch(0.78 0.18 195) 80%, transparent); }
+      2px 0 0 color-mix(in oklab, oklch(0.78 0.18 195) 80%, transparent);
+  }
 }
 @utility chroma {
   animation: chroma-drift 4.5s ease-in-out infinite;
 }
 
 /* FX kill-switch: disables glitch + chromatic aberration site-wide. */
-body.fx-off .chroma { animation: none !important; text-shadow: none !important; }
+body.fx-off .chroma {
+  animation: none !important;
+  text-shadow: none !important;
+}
 body.fx-off .glitch::before,
-body.fx-off .glitch::after { content: none !important; animation: none !important; }
-body.fx-off .reveal.in-view { animation: reveal-up 0.7s cubic-bezier(.2,.7,.2,1) both !important; }
-body.fx-off .grid-bg-animated { animation: none !important; }
+body.fx-off .glitch::after {
+  content: none !important;
+  animation: none !important;
+}
+body.fx-off .reveal.in-view {
+  animation: reveal-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both !important;
+}
+body.fx-off .grid-bg-animated {
+  animation: none !important;
+}
 body.fx-off .animate-orb-a,
 body.fx-off .animate-orb-b,
-body.fx-off .animate-scan-sweep { animation: none !important; display: none !important; }
-body.fx-off canvas { display: none !important; }
+body.fx-off .animate-scan-sweep {
+  animation: none !important;
+  display: none !important;
+}
+body.fx-off canvas {
+  display: none !important;
+}
 
 /* ---------- Star Wars hologram flicker overlay ---------- */
 @keyframes holo-flicker {
-  0%, 100% { opacity: 0.10; }
-  45%      { opacity: 0.18; }
-  50%      { opacity: 0.04; }
-  55%      { opacity: 0.16; }
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  45% {
+    opacity: 0.18;
+  }
+  50% {
+    opacity: 0.04;
+  }
+  55% {
+    opacity: 0.16;
+  }
 }
 @utility holo {
   position: relative;
   &::after {
     content: "";
-    position: absolute; inset: 0;
+    position: absolute;
+    inset: 0;
     pointer-events: none;
-    background:
-      repeating-linear-gradient(
-        to bottom,
-        transparent 0,
-        transparent 2px,
-        color-mix(in oklab, var(--accent) 22%, transparent) 2px,
-        color-mix(in oklab, var(--accent) 22%, transparent) 3px
-      );
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 2px,
+      color-mix(in oklab, var(--accent) 22%, transparent) 2px,
+      color-mix(in oklab, var(--accent) 22%, transparent) 3px
+    );
     mix-blend-mode: screen;
     animation: holo-flicker 3.6s ease-in-out infinite;
   }
 }
-body.fx-off .holo::after { display: none !important; }
+body.fx-off .holo::after {
+  display: none !important;
+}
 
 /* ---------- Video Player Overlays ---------- */
 @utility bg-scanlines {
@@ -579,16 +791,18 @@ body.fx-off .holo::after { display: none !important; }
 }
 
 @utility bg-radial-vignette {
-  background: radial-gradient(
-    circle,
-    transparent 50%,
-    rgba(0, 0, 0, 0.6) 100%
-  );
+  background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.6) 100%);
 }
 
 @keyframes fade-in {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @utility animate-fade-in {
@@ -597,24 +811,49 @@ body.fx-off .holo::after { display: none !important; }
 
 /* ---------- S.H.I.E.L.D. ID Card Custom Elements ---------- */
 @keyframes shield-scanner-sweep {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(220px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(220px);
+  }
 }
 
 body.avengers .animate-scanner-sweep {
   animation: shield-scanner-sweep 3s ease-in-out infinite;
 }
 
-body.avengers .avengers-scan-line { display: block !important; }
-body.avengers .avengers-level-text { display: inline-block !important; }
-body.avengers .normal-level-text { display: none !important; }
-body.avengers .avengers-watermark { display: block !important; }
-body.avengers .avengers-shield-title { display: inline-block !important; }
-body.avengers .avengers-clearance { display: inline-block !important; }
-body.avengers .normal-live-text { display: none !important; }
-body.avengers .avengers-active-text { display: inline-block !important; }
-body.avengers .normal-op-text { display: none !important; }
-body.avengers .avengers-id-text { display: inline-block !important; }
+body.avengers .avengers-scan-line {
+  display: block !important;
+}
+body.avengers .avengers-level-text {
+  display: inline-block !important;
+}
+body.avengers .normal-level-text {
+  display: none !important;
+}
+body.avengers .avengers-watermark {
+  display: block !important;
+}
+body.avengers .avengers-shield-title {
+  display: inline-block !important;
+}
+body.avengers .avengers-clearance {
+  display: inline-block !important;
+}
+body.avengers .normal-live-text {
+  display: none !important;
+}
+body.avengers .avengers-active-text {
+  display: inline-block !important;
+}
+body.avengers .normal-op-text {
+  display: none !important;
+}
+body.avengers .avengers-id-text {
+  display: inline-block !important;
+}
 
 /* ---------- Section-wise Avengers Theme Overrides ---------- */
 
@@ -627,10 +866,14 @@ body.avengers section.reveal {
 
 /* 1. ABOUT SECTION: Captain America Theme */
 body.avengers #about {
-  --accent: oklch(0.70 0.15 240); /* Captain America Blue */
-  --border: oklch(0.70 0.15 240 / 0.25);
-  --ring: oklch(0.70 0.15 240);
-  background: radial-gradient(circle at center, oklch(0.06 0.03 240), oklch(0.02 0.01 20)) !important;
+  --accent: oklch(0.7 0.15 240); /* Captain America Blue */
+  --border: oklch(0.7 0.15 240 / 0.25);
+  --ring: oklch(0.7 0.15 240);
+  background: radial-gradient(
+    circle at center,
+    oklch(0.06 0.03 240),
+    oklch(0.02 0.01 20)
+  ) !important;
 }
 
 body.avengers #about::before {
@@ -643,10 +886,10 @@ body.avengers #about::before {
   height: 320px;
   border: 12px double oklch(0.62 0.23 25 / 0.1); /* Patriot Red ring */
   border-radius: 50%;
-  background: radial-gradient(circle, oklch(0.70 0.15 240 / 0.04) 40%, transparent 60%);
+  background: radial-gradient(circle, oklch(0.7 0.15 240 / 0.04) 40%, transparent 60%);
   pointer-events: none;
   z-index: 0;
-  box-shadow: 0 0 50px oklch(0.70 0.15 240 / 0.05);
+  box-shadow: 0 0 50px oklch(0.7 0.15 240 / 0.05);
 }
 
 body.avengers #about::after {
@@ -664,24 +907,47 @@ body.avengers #about::after {
 
 /* Patriot red-white-blue gradient border for Cap's terminal card */
 body.avengers #about .hover-glow {
-  border-image: linear-gradient(135deg, oklch(0.62 0.23 25 / 0.6), oklch(0.95 0.05 85 / 0.6), oklch(0.70 0.15 240 / 0.6)) 1 !important;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 0 10px oklch(0.70 0.15 240 / 0.05) !important;
+  border-image: linear-gradient(
+      135deg,
+      oklch(0.62 0.23 25 / 0.6),
+      oklch(0.95 0.05 85 / 0.6),
+      oklch(0.7 0.15 240 / 0.6)
+    )
+    1 !important;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    inset 0 0 10px oklch(0.7 0.15 240 / 0.05) !important;
 }
-
 
 /* 2. EXPERIENCE & SKILLS SECTIONS: Thor Theme */
 body.avengers #experience,
 body.avengers #skills {
-  --accent: oklch(0.80 0.18 200); /* Lightning Cyan-Blue */
-  --border: oklch(0.80 0.18 200 / 0.25);
-  --ring: oklch(0.80 0.18 200);
-  background: radial-gradient(circle at center, oklch(0.06 0.03 200), oklch(0.02 0.01 20)) !important;
+  --accent: oklch(0.8 0.18 200); /* Lightning Cyan-Blue */
+  --border: oklch(0.8 0.18 200 / 0.25);
+  --ring: oklch(0.8 0.18 200);
+  background: radial-gradient(
+    circle at center,
+    oklch(0.06 0.03 200),
+    oklch(0.02 0.01 20)
+  ) !important;
 }
 
 @keyframes lightning-flash {
-  0%, 93%, 97%, 100% { opacity: 0.02; filter: brightness(1); }
-  94%, 96% { opacity: 0.22; filter: brightness(2.2) drop-shadow(0 0 25px oklch(0.80 0.18 200)); }
-  95% { opacity: 0.05; }
+  0%,
+  93%,
+  97%,
+  100% {
+    opacity: 0.02;
+    filter: brightness(1);
+  }
+  94%,
+  96% {
+    opacity: 0.22;
+    filter: brightness(2.2) drop-shadow(0 0 25px oklch(0.8 0.18 200));
+  }
+  95% {
+    opacity: 0.05;
+  }
 }
 
 body.avengers #experience::before,
@@ -689,7 +955,12 @@ body.avengers #skills::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, transparent 40%, oklch(0.80 0.18 200 / 0.15) 50%, transparent 60%);
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    oklch(0.8 0.18 200 / 0.15) 50%,
+    transparent 60%
+  );
   background-size: 200% 200%;
   pointer-events: none;
   z-index: 0;
@@ -699,9 +970,8 @@ body.avengers #skills::before {
 body.avengers #experience .hover-glow:hover,
 body.avengers #skills .hover-glow:hover {
   border-color: var(--accent) !important;
-  box-shadow: 0 0 20px oklch(0.80 0.18 200 / 0.3) !important;
+  box-shadow: 0 0 20px oklch(0.8 0.18 200 / 0.3) !important;
 }
-
 
 /* 3. PROJECTS & RESEARCH SECTIONS: Hulk / Gamma Radiation Theme */
 body.avengers #projects,
@@ -709,7 +979,11 @@ body.avengers #research {
   --accent: oklch(0.85 0.22 140); /* Radioactive Gamma Green */
   --border: oklch(0.85 0.22 140 / 0.25);
   --ring: oklch(0.85 0.22 140);
-  background: radial-gradient(circle at center, oklch(0.06 0.03 140), oklch(0.02 0.01 20)) !important;
+  background: radial-gradient(
+    circle at center,
+    oklch(0.06 0.03 140),
+    oklch(0.02 0.01 20)
+  ) !important;
 }
 
 body.avengers #projects::before,
@@ -728,15 +1002,22 @@ body.avengers #research::before {
 }
 
 @keyframes text-blink-slow {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 body.avengers #projects .hover-glow,
 body.avengers #research .hover-glow {
   background: rgba(10, 15, 10, 0.6) !important;
   border-color: oklch(0.85 0.22 140 / 0.22) !important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.65), inset 0 0 15px oklch(0.85 0.22 140 / 0.08) !important;
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.65),
+    inset 0 0 15px oklch(0.85 0.22 140 / 0.08) !important;
 }
 
 body.avengers #projects .hover-glow:hover,
@@ -745,13 +1026,16 @@ body.avengers #research .hover-glow:hover {
   box-shadow: 0 0 25px oklch(0.85 0.22 140 / 0.35) !important;
 }
 
-
 /* 4. CONTACT SECTION: Iron Man / Stark Secure Theme */
 body.avengers #contact {
   --accent: oklch(0.84 0.18 85); /* Stark Gold */
   --border: oklch(0.84 0.18 85 / 0.25);
   --ring: oklch(0.84 0.18 85);
-  background: radial-gradient(circle at center, oklch(0.06 0.03 25), oklch(0.02 0.01 20)) !important;
+  background: radial-gradient(
+    circle at center,
+    oklch(0.06 0.03 25),
+    oklch(0.02 0.01 20)
+  ) !important;
 }
 
 body.avengers #contact::before {
@@ -772,7 +1056,11 @@ body.avengers #resume-page {
   --accent: oklch(0.75 0.05 250); /* Sleek Silver/Chrome */
   --border: oklch(0.75 0.05 250 / 0.22);
   --ring: oklch(0.75 0.05 250);
-  background: radial-gradient(circle at center, oklch(0.08 0.01 250), oklch(0.02 0.01 20)) !important;
+  background: radial-gradient(
+    circle at center,
+    oklch(0.08 0.01 250),
+    oklch(0.02 0.01 20)
+  ) !important;
 }
 
 body.avengers #resume-page::before {
@@ -790,14 +1078,23 @@ body.avengers #resume-page::before {
 
 body.avengers #resume-page .hover-glow {
   background: rgba(15, 15, 15, 0.6) !important;
-  border-image: linear-gradient(135deg, oklch(0.75 0.05 250 / 0.6), oklch(0.62 0.23 25 / 0.3), oklch(0.75 0.05 250 / 0.6)) 1 !important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.65), inset 0 0 15px oklch(0.75 0.05 250 / 0.08) !important;
+  border-image: linear-gradient(
+      135deg,
+      oklch(0.75 0.05 250 / 0.6),
+      oklch(0.62 0.23 25 / 0.3),
+      oklch(0.75 0.05 250 / 0.6)
+    )
+    1 !important;
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.65),
+    inset 0 0 15px oklch(0.75 0.05 250 / 0.08) !important;
 }
 
 /* ---------- Print Styles for Resume ---------- */
 @media print {
   /* Reset document for printing */
-  html, body {
+  html,
+  body {
     background: #ffffff !important;
     color: #000000 !important;
     font-family: "Inter", sans-serif !important;
@@ -809,11 +1106,19 @@ body.avengers #resume-page .hover-glow {
   }
 
   /* Hide interactive/ambient components */
-  header, footer, nav, button,
-  .no-print, .print-hide,
-  .telemetry-hud, .hud-frame, .cursor-spotlight,
-  .background-fx, .wireframe-sphere,
-  #loading-screen, .loading-screen {
+  header,
+  footer,
+  nav,
+  button,
+  .no-print,
+  .print-hide,
+  .telemetry-hud,
+  .hud-frame,
+  .cursor-spotlight,
+  .background-fx,
+  .wireframe-sphere,
+  #loading-screen,
+  .loading-screen {
     display: none !important;
     height: 0 !important;
     opacity: 0 !important;
@@ -858,13 +1163,13 @@ body.avengers #resume-page .hover-glow {
 /* ---------- Satellite Earth Drift Animation ---------- */
 @keyframes earth-drift {
   0% {
-    transform: scale(1.0) translate(0, 0) rotate(0deg);
+    transform: scale(1) translate(0, 0) rotate(0deg);
   }
   50% {
     transform: scale(1.16) translate(-3%, -1.5%) rotate(2deg);
   }
   100% {
-    transform: scale(1.0) translate(0, 0) rotate(0deg);
+    transform: scale(1) translate(0, 0) rotate(0deg);
   }
 }
 
@@ -884,6 +1189,3 @@ body.avengers #resume-page .hover-glow {
     transform: translate(-50%, -50%) translateY(0px) rotate(-15deg);
   }
 }
-
-
-

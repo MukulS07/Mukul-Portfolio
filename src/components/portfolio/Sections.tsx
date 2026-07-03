@@ -11,14 +11,12 @@ export function About() {
             <p>
               <span className="text-accent">$</span> whoami
             </p>
-            <p className="text-foreground">
-              Final-year B.Tech CSE (Cyber Security) @ LPU, Punjab.
-            </p>
+            <p className="text-foreground">Final-year B.Tech CSE (Cyber Security) @ LPU, Punjab.</p>
             <p className="text-muted-foreground">
               Published researcher — DASGRI Congress 2026. Built
-              <span className="text-accent"> EcoGeoGuard</span> (AI-IoT landslide
-              platform) and <span className="text-accent">INVENTROX</span> (AI
-              business OS for SMEs). Obsessed with secure, cloud-native systems.
+              <span className="text-accent"> EcoGeoGuard</span> (AI-IoT landslide platform) and{" "}
+              <span className="text-accent">INVENTROX</span> (AI business OS for SMEs). Obsessed
+              with secure, cloud-native systems.
             </p>
             <p className="text-muted-foreground">
               <span className="text-accent">$</span> focus
@@ -128,10 +126,7 @@ function Bars({ level }: { level: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <span
           key={i}
-          className={
-            "h-1.5 w-3 rounded-sm " +
-            (i < level ? "bg-accent" : "bg-white/10")
-          }
+          className={"h-1.5 w-3 rounded-sm " + (i < level ? "bg-accent" : "bg-white/10")}
         />
       ))}
     </div>
@@ -140,8 +135,17 @@ function Bars({ level }: { level: number }) {
 
 export function Skills() {
   const ticker = [
-    "Git", "GitHub", "VS Code", "IntelliJ", "Salesforce CLI", "Unity 3D",
-    "Blender", "Docker", "Linux", "Bash", "Postman",
+    "Git",
+    "GitHub",
+    "VS Code",
+    "IntelliJ",
+    "Salesforce CLI",
+    "Unity 3D",
+    "Blender",
+    "Docker",
+    "Linux",
+    "Bash",
+    "Postman",
   ];
   return (
     <Section id="skills" label="skills.json" title="// stack & arsenal">
@@ -266,27 +270,30 @@ export function Projects() {
     <Section id="projects" label="projects/" title="// shipped & in production">
       <div className="grid lg:grid-cols-2 gap-6">
         {projects.map((p) => (
-          <article key={p.num} className="border border-border bg-background group hover:border-accent/50 transition">
+          <article
+            key={p.num}
+            className="border border-border bg-background group hover:border-accent/50 transition"
+          >
             <header className="flex items-center justify-between px-5 py-3 border-b border-border font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
               <span>PROJECT · {p.num}</span>
-              <span className={"px-2 py-0.5 border text-[10px] tracking-[0.22em] " + statusColor[p.status]}>
+              <span
+                className={
+                  "px-2 py-0.5 border text-[10px] tracking-[0.22em] " + statusColor[p.status]
+                }
+              >
                 {p.status}
               </span>
             </header>
 
             <div className="p-5 sm:p-6">
-              <h3 className="font-sans text-xl font-semibold text-foreground">
-                {p.title}
-              </h3>
+              <h3 className="font-sans text-xl font-semibold text-foreground">{p.title}</h3>
               <div className="mt-1 font-mono text-xs text-muted-foreground">
                 {p.type} <span className="text-dim">·</span> {p.period}
               </div>
 
               <ProjectVideo src={p.video} title={p.title} />
 
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                {p.description}
-              </p>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
 
               {p.stats && (
                 <div className="mt-5 grid grid-cols-3 gap-2 font-mono text-xs">
@@ -351,22 +358,24 @@ export function Research() {
             <h3 className="mt-3 font-sans text-2xl sm:text-3xl font-semibold text-foreground leading-tight">
               EcoGeoGuard: AI-IoT Based Landslide Prediction and Smart Agriculture System
             </h3>
-            <p className="mt-3 font-mono text-sm text-muted-foreground">
-              Mukul Sharma et al.
-            </p>
+            <p className="mt-3 font-mono text-sm text-muted-foreground">Mukul Sharma et al.</p>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground max-w-xl">
-              A multi-sensor fusion approach combining LoRa-based IoT nodes with an
-              ML risk-scoring pipeline on AWS, delivering sub-3-minute landslide alerts
-              and dual-use smart agriculture telemetry.
+              A multi-sensor fusion approach combining LoRa-based IoT nodes with an ML risk-scoring
+              pipeline on AWS, delivering sub-3-minute landslide alerts and dual-use smart
+              agriculture telemetry.
             </p>
           </div>
           <div className="font-mono text-xs space-y-3">
             <div className="border border-border rounded-md p-3 bg-black/20">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">venue</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                venue
+              </div>
               <div className="mt-1 text-foreground">DASGRI Congress 2026</div>
             </div>
             <div className="border border-border rounded-md p-3 bg-black/20">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">status</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                status
+              </div>
               <div className="mt-1 text-accent">accepted · oral</div>
             </div>
           </div>
@@ -449,10 +458,7 @@ export function Experience() {
           </div>
           <ul className="space-y-2.5">
             {certs.map(([n, i, d]) => (
-              <li
-                key={n}
-                className="glass-panel p-3.5 flex items-center justify-between gap-3"
-              >
+              <li key={n} className="glass-panel p-3.5 flex items-center justify-between gap-3">
                 <div>
                   <div className="font-mono text-sm text-foreground">{n}</div>
                   <div className="font-mono text-[11px] text-muted-foreground">{i}</div>
@@ -474,15 +480,27 @@ export function Contact() {
         <div className="lg:col-span-3">
           <TerminalCard title="~/contact.sh" status="open to roles">
             <div className="font-mono text-sm space-y-1">
-              <Row k="email" v="mukulsharmaworks@gmail.com" href="mailto:mukulsharmaworks@gmail.com" />
-              <Row k="github" v="github.com/mukulsharmams007" href="https://github.com/mukulsharmams007" />
-              <Row k="linkedin" v="linkedin.com/in/mukul-sharma-514634214" href="https://www.linkedin.com/in/mukul-sharma-514634214/" />
+              <Row
+                k="email"
+                v="mukulsharmaworks@gmail.com"
+                href="mailto:mukulsharmaworks@gmail.com"
+              />
+              <Row
+                k="github"
+                v="github.com/mukulsharmams007"
+                href="https://github.com/mukulsharmams007"
+              />
+              <Row
+                k="linkedin"
+                v="linkedin.com/in/mukul-sharma-514634214"
+                href="https://www.linkedin.com/in/mukul-sharma-514634214/"
+              />
               <Row k="mobile" v="+91-7737360788" href="tel:+917737360788" />
               <Row k="location" v="Jaipur, IN · IST" />
             </div>
             <div className="mt-6 font-mono text-xs text-muted-foreground border-t border-border pt-4">
-              <span className="text-accent">$</span> echo "Available for full-time
-              roles in Cyber Security, Cloud, Full-Stack & AI/ML"
+              <span className="text-accent">$</span> echo "Available for full-time roles in Cyber
+              Security, Cloud, Full-Stack & AI/ML"
               <span className="text-accent animate-cursor">▌</span>
             </div>
           </TerminalCard>
@@ -542,7 +560,12 @@ function Row({ k, v, href }: { k: string; v: string; href?: string }) {
   const inner = (
     <div className="grid grid-cols-[115px_1fr] gap-4 py-2 px-3 -mx-3 rounded hover:bg-white/[0.03] transition-colors items-center group cursor-pointer">
       <span className="text-muted-foreground flex items-center gap-2 select-none">
-        {Icon && <Icon size={14} className="text-muted-foreground group-hover:text-accent transition-colors" />}
+        {Icon && (
+          <Icon
+            size={14}
+            className="text-muted-foreground group-hover:text-accent transition-colors"
+          />
+        )}
         <span>{k}</span>
       </span>
       <span className="text-foreground group-hover:text-accent transition-colors break-all font-mono">
@@ -552,7 +575,12 @@ function Row({ k, v, href }: { k: string; v: string; href?: string }) {
   );
 
   return href ? (
-    <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="block">
+    <a
+      href={href}
+      target={href.startsWith("http") ? "_blank" : undefined}
+      rel="noreferrer"
+      className="block"
+    >
       {inner}
     </a>
   ) : (
@@ -592,7 +620,8 @@ export function Footer() {
     <footer className="border-t border-border mt-10">
       <div className="mx-auto max-w-6xl px-4 py-8 flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-muted-foreground">
         <div>
-          <span className="text-accent">$</span> echo "© {new Date().getFullYear()} Mukul Sharma · built from a terminal"
+          <span className="text-accent">$</span> echo "© {new Date().getFullYear()} Mukul Sharma ·
+          built from a terminal"
         </div>
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />

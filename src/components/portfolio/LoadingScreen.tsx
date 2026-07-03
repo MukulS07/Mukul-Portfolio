@@ -7,7 +7,7 @@ export function LoadingScreen() {
   const [isAvengers, setIsAvengers] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [sysTime, setSysTime] = useState("");
-  
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export function LoadingScreen() {
     "DECRYPT: Retrieving Avengers Initiative archives...",
     "DB_ACCESS: Pulling Agent Mukul Sharma's database...",
     "LOG: Syncing local sensor grid and cloud nodes...",
-    "ACCESS_GRANTED: Welcome back, Director Sharma."
+    "ACCESS_GRANTED: Welcome back, Director Sharma.",
   ];
 
   // progress logic
@@ -67,7 +67,7 @@ export function LoadingScreen() {
     if (isAvengers) {
       const logIdx = Math.min(
         avengersLogs.length - 1,
-        Math.floor((percent / 100) * avengersLogs.length)
+        Math.floor((percent / 100) * avengersLogs.length),
       );
       setLogs(avengersLogs.slice(0, logIdx + 1));
     }
@@ -91,7 +91,9 @@ export function LoadingScreen() {
     if (!ctx) return;
 
     let raf = 0;
-    let w = 0, h = 0, dpr = 1;
+    let w = 0,
+      h = 0,
+      dpr = 1;
 
     // Build latitude/longitude sphere grid vertices
     const verts: [number, number, number][] = [];
@@ -196,8 +198,10 @@ export function LoadingScreen() {
 
       const ay = elapsed * 0.15;
       const ax = elapsed * 0.04;
-      const cosY = Math.cos(ay), sinY = Math.sin(ay);
-      const cosX = Math.cos(ax), sinX = Math.sin(ax);
+      const cosY = Math.cos(ay),
+        sinY = Math.sin(ay);
+      const cosX = Math.cos(ax),
+        sinX = Math.sin(ax);
 
       // Project vertices
       const proj = verts.map(([x, y, z]) => {
@@ -220,7 +224,8 @@ export function LoadingScreen() {
 
       // Draw wireframe edges
       for (const [a, b] of edges) {
-        const pa = proj[a], pb = proj[b];
+        const pa = proj[a],
+          pb = proj[b];
         const zAvg = (pa.z + pb.z) / 2;
         const front = (zAvg + 1) / 2; // 0..1
         ctx.globalAlpha = 0.08 + front * 0.45;
@@ -288,7 +293,9 @@ export function LoadingScreen() {
           <div className="flex justify-center my-6 select-none animate-pulse">
             <div className="relative flex items-center justify-center h-16 w-16 rounded-full border border-accent/40 bg-accent/5">
               <div className="absolute inset-0 rounded-full border-t border-accent animate-spin" />
-              <span className="font-sans text-2xl font-bold text-accent tracking-[0.05em] pl-[2px]">MS</span>
+              <span className="font-sans text-2xl font-bold text-accent tracking-[0.05em] pl-[2px]">
+                MS
+              </span>
             </div>
           </div>
 
@@ -301,7 +308,10 @@ export function LoadingScreen() {
           </div>
 
           <div className="mt-6 border border-border/20 p-0.5 bg-black/40 rounded-xs">
-            <div className="h-1.5 bg-accent transition-all duration-150 rounded-xs" style={{ width: `${percent}%` }} />
+            <div
+              className="h-1.5 bg-accent transition-all duration-150 rounded-xs"
+              style={{ width: `${percent}%` }}
+            />
           </div>
 
           <div className="mt-4 flex justify-between items-center text-[9px] text-dim select-none">
@@ -327,26 +337,51 @@ export function LoadingScreen() {
       />
 
       {/* Floating Vector Satellite icon at top-right */}
-      <div 
+      <div
         className="absolute pointer-events-none z-10"
-        style={{ 
-          left: "74%", 
-          top: "18.5%", 
+        style={{
+          left: "74%",
+          top: "18.5%",
           transform: "translate(-50%, -50%) rotate(-15deg)",
-          animation: "float 6s ease-in-out infinite"
+          animation: "float 6s ease-in-out infinite",
         }}
       >
         <svg width="80" height="60" viewBox="-40 -30 80 60" className="text-accent">
           {/* Satellite Body */}
-          <rect x="-6" y="-10" width="12" height="20" rx="2" fill="rgba(0, 221, 255, 0.1)" stroke="currentColor" strokeWidth="1.2" />
+          <rect
+            x="-6"
+            y="-10"
+            width="12"
+            height="20"
+            rx="2"
+            fill="rgba(0, 221, 255, 0.1)"
+            stroke="currentColor"
+            strokeWidth="1.2"
+          />
           <circle cx="0" cy="0" r="3.5" fill="none" stroke="currentColor" strokeWidth="0.8" />
           {/* Left panel */}
           <line x1="-22" y1="0" x2="-6" y2="0" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="-35" y="-8" width="13" height="16" fill="rgba(0, 221, 255, 0.05)" stroke="currentColor" strokeWidth="1" />
+          <rect
+            x="-35"
+            y="-8"
+            width="13"
+            height="16"
+            fill="rgba(0, 221, 255, 0.05)"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
           <line x1="-28" y1="-8" x2="-28" y2="8" stroke="currentColor" strokeWidth="0.5" />
           {/* Right panel */}
           <line x1="6" y1="0" x2="22" y2="0" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="22" y="-8" width="13" height="16" fill="rgba(0, 221, 255, 0.05)" stroke="currentColor" strokeWidth="1" />
+          <rect
+            x="22"
+            y="-8"
+            width="13"
+            height="16"
+            fill="rgba(0, 221, 255, 0.05)"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
           <line x1="28" y1="-8" x2="28" y2="8" stroke="currentColor" strokeWidth="0.5" />
           {/* Dish */}
           <path d="M-4,13 Q0,18 4,13" fill="none" stroke="currentColor" strokeWidth="1.2" />
@@ -428,7 +463,9 @@ export function LoadingScreen() {
       {/* TOP HEADER SECTION */}
       <header className="relative z-20 flex justify-between items-center border-b border-border/25 pb-3 bg-black/60 backdrop-blur-xs">
         <div className="flex items-center gap-3">
-          <span className="text-sm font-bold text-white tracking-[0.1em]">MS<span className="text-accent">.</span></span>
+          <span className="text-sm font-bold text-white tracking-[0.1em]">
+            MS<span className="text-accent">.</span>
+          </span>
           <span className="text-muted-foreground border-l border-border/30 pl-3 tracking-[0.18em]">
             SYSTEM BOOT: INITIALIZING...
           </span>
@@ -468,7 +505,7 @@ export function LoadingScreen() {
                 { name: "DATABASE", active: true },
                 { name: "AWS SERVICES", active: true },
                 { name: "SECURITY PROTOCOLS", active: true },
-                { name: "INTERFACE", active: percent < 90, loading: percent < 95 }
+                { name: "INTERFACE", active: percent < 90, loading: percent < 95 },
               ].map((sys) => (
                 <li key={sys.name} className="flex justify-between items-center">
                   <span>• {sys.name}</span>
@@ -478,17 +515,13 @@ export function LoadingScreen() {
                         sys.loading
                           ? "bg-amber-warn animate-pulse"
                           : sys.active
-                          ? "bg-accent"
-                          : "bg-white/10"
+                            ? "bg-accent"
+                            : "bg-white/10"
                       }`}
                     />
                     <span
                       className={`text-[9px] ${
-                        sys.loading
-                          ? "text-amber-warn"
-                          : sys.active
-                          ? "text-accent"
-                          : "text-dim"
+                        sys.loading ? "text-amber-warn" : sys.active ? "text-accent" : "text-dim"
                       }`}
                     >
                       {sys.loading ? "LOADING" : "ONLINE"}
@@ -506,68 +539,96 @@ export function LoadingScreen() {
         {/* Right column: SEARCH AND IDENTIFY PROGRESS */}
         <div className="col-span-12 md:col-span-4 border border-border/25 bg-black/75 backdrop-blur-xs p-4 sm:p-5 rounded-sm flex flex-col gap-3 justify-center min-w-[280px]">
           {/* Step 1 */}
-          <div className={`transition-opacity duration-300 ${percent < 0 ? "opacity-30" : "opacity-100"}`}>
+          <div
+            className={`transition-opacity duration-300 ${percent < 0 ? "opacity-30" : "opacity-100"}`}
+          >
             <div className="flex justify-between items-center text-[10px] tracking-wider mb-1">
               <span className="text-white font-semibold flex items-center gap-1.5">
-                <span className={`h-1.5 w-1.5 rounded-full ${step1Percent === 100 ? "bg-accent" : "bg-accent animate-ping"}`} />
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${step1Percent === 100 ? "bg-accent" : "bg-accent animate-ping"}`}
+                />
                 SEARCHING...
               </span>
               <span className="text-accent text-[9px]">{step1Percent}%</span>
             </div>
             <p className="text-[9px] text-muted-foreground mb-1.5">Scanning Global Database</p>
             <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-              <div className="h-full bg-accent transition-all duration-150" style={{ width: `${step1Percent}%` }} />
+              <div
+                className="h-full bg-accent transition-all duration-150"
+                style={{ width: `${step1Percent}%` }}
+              />
             </div>
           </div>
 
           <div className="text-center text-muted-foreground text-[8px] tracking-[0.2em]">↓</div>
 
           {/* Step 2 */}
-          <div className={`transition-opacity duration-300 ${percent < 25 ? "opacity-30" : "opacity-100"}`}>
+          <div
+            className={`transition-opacity duration-300 ${percent < 25 ? "opacity-30" : "opacity-100"}`}
+          >
             <div className="flex justify-between items-center text-[10px] tracking-wider mb-1">
               <span className="text-white font-semibold flex items-center gap-1.5">
-                <span className={`h-1.5 w-1.5 rounded-full ${step2Percent === 100 ? "bg-accent" : percent >= 25 ? "bg-accent animate-ping" : "bg-white/10"}`} />
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${step2Percent === 100 ? "bg-accent" : percent >= 25 ? "bg-accent animate-ping" : "bg-white/10"}`}
+                />
                 FINDING MUKUL SHARMA...
               </span>
               <span className="text-accent text-[9px]">{step2Percent}%</span>
             </div>
             <p className="text-[9px] text-muted-foreground mb-1.5">Location: Jaipur, India</p>
             <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-              <div className="h-full bg-accent transition-all duration-150" style={{ width: `${step2Percent}%` }} />
+              <div
+                className="h-full bg-accent transition-all duration-150"
+                style={{ width: `${step2Percent}%` }}
+              />
             </div>
           </div>
 
           <div className="text-center text-muted-foreground text-[8px] tracking-[0.2em]">↓</div>
 
           {/* Step 3 */}
-          <div className={`transition-opacity duration-300 ${percent < 50 ? "opacity-30" : "opacity-100"}`}>
+          <div
+            className={`transition-opacity duration-300 ${percent < 50 ? "opacity-30" : "opacity-100"}`}
+          >
             <div className="flex justify-between items-center text-[10px] tracking-wider mb-1">
               <span className="text-white font-semibold flex items-center gap-1.5">
-                <span className={`h-1.5 w-1.5 rounded-full ${step3Percent === 100 ? "bg-accent" : percent >= 50 ? "bg-accent animate-ping" : "bg-white/10"}`} />
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${step3Percent === 100 ? "bg-accent" : percent >= 50 ? "bg-accent animate-ping" : "bg-white/10"}`}
+                />
                 IDENTITY VERIFIED
               </span>
               <span className="text-accent text-[9px]">{step3Percent}%</span>
             </div>
             <p className="text-[9px] text-muted-foreground mb-1.5">Access Level: Authorized</p>
             <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-              <div className="h-full bg-accent transition-all duration-150" style={{ width: `${step3Percent}%` }} />
+              <div
+                className="h-full bg-accent transition-all duration-150"
+                style={{ width: `${step3Percent}%` }}
+              />
             </div>
           </div>
 
           <div className="text-center text-muted-foreground text-[8px] tracking-[0.2em]">↓</div>
 
           {/* Step 4 */}
-          <div className={`transition-opacity duration-300 ${percent < 75 ? "opacity-30" : "opacity-100"}`}>
+          <div
+            className={`transition-opacity duration-300 ${percent < 75 ? "opacity-30" : "opacity-100"}`}
+          >
             <div className="flex justify-between items-center text-[10px] tracking-wider mb-1">
               <span className="text-white font-semibold flex items-center gap-1.5">
-                <span className={`h-1.5 w-1.5 rounded-full ${step4Percent === 100 ? "bg-accent" : percent >= 75 ? "bg-accent animate-ping" : "bg-white/10"}`} />
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${step4Percent === 100 ? "bg-accent" : percent >= 75 ? "bg-accent animate-ping" : "bg-white/10"}`}
+                />
                 OPENING PORTFOLIO...
               </span>
               <span className="text-accent text-[9px]">{step4Percent}%</span>
             </div>
             <p className="text-[9px] text-muted-foreground mb-1.5">Loading Experience</p>
             <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-              <div className="h-full bg-accent transition-all duration-150" style={{ width: `${step4Percent}%` }} />
+              <div
+                className="h-full bg-accent transition-all duration-150"
+                style={{ width: `${step4Percent}%` }}
+              />
             </div>
           </div>
         </div>
@@ -601,7 +662,9 @@ export function LoadingScreen() {
                 </div>
               </div>
             </div>
-            <span className="text-white text-xs font-semibold tabular-nums tracking-widest">{percent}%</span>
+            <span className="text-white text-xs font-semibold tabular-nums tracking-widest">
+              {percent}%
+            </span>
           </div>
           <div className="text-[8px] text-muted-foreground mt-1 tracking-widest select-none">
             LOADING PORTFOLIO INTERFACE

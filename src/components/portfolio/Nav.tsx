@@ -81,7 +81,9 @@ export function Nav() {
             >
               <span
                 className={`absolute top-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full transition-all ${
-                  avengers ? "left-3 bg-accent shadow-[0_0_8px_var(--accent)]" : "left-0.5 bg-muted-foreground"
+                  avengers
+                    ? "left-3 bg-accent shadow-[0_0_8px_var(--accent)]"
+                    : "left-0.5 bg-muted-foreground"
                 }`}
               />
             </span>
@@ -108,16 +110,17 @@ export function Nav() {
 
       {open && (
         <div className="md:hidden border-t border-border bg-background font-mono text-xs tracking-[0.18em]">
-          {!avengers && links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              onClick={() => setOpen(false)}
-              className="block px-5 py-3 border-b border-border text-muted-foreground hover:text-foreground"
-            >
-              {l.label}
-            </Link>
-          ))}
+          {!avengers &&
+            links.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                onClick={() => setOpen(false)}
+                className="block px-5 py-3 border-b border-border text-muted-foreground hover:text-foreground"
+              >
+                {l.label}
+              </Link>
+            ))}
           {/* Mobile Toggles Panel */}
           <div className="flex flex-col gap-3 px-5 py-4 border-b border-border bg-black/20">
             <div className="flex items-center justify-between text-muted-foreground">
@@ -158,8 +161,11 @@ export function StatusBar() {
   useEffect(() => {
     const tick = () => {
       const fmt = new Intl.DateTimeFormat("en-GB", {
-        hour: "2-digit", minute: "2-digit", second: "2-digit",
-        hour12: false, timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZone: "Asia/Kolkata",
       });
       setTime(fmt.format(new Date()));
     };
@@ -181,7 +187,9 @@ export function StatusBar() {
           <span className="hidden sm:inline">◉ JAIPUR, IN</span>
           <span className="hidden md:inline">⌁ 32°C · CLEAR</span>
         </div>
-        <div className="tabular-nums text-foreground">{time} <span className="text-muted-foreground">IST</span></div>
+        <div className="tabular-nums text-foreground">
+          {time} <span className="text-muted-foreground">IST</span>
+        </div>
       </div>
     </div>
   );
