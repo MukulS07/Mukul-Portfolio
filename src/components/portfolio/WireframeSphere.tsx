@@ -119,7 +119,7 @@ export function WireframeSphere() {
     window.addEventListener("resize", resize);
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let start = performance.now();
+    const start = performance.now();
 
     // mouse-driven rotation offsets (critically-damped spring smoothing)
     let targetMX = 0,
@@ -172,9 +172,9 @@ export function WireframeSphere() {
       // project all verts once
       const proj: { x: number; y: number; z: number; s: number }[] = verts.map(([x, y, z]) => {
         // rotate Y then X
-        let rx = x * cosY + z * sinY;
+        const rx = x * cosY + z * sinY;
         let rz = -x * sinY + z * cosY;
-        let ry = y * cosX - rz * sinX;
+        const ry = y * cosX - rz * sinX;
         rz = y * sinX + rz * cosX;
         const scale = persp / (persp - rz * R);
         return {

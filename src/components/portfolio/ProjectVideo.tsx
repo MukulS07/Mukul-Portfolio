@@ -42,8 +42,6 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
     }
   }, [isMuted]);
 
-  if (!src) return null;
-
   const handleEnded = () => {
     const video = videoRef.current;
     if (video) {
@@ -111,6 +109,8 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
       });
     }
   };
+
+  if (!src) return null;
 
   return (
     <>

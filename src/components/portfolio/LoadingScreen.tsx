@@ -1,5 +1,17 @@
 import { useEffect, useState, useRef } from "react";
 
+// S.H.I.E.L.D. loading logs for Avengers Mode
+const avengersLogs = [
+  "SECURE_LINK: Connecting to S.H.I.E.L.D. Mainframe...",
+  "SYS_AUTH: Verifying Level 10 Security Clearance...",
+  "INIT: Booting J.A.R.V.I.S. HUD Interface...",
+  "STATUS: Stark Arc Reactor power levels: 100% (NOMINAL)...",
+  "DECRYPT: Retrieving Avengers Initiative archives...",
+  "DB_ACCESS: Pulling Agent Mukul Sharma's database...",
+  "LOG: Syncing local sensor grid and cloud nodes...",
+  "ACCESS_GRANTED: Welcome back, Director Sharma.",
+];
+
 export function LoadingScreen() {
   const [percent, setPercent] = useState(0);
   const [logs, setLogs] = useState<string[]>([]);
@@ -34,18 +46,6 @@ export function LoadingScreen() {
     const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
   }, []);
-
-  // S.H.I.E.L.D. loading logs for Avengers Mode
-  const avengersLogs = [
-    "SECURE_LINK: Connecting to S.H.I.E.L.D. Mainframe...",
-    "SYS_AUTH: Verifying Level 10 Security Clearance...",
-    "INIT: Booting J.A.R.V.I.S. HUD Interface...",
-    "STATUS: Stark Arc Reactor power levels: 100% (NOMINAL)...",
-    "DECRYPT: Retrieving Avengers Initiative archives...",
-    "DB_ACCESS: Pulling Agent Mukul Sharma's database...",
-    "LOG: Syncing local sensor grid and cloud nodes...",
-    "ACCESS_GRANTED: Welcome back, Director Sharma.",
-  ];
 
   // progress logic
   useEffect(() => {
@@ -205,9 +205,9 @@ export function LoadingScreen() {
 
       // Project vertices
       const proj = verts.map(([x, y, z]) => {
-        let rx = x * cosY + z * sinY;
+        const rx = x * cosY + z * sinY;
         let rz = -x * sinY + z * cosY;
-        let ry = y * cosX - rz * sinX;
+        const ry = y * cosX - rz * sinX;
         rz = y * sinX + rz * cosX;
         const scale = persp / (persp - rz * R);
         return {
