@@ -210,14 +210,7 @@ bun run preview
 
 ---
 
-## 🔗 Connected Ecosystems
 
-This application is actively connected to **[Lovable.dev](https://lovable.dev)**.
-
-> [!WARNING]
-> Do **not** amend, squash, or force-push commits to the primary deployment branches of this repository as it will overwrite and disconnect project history synchronized in the Lovable design editor. Keep the branch history linear and consistent.
-
----
 
 <p align="center">
   <sub>Designed & Developed by <a href="mailto:mukulsharmaworks@gmail.com">Mukul Sharma</a>. Protected by Modern Web Protocols and a passion for immersive human-computer interfaces.</sub>
