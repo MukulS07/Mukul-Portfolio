@@ -415,19 +415,79 @@ const timeline = [
   },
 ];
 
-const certs = [
-  ["Google UX Design", "Coursera · Google", "Apr 2026"],
-  ["Cloud Computing", "NPTEL", "Jul – Oct 2025"],
-  ["Core & Advanced Java", "Programming Pathsala", "Jun – Aug 2024"],
-  ["DSA using C/C++", "Udemy", "Feb – Mar 2024"],
-  ["Design & Analysis of Algorithms", "Coursera", "Jan – May 2024"],
+interface Certificate {
+  name: string;
+  issuer: string;
+  date: string;
+  fileUrl: string | null;
+  thumbnailUrl: string | null;
+}
+
+const certs: Certificate[] = [
+  {
+    name: "Google UX Design Specialization",
+    issuer: "Google · Coursera",
+    date: "Apr 2026",
+    fileUrl: "/certificates/google_ux_specialization.pdf",
+    thumbnailUrl: "/certificates/google_ux_specialization_thumb.png",
+  },
+  {
+    name: "Salesforce Developer Training",
+    issuer: "Salesforce · Programming Pathsala",
+    date: "Jun – Jul 2025",
+    fileUrl: "/certificates/salesforce_training.pdf",
+    thumbnailUrl: "/certificates/salesforce_training_thumb.png",
+  },
+  {
+    name: "Game Design & Development Capstone",
+    issuer: "Michigan State University · Coursera",
+    date: "Nov 2025",
+    fileUrl: "/certificates/game_design_capstone.pdf",
+    thumbnailUrl: "/certificates/game_design_capstone_thumb.png",
+  },
+  {
+    name: "Cloud Computing",
+    issuer: "NPTEL (IIT)",
+    date: "Jul – Oct 2024",
+    fileUrl: "/certificates/cloud_computing_nptel.pdf",
+    thumbnailUrl: "/certificates/cloud_computing_nptel_thumb.png",
+  },
+  {
+    name: "Google UI/UX: Build Dynamic User Interfaces",
+    issuer: "Google · Coursera",
+    date: "Apr 2026",
+    fileUrl: "/certificates/google_ux_dynamic_ui.pdf",
+    thumbnailUrl: "/certificates/google_ux_dynamic_ui_thumb.png",
+  },
+  {
+    name: "Java Capstone Project",
+    issuer: "Programming Pathsala",
+    date: "Jun – Aug 2024",
+    fileUrl: "/certificates/java_capstone.jpg",
+    thumbnailUrl: "/certificates/java_capstone_thumb.jpg",
+  },
+  {
+    name: "DSA using C/C++",
+    issuer: "Udemy",
+    date: "Feb – Mar 2024",
+    fileUrl: null,
+    thumbnailUrl: null,
+  },
+  {
+    name: "Design & Analysis of Algorithms",
+    issuer: "Coursera",
+    date: "Jan – May 2024",
+    fileUrl: null,
+    thumbnailUrl: null,
+  },
 ];
 
 export function Experience() {
   return (
     <Section id="experience" label="experience.log" title="// training · leadership">
       <div className="grid lg:grid-cols-5 gap-6">
-        <div className="lg:col-span-3 relative">
+        {/* Experience Timeline */}
+        <div className="lg:col-span-5 relative">
           <div className="absolute left-3 top-2 bottom-2 w-px bg-border" />
           <ul className="space-y-6">
             {timeline.map((t) => (
@@ -451,22 +511,65 @@ export function Experience() {
             ))}
           </ul>
         </div>
+      </div>
 
-        <div className="lg:col-span-2">
-          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
-            certifications · grid
-          </div>
-          <ul className="space-y-2.5">
-            {certs.map(([n, i, d]) => (
-              <li key={n} className="glass-panel p-3.5 flex items-center justify-between gap-3">
+      {/* Certifications full-width grid */}
+      <div className="mt-12 pt-8 border-t border-border/40">
+        <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-4">
+          certifications · telemetry
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {certs.map((c) => (
+            <a
+              key={c.name}
+              href={c.fileUrl || undefined}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`glass-panel overflow-hidden flex flex-col group transition-all duration-300 ${
+                c.fileUrl 
+                  ? "hover:border-accent hover:shadow-[0_0_15px_rgba(56,189,248,0.15)] cursor-pointer" 
+                  : "opacity-85"
+              }`}
+            >
+              {/* Thumbnail area */}
+              <div className="aspect-video w-full bg-black/45 relative overflow-hidden border-b border-border/20">
+                {c.thumbnailUrl ? (
+                  <img
+                    src={c.thumbnailUrl}
+                    alt={c.name}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center p-4 font-mono text-[9px] text-muted-foreground bg-gradient-to-br from-black to-accent/5">
+                    <span className="text-accent/40 font-bold mb-1">⚡ [NO_PREVIEW]</span>
+                    <span className="text-[7px] text-dim">{c.issuer}</span>
+                  </div>
+                )}
+                
+                {/* View overlay */}
+                {c.fileUrl && (
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center font-mono text-[9px] tracking-widest text-accent font-bold uppercase">
+                    [ VIEW CREDENTIAL ]
+                  </div>
+                )}
+              </div>
+
+              {/* Detail area */}
+              <div className="p-3 flex-1 flex flex-col justify-between gap-1.5 bg-black/25">
                 <div>
-                  <div className="font-mono text-sm text-foreground">{n}</div>
-                  <div className="font-mono text-[11px] text-muted-foreground">{i}</div>
+                  <div className="font-mono text-[11px] leading-tight text-foreground group-hover:text-accent transition-colors font-semibold">
+                    {c.name}
+                  </div>
+                  <div className="font-mono text-[9px] text-muted-foreground mt-1">
+                    {c.issuer}
+                  </div>
                 </div>
-                <div className="font-mono text-[10px] text-dim whitespace-nowrap">{d}</div>
-              </li>
-            ))}
-          </ul>
+                <div className="font-mono text-[8px] text-dim text-right">
+                  {c.date}
+                </div>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </Section>

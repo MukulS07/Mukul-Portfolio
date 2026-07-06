@@ -20,6 +20,7 @@ import { WireframeSphere } from "@/components/portfolio/WireframeSphere";
 import { TelemetryHUD } from "@/components/portfolio/TelemetryHUD";
 import { HUDFrame } from "@/components/portfolio/HUDFrame";
 import { LoadingScreen } from "@/components/portfolio/LoadingScreen";
+import { VoiceChatbotWidget } from "@/components/portfolio/VoiceChatbotWidget";
 
 function NotFoundComponent() {
   return (
@@ -166,6 +167,11 @@ function RootComponent() {
         </main>
         <Footer />
         <TelemetryHUD />
+        {typeof window !== "undefined" &&
+          (window.location.hostname === "localhost" ||
+            window.location.hostname === "127.0.0.1") && (
+            <VoiceChatbotWidget />
+          )}
       </div>
     </QueryClientProvider>
   );

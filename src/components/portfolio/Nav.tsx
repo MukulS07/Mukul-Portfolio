@@ -9,6 +9,7 @@ const links: { label: string; to: string }[] = [
   { label: "PROJECTS", to: "/projects" },
   { label: "RESEARCH", to: "/research" },
   { label: "SKILLS", to: "/skills" },
+  { label: "AI BOT", to: "/chatbot" },
   { label: "RESUME", to: "/resume" },
   { label: "CONTACT", to: "/contact" },
 ];
@@ -17,6 +18,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const [avengers, setAvengers] = useState(false);
   const [fxEnabled, setFxEnabled] = useState(true);
+  const [isLocal, setIsLocal] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("avengers-mode") === "1";
@@ -27,6 +29,13 @@ export function Nav() {
     const enabled = storedFx === null ? true : storedFx === "1";
     setFxEnabled(enabled);
     document.body.classList.toggle("fx-off", !enabled);
+
+    if (typeof window !== "undefined") {
+      setIsLocal(
+        window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1"
+      );
+    }
   }, []);
 
   const toggleAvengers = () => {
@@ -43,16 +52,30 @@ export function Nav() {
     document.body.classList.toggle("fx-off", !next);
   };
 
+  const visibleLinks = links.filter((l) => l.to !== "/chatbot" || isLocal);
+
   return (
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur border-b border-border">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 h-14 flex items-center justify-between gap-4 font-mono text-[11px] tracking-[0.18em]">
-        <Link to="/" className="font-serif-display text-2xl text-foreground leading-none">
-          MS<span className="text-accent">.</span>
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link to="/" className="font-serif-display text-2xl text-foreground leading-none">
+            MS<span className="text-accent">.</span>
+          </Link>
+          <div className={`hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded border font-mono text-[8px] tracking-[0.2em] select-none ${
+            avengers 
+              ? "border-[#ef4444]/30 bg-[#ef4444]/5 text-[#ef4444]/90" 
+              : "border-accent/20 bg-accent/5 text-accent/85"
+          }`}>
+            <span className={`h-1 w-1 rounded-full animate-pulse ${
+              avengers ? "bg-[#ef4444] shadow-[0_0_6px_#ef4444]" : "bg-accent shadow-[0_0_6px_var(--accent)]"
+            }`} />
+            <span>{avengers ? "PORTFOLIO // HUD" : "PORTFOLIO // SYSTEM"}</span>
+          </div>
+        </div>
 
         {!avengers && (
           <nav className="hidden md:flex items-center gap-7 text-muted-foreground">
-            {links.map((l) => (
+            {visibleLinks.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
@@ -111,7 +134,7 @@ export function Nav() {
       {open && (
         <div className="md:hidden border-t border-border bg-background font-mono text-xs tracking-[0.18em]">
           {!avengers &&
-            links.map((l) => (
+            visibleLinks.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
