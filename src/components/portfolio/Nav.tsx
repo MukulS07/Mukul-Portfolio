@@ -18,7 +18,6 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const [avengers, setAvengers] = useState(false);
   const [fxEnabled, setFxEnabled] = useState(true);
-  const [isLocal, setIsLocal] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("avengers-mode") === "1";
@@ -29,13 +28,6 @@ export function Nav() {
     const enabled = storedFx === null ? true : storedFx === "1";
     setFxEnabled(enabled);
     document.body.classList.toggle("fx-off", !enabled);
-
-    if (typeof window !== "undefined") {
-      setIsLocal(
-        window.location.hostname === "localhost" ||
-          window.location.hostname === "127.0.0.1"
-      );
-    }
   }, []);
 
   const toggleAvengers = () => {
@@ -52,7 +44,7 @@ export function Nav() {
     document.body.classList.toggle("fx-off", !next);
   };
 
-  const visibleLinks = links.filter((l) => l.to !== "/chatbot" || isLocal);
+  const visibleLinks = links;
 
   return (
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur border-b border-border">
