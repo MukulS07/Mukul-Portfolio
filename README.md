@@ -39,13 +39,13 @@ This application represents the virtual nerve center of **Mukul Sharma's** engin
 
 On cold launch, the system executes an automated hardware validation sequence. It mocks kernel level allocation checks, scans local configurations, validates environmental variables, and processes cryptographic handshakes before granting user access.
 
-- **Core File:** [LoadingScreen.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/LoadingScreen.tsx)
+- **Core File:** [LoadingScreen.tsx](./src/components/portfolio/LoadingScreen.tsx)
 
 ### 🛡️ Avengers Protocol (S.H.I.E.L.D. HUD Mode)
 
 For authorized personnel, a secret toggle engages **Avengers Mode**, restructuring the interface into a holographic, high-contrast Stark-Tech heads-up display. Complete with custom JARVIS system alerts, audio sound effects, and classified dossier access.
 
-- **Core File:** [Sections.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/Sections.tsx)
+- **Core File:** [Sections.tsx](./src/components/portfolio/Sections.tsx)
 
 ### 📊 Real-time Telemetry Grid
 
@@ -56,7 +56,7 @@ The screen is continuously monitored by a diagnostic HUD providing real-time dat
 - **Scroll Tracking:** Percentage based vertical displacement vector.
 - **Spectrum Visualizer:** Live interactive audio feedback bars.
 
-* **Core File:** [FXToggle.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/FXToggle.tsx)
+* **Core File:** [FXToggle.tsx](./src/components/portfolio/FXToggle.tsx)
 
 ### 🌀 3D Wireframe Node Matrix
 
@@ -129,29 +129,35 @@ A fast-paced 2D top-down physics-based space action game utilizing advanced obje
 
 A structured map of the system workspace:
 
-- [public/](file:///m:/WEBSITES/Mukul-Portfolio/public) — _Global static resources, documents, and video recordings_
-  - [cv.pdf](file:///m:/WEBSITES/Mukul-Portfolio/public/cv.pdf) — _Professional Resume / CV_
-  - [videooutput/](file:///m:/WEBSITES/Mukul-Portfolio/public/videooutput) — _Recorded system previews and demonstrations_
-- [src/](file:///m:/WEBSITES/Mukul-Portfolio/src) — _Core application code_
-  - [assets/](file:///m:/WEBSITES/Mukul-Portfolio/src/assets) — _Images, backgrounds, and graphical resources_
-  - [components/](file:///m:/WEBSITES/Mukul-Portfolio/src/components) — _React interface components_
-    - [portfolio/](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio) — _Cyberpunk HUD, Spectrum, and sound logic_
-      - [FXToggle.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/FXToggle.tsx) — _Interactive filters & telemetry toggle_
-      - [LoadingScreen.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/LoadingScreen.tsx) — _Boot sequences & status mockup_
-      - [Sections.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/components/portfolio/Sections.tsx) — _Main interactive panels & theme control_
-    - [ui/](file:///m:/WEBSITES/Mukul-Portfolio/src/components/ui) — _Primitive button grids and layouts_
-  - [hooks/](file:///m:/WEBSITES/Mukul-Portfolio/src/hooks) — _State monitors & listener hooks_
-  - [lib/](file:///m:/WEBSITES/Mukul-Portfolio/src/lib) — _Utilities, telemetry mathematics, and constants_
-  - [routes/](file:///m:/WEBSITES/Mukul-Portfolio/src/routes) — _TanStack Start file routing system_
-    - [__root.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/routes/__root.tsx) — _Core app wrapper & telemetry shell_
-    - [index.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/routes/index.tsx) — _System landing console_
-    - [resume.tsx](file:///m:/WEBSITES/Mukul-Portfolio/src/routes/resume.tsx) — _Professional resume page_
-  - [server.ts](file:///m:/WEBSITES/Mukul-Portfolio/src/server.ts) — _SSR build configuration with Nitro integration_
-  - [start.ts](file:///m:/WEBSITES/Mukul-Portfolio/src/start.ts) — _Hydration startup hook_
-  - [styles.css](file:///m:/WEBSITES/Mukul-Portfolio/src/styles.css) — _Animation variables, neon styles, scanlines_
-- [package.json](file:///m:/WEBSITES/Mukul-Portfolio/package.json) — _Engine dependencies and run scripts_
-- [tsconfig.json](file:///m:/WEBSITES/Mukul-Portfolio/tsconfig.json) — _Compiler configurations_
-- [vite.config.ts](file:///m:/WEBSITES/Mukul-Portfolio/vite.config.ts) — _Vite build system configurations_
+- [public/](./public) — _Global static resources, documents, and video recordings_
+  - [cv.pdf](./public/cv.pdf) — _Professional Resume / CV_
+  - [videooutput/](./public/videooutput) — _Recorded system previews and demonstrations_
+- [src/](./src) — _Core application code_
+  - [assets/](./src/assets) — _Images, backgrounds, and graphical resources_
+  - [components/](./src/components) — _React interface components_
+    - [portfolio/](./src/components/portfolio) — _Cyberpunk HUD, Spectrum visualizer, voice assistant, and sound logic_
+      - [VoiceChatbot.tsx](./src/components/portfolio/VoiceChatbot.tsx) — _Integrated AI voice chatbot assistant_
+      - [VoiceChatbotWidget.tsx](./src/components/portfolio/VoiceChatbotWidget.tsx) — _Floating voice assistant telemetry panel_
+      - [TelemetryHUD.tsx](./src/components/portfolio/TelemetryHUD.tsx) — _Real-time developer telemetry overlay_
+      - [WireframeSphere.tsx](./src/components/portfolio/WireframeSphere.tsx) — _Mathematical 3D rotating vector sphere projection_
+      - [LoadingScreen.tsx](./src/components/portfolio/LoadingScreen.tsx) — _Futuristic system validation & boot sequence simulator_
+      - [Sections.tsx](./src/components/portfolio/Sections.tsx) — _Main UI sections & S.H.I.E.L.D. HUD layout controller_
+      - [FXToggle.tsx](./src/components/portfolio/FXToggle.tsx) — _Interactive filters, scanlines, and audio spectral toggles_
+      - [Hero.tsx](./src/components/portfolio/Hero.tsx) — _Terminal-style main welcome deck and command prompt console_
+    - [ui/](./src/components/ui) — _Primitive button grids and layout utilities_
+  - [hooks/](./src/hooks) — _Custom state monitors and browser listeners_
+  - [lib/](./src/lib) — _Utilities, telemetry calculations, and constants_
+  - [routes/](./src/routes) — _TanStack Start routing registry_
+    - [__root.tsx](./src/routes/__root.tsx) — _Core app wrapper & layout shell_
+    - [index.tsx](./src/routes/index.tsx) — _Main interactive dashboard deck_
+    - [chatbot.tsx](./src/routes/chatbot.tsx) — _Voice assistant telemetry page (localhost only)_
+    - [resume.tsx](./src/routes/resume.tsx) — _Professional resume telemetry layout_
+  - [server.ts](./src/server.ts) — _SSR build configuration with Nitro engine integration_
+  - [start.ts](./src/start.ts) — _Client-side hydration startup hook_
+  - [styles.css](./src/styles.css) — _GPU-accelerated CSS animations, scanline filters, and typography_
+- [package.json](./package.json) — _Engine dependencies and deployment scripts_
+- [tsconfig.json](./tsconfig.json) — _TypeScript compilation rules_
+- [vite.config.ts](./vite.config.ts) — _Vite bundler configuration parameters_
 
 ---
 
@@ -167,7 +173,7 @@ Ensure you have [Bun](https://bun.sh/) (recommended for peak performance) or [No
 
 ```bash
 # Clone the repository
-git clone https://github.com/mukulsharmams007/Mukul-Portfolio.git
+git clone https://github.com/MukulS07/Mukul-Portfolio.git
 cd Mukul-Portfolio
 
 # Install dependencies using Bun
@@ -209,8 +215,6 @@ bun run preview
 ```
 
 ---
-
-
 
 <p align="center">
   <sub>Designed & Developed by <a href="mailto:mukulsharmaworks@gmail.com">Mukul Sharma</a>. Protected by Modern Web Protocols and a passion for immersive human-computer interfaces.</sub>
