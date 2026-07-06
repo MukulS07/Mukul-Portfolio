@@ -296,13 +296,13 @@ export function Projects() {
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
 
               {p.stats && (
-                <div className="mt-5 grid grid-cols-3 gap-2 font-mono text-xs">
+                <div className="mt-5 grid grid-cols-3 gap-2 font-mono text-[9px] sm:text-xs">
                   {p.stats.map((s) => (
-                    <div key={s.k} className="border border-border rounded-md p-2.5 bg-black/20">
-                      <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                    <div key={s.k} className="border border-border rounded-md p-1.5 sm:p-2.5 bg-black/20">
+                      <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.18em] text-muted-foreground truncate" title={s.k}>
                         {s.k}
                       </div>
-                      <div className="mt-1 text-foreground">{s.v}</div>
+                      <div className="mt-1 text-foreground font-semibold sm:font-normal">{s.v}</div>
                     </div>
                   ))}
                 </div>
@@ -661,7 +661,7 @@ function Row({ k, v, href }: { k: string; v: string; href?: string }) {
   }[k];
 
   const inner = (
-    <div className="grid grid-cols-[115px_1fr] gap-4 py-2 px-3 -mx-3 rounded hover:bg-white/[0.03] transition-colors items-center group cursor-pointer">
+    <div className="grid grid-cols-[90px_1fr] sm:grid-cols-[115px_1fr] gap-4 py-2 px-3 -mx-3 rounded hover:bg-white/[0.03] transition-colors items-center group cursor-pointer">
       <span className="text-muted-foreground flex items-center gap-2 select-none">
         {Icon && (
           <Icon

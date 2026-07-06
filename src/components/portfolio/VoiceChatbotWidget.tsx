@@ -907,7 +907,7 @@ export function VoiceChatbotWidget() {
       {/* Expanded Floating AI Widget Panel */}
       {isOpen && (
         <div
-          className={`w-[320px] sm:w-[360px] h-[260px] bg-background/90 backdrop-blur-lg border rounded-lg flex flex-col justify-between overflow-hidden shadow-2xl transition-all duration-300 ${accentColor} ${glowShadow}`}
+          className={`w-[calc(100vw-32px)] sm:w-[360px] h-[260px] bg-background/90 backdrop-blur-lg border rounded-lg flex flex-col justify-between overflow-hidden shadow-2xl transition-all duration-300 ${accentColor} ${glowShadow}`}
         >
           {/* Scanline overlay */}
           <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-[0.02] z-0" />

@@ -255,10 +255,10 @@ export function Hero() {
                   S.H.I.E.L.D. AGENT ACCESS
                 </span>
               </div>
-              <h1 className="mt-8 font-serif-display text-foreground leading-[0.92] text-6xl sm:text-7xl lg:text-[88px]">
+              <h1 className="mt-8 font-serif-display text-foreground leading-[0.92] text-5xl sm:text-7xl lg:text-[88px]">
                 Mukul
                 <br />
-                <span className="pl-10">
+                <span className="pl-4 sm:pl-10">
                   Sharma<span className="text-accent">.</span>
                 </span>
               </h1>
@@ -392,12 +392,12 @@ export function Hero() {
             <tbody>
               {events.map((e, i) => (
                 <tr key={i} className="border-b border-border last:border-0">
-                  <td className="px-5 sm:px-6 py-2.5 text-muted-foreground w-28 tabular-nums">
+                  <td className="hidden sm:table-cell px-5 sm:px-6 py-2.5 text-muted-foreground w-28 tabular-nums">
                     {e.t}
                   </td>
-                  <td className={`py-2.5 w-20 ${e.tagColor}`}>{e.tag}</td>
-                  <td className="py-2.5 text-foreground">{e.msg}</td>
-                  <td className="px-5 sm:px-6 py-2.5 text-muted-foreground text-right">{e.note}</td>
+                  <td className={`py-2.5 w-16 sm:w-20 ${e.tagColor}`}>{e.tag}</td>
+                  <td className="py-2.5 text-foreground break-all sm:break-normal">{e.msg}</td>
+                  <td className="hidden sm:table-cell px-5 sm:px-6 py-2.5 text-muted-foreground text-right">{e.note}</td>
                 </tr>
               ))}
             </tbody>

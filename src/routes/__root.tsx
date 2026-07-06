@@ -8,7 +8,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -139,8 +139,10 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const location = useRouterState({ select: (s) => s.location });
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("avengers-mode") === "1";
       document.body.classList.toggle("avengers", stored);
@@ -167,7 +169,7 @@ function RootComponent() {
         </main>
         <Footer />
         <TelemetryHUD />
-        {typeof window !== "undefined" && <VoiceChatbotWidget />}
+        {mounted && <VoiceChatbotWidget />}
       </div>
     </QueryClientProvider>
   );

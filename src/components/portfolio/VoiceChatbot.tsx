@@ -657,7 +657,7 @@ export function VoiceChatbot() {
       <div className="grid lg:grid-cols-5 gap-6">
         
         {/* Left Side: Visual Hologram Canvas + Controls */}
-        <div className="lg:col-span-2 flex flex-col justify-between glass-panel p-5 items-center relative overflow-hidden min-h-[420px]">
+        <div className="lg:col-span-2 flex flex-col justify-between glass-panel p-5 items-center relative overflow-hidden min-h-[350px] lg:min-h-[420px]">
           
           {/* Scanning Line overlay */}
           <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-[0.02]" />
@@ -778,7 +778,7 @@ export function VoiceChatbot() {
         </div>
 
         {/* Right Side: Chat Logger Terminal Console */}
-        <div className="lg:col-span-3 flex flex-col justify-between glass-panel p-5 min-h-[420px]">
+        <div className="lg:col-span-3 flex flex-col justify-between glass-panel p-5 min-h-[380px] lg:min-h-[420px]">
           
           {/* Header information */}
           <div className="flex items-center justify-between border-b border-border pb-3 mb-3 font-mono text-[10px] tracking-[0.2em] text-muted-foreground select-none">
