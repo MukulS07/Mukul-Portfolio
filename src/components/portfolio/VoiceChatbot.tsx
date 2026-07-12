@@ -912,8 +912,8 @@ function queryOfflineExpert(query: string, avengersMode: boolean): string {
   // 8. CONTACTS
   if (q.includes("contact") || q.includes("email") || q.includes("phone") || q.includes("github") || q.includes("linkedin") || q.includes("hire") || q.includes("reach") || q.includes("number")) {
     return avengersMode
-      ? "Comms uplink ready, Boss. You can email Mukul at mukulsharmaworks@gmail.com, or dial plus 91 77373 60788. You can also view his GitHub at mukulsharmams007 or message him on LinkedIn. Direct buttons are printed in the log panel."
-      : "To contact Mukul Sharma, transmit an email to mukulsharmaworks@gmail.com or call plus 91 77373 60788. Social links are active on the terminal: GitHub at github.com/mukulsharmams007 and LinkedIn at mukul-sharma-514634214.";
+      ? "Comms uplink ready, Boss. You can email Mukul at mukulsharmaworks@gmail.com, or dial plus 91 77373 60788. You can also view his GitHub at MukulS07 or message him on LinkedIn. Direct buttons are printed in the log panel."
+      : "To contact Mukul Sharma, transmit an email to mukulsharmaworks@gmail.com or call plus 91 77373 60788. Social links are active on the terminal: GitHub at github.com/MukulS07 and LinkedIn at mukul-sharma-514634214.";
   }
 
   // 9. FRIDAY / STARK REFERENCES

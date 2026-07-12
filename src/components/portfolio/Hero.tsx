@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import portrait from "@/assets/portrait.jpg";
 import { ProjectVideo } from "./ProjectVideo";
 import { Link } from "@tanstack/react-router";
+import linkedinUpdates from "@/data/linkedin-updates.json";
 
 const roles = ["Security Engineer", "Cloud Architect", "AI/IoT Builder", "Full-Stack Developer"];
 
@@ -35,11 +36,12 @@ const ticker = [
   "Blender",
 ];
 
-const events: { t: string; tag: string; tagColor: string; msg: string; note: string }[] = [
+const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg: string; note: string }[] = [
   {
     t: "06:53:01",
     tag: "DESIGN",
     tagColor: "text-accent",
+    repo: "Mukul-Portfolio",
     msg: "iter  portfolio · v2",
     note: "+cockpit +grid",
   },
@@ -47,6 +49,7 @@ const events: { t: string; tag: string; tagColor: string; msg: string; note: str
     t: "06:52:59",
     tag: "CI",
     tagColor: "text-amber-warn",
+    repo: "EcoGeoGuard",
     msg: "pass  ecogeoguard#218",
     note: "12 checks ✓",
   },
@@ -54,6 +57,7 @@ const events: { t: string; tag: string; tagColor: string; msg: string; note: str
     t: "06:52:43",
     tag: "AWS",
     tagColor: "text-foreground",
+    repo: "landslide-risk",
     msg: "deploy lambda · landslide-risk",
     note: "rt 0.18s",
   },
@@ -61,6 +65,7 @@ const events: { t: string; tag: string; tagColor: string; msg: string; note: str
     t: "06:51:10",
     tag: "AI",
     tagColor: "text-muted-foreground",
+    repo: "ml-pipeline-v3",
     msg: "infer ml-pipeline-v3",
     note: "f1 0.94",
   },
@@ -68,6 +73,7 @@ const events: { t: string; tag: string; tagColor: string; msg: string; note: str
     t: "06:48:02",
     tag: "IOT",
     tagColor: "text-accent",
+    repo: "node-187",
     msg: "ingest node-187 telemetry",
     note: "ok",
   },
@@ -213,6 +219,15 @@ function Radar() {
 export function Hero() {
   const [roleIdx, setRoleIdx] = useState(0);
   const [repoCount, setRepoCount] = useState("24");
+  const [eventsList, setEventsList] = useState<{
+    t: string;
+    tag: string;
+    tagColor: string;
+    repo: string;
+    msg: string;
+    note: string;
+    link?: string;
+  }[]>([]);
 
   useEffect(() => {
     const id = setInterval(() => setRoleIdx((i) => (i + 1) % roles.length), 2200);
@@ -220,7 +235,8 @@ export function Hero() {
   }, []);
 
   useEffect(() => {
-    fetch("https://api.github.com/users/mukulsharmams007")
+    // 1. Fetch public profile stats
+    fetch("https://api.github.com/users/MukulS07")
       .then((res) => res.json())
       .then((data) => {
         if (data && typeof data.public_repos === "number") {
@@ -230,7 +246,198 @@ export function Hero() {
       .catch((err) => {
         console.error("Failed to fetch GitHub repos count:", err);
       });
+
+    // 2. Fetch public events activity feed
+    fetch("https://api.github.com/users/MukulS07/events/public")
+      .then((res) => {
+        if (!res.ok) throw new Error("API error fetching events");
+        return res.json();
+      })
+      .then((data) => {
+        if (!Array.isArray(data) || data.length === 0) {
+          setEventsList(mockEvents);
+          return;
+        }
+
+        const formatted = data.slice(0, 5).map((evt: any) => {
+          let tag = "ACTIVITY";
+          let tagColor = "text-muted-foreground";
+          let msg = "";
+          let note = "";
+
+          // Calculate relative time (e.g. 2m ago, 3h ago, 5d ago)
+          const createdTime = new Date(evt.created_at).getTime();
+          const now = Date.now();
+          const diffMs = now - createdTime;
+          const diffMins = Math.floor(diffMs / 60000);
+          const diffHours = Math.floor(diffMins / 60);
+          const diffDays = Math.floor(diffHours / 24);
+
+          let t = "";
+          if (diffMins < 1) {
+            t = "just now";
+          } else if (diffMins < 60) {
+            t = `${diffMins}m ago`;
+          } else if (diffHours < 24) {
+            t = `${diffHours}h ago`;
+          } else {
+            t = `${diffDays}d ago`;
+          }
+
+          const repoName = evt.repo?.name ? evt.repo.name.replace(/^MukulS07\//, "") : "";
+
+          switch (evt.type) {
+            case "PushEvent":
+              tag = "PUSH";
+              tagColor = "text-accent"; // sky blue
+              const commitCount = evt.payload?.commits?.length || 1;
+              const commitMsg = evt.payload?.commits?.[0]?.message?.split("\n")?.[0] || "";
+              const truncatedMsg = commitMsg.length > 30 ? commitMsg.substring(0, 30) + "..." : commitMsg;
+              msg = commitMsg ? `pushed: "${truncatedMsg}"` : "pushed commits";
+              note = evt.payload?.ref ? evt.payload.ref.replace("refs/heads/", "") : "main";
+              if (commitCount > 1) {
+                note += ` (+${commitCount - 1} commits)`;
+              }
+              break;
+
+            case "CreateEvent":
+              tag = "CREATE";
+              tagColor = "text-amber-warn"; // amber/gold
+              const refType = evt.payload?.ref_type || "repository";
+              const refName = evt.payload?.ref ? `"${evt.payload.ref}"` : "";
+              msg = `created ${refType} ${refName}`;
+              note = refType === "branch" ? "+branch" : "+repo";
+              break;
+
+            case "PullRequestEvent":
+              tag = "PR";
+              tagColor = "text-emerald-400"; // green
+              const prAction = evt.payload?.action || "opened";
+              const prNum = evt.payload?.number || "";
+              const prTitle = evt.payload?.pull_request?.title || "";
+              const truncatedPrTitle = prTitle.length > 25 ? prTitle.substring(0, 25) + "..." : prTitle;
+              msg = `${prAction} PR: "${truncatedPrTitle}"`;
+              note = `PR #${prNum}`;
+              break;
+
+            case "IssuesEvent":
+              tag = "ISSUE";
+              tagColor = "text-rose-500"; // red
+              const issueAction = evt.payload?.action || "opened";
+              const issueNum = evt.payload?.issue?.number || "";
+              const issueTitle = evt.payload?.issue?.title || "";
+              const truncatedIssueTitle = issueTitle.length > 25 ? issueTitle.substring(0, 25) + "..." : issueTitle;
+              msg = `${issueAction} issue: "${truncatedIssueTitle}"`;
+              note = `issue #${issueNum}`;
+              break;
+
+            case "WatchEvent":
+              tag = "STAR";
+              tagColor = "text-yellow-400"; // bright yellow
+              msg = `starred the repository`;
+              note = "★ star";
+              break;
+
+            case "ForkEvent":
+              tag = "FORK";
+              tagColor = "text-indigo-400"; // indigo
+              msg = `forked to ${evt.payload?.forkee?.name || "fork"}`;
+              note = "forked";
+              break;
+
+            default:
+              tag = "ACTIVITY";
+              tagColor = "text-muted-foreground";
+              msg = `active in repository`;
+              note = "uplink ok";
+              break;
+          }
+
+          return { t, tag, tagColor, repo: repoName, msg, note };
+        });
+
+        setEventsList(formatted);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch GitHub events:", err);
+        setEventsList(mockEvents);
+      });
   }, []);
+
+  // Find the latest PUSH or CREATE event to showcase what the user is working on
+  const activeEvent = eventsList.find(e => e.tag === "PUSH" || e.tag === "CREATE");
+
+  const linkedinEvents = linkedinUpdates.map((item) => {
+    const createdTime = new Date(item.date).getTime();
+    const now = Date.now();
+    const diffMs = now - createdTime;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMins / 60);
+    const diffDays = Math.floor(diffHours / 24);
+
+    let t = "";
+    if (diffMins < 1) t = "just now";
+    else if (diffMins < 60) t = `${diffMins}m ago`;
+    else if (diffHours < 24) t = `${diffHours}h ago`;
+    else if (diffDays < 30) t = `${diffDays}d ago`;
+    else t = `${Math.floor(diffDays / 30)}mo ago`;
+
+    let tagColor = "text-muted-foreground";
+    switch (item.type) {
+      case "RESEARCH": tagColor = "text-accent"; break;
+      case "MILESTONE": tagColor = "text-yellow-400"; break;
+      case "PRODUCT": tagColor = "text-amber-warn"; break;
+      case "ARTICLE": tagColor = "text-emerald-400"; break;
+    }
+
+    return {
+      t,
+      tag: item.type,
+      tagColor,
+      repo: "linkedin.com",
+      msg: item.text,
+      note: "transmit →",
+      link: item.link
+    };
+  });
+
+  let activeProjName = "EcoGeoGuard";
+  let activeProjSub = "AI-IoT Landslide Prediction Platform";
+  let activeProjFolder = "~/projects/ecogeoguard-v2";
+  let activeProjVideo = "/videooutput/My Video.mp4";
+  let activeProjStack = ["Python", "AWS Lambda", "DynamoDB", "LoRa", "Next.js"];
+  let activeProjCommit = "";
+  let activeProjTime = "";
+  let activeProjStatus = "BUILDING";
+  let activeProjStatusColor = "text-amber-warn";
+
+  if (activeEvent) {
+    const repoLower = activeEvent.repo.toLowerCase();
+    activeProjCommit = activeEvent.msg;
+    activeProjTime = activeEvent.t;
+    activeProjStatus = "ACTIVE";
+    activeProjStatusColor = "text-accent";
+
+    if (repoLower.includes("inventrox")) {
+      activeProjName = "INVENTROX";
+      activeProjSub = "AI Business Operating System";
+      activeProjFolder = `~/github/${activeEvent.repo}`;
+      activeProjVideo = "/videooutput/My Video-1.mp4";
+      activeProjStack = ["Next.js", "Node.js", "Express", "MongoDB", "AI APIs"];
+    } else if (repoLower.includes("ecogeoguard")) {
+      activeProjName = "EcoGeoGuard";
+      activeProjSub = "AI-IoT Landslide Prediction Platform";
+      activeProjFolder = `~/github/${activeEvent.repo}`;
+      activeProjVideo = "/videooutput/My Video.mp4";
+      activeProjStack = ["Python", "AWS Lambda", "DynamoDB", "LoRa", "Next.js"];
+    } else {
+      activeProjName = activeEvent.repo;
+      activeProjSub = "Active Developer Sandbox";
+      activeProjFolder = `~/github/${activeEvent.repo}`;
+      activeProjVideo = "/videooutput/My Video.mp4"; // default project preview
+      activeProjStack = ["React", "TypeScript", "Vite", "TanStack", "TailwindCSS"];
+    }
+  }
 
   const commits = useCountUp(412);
 
@@ -346,63 +553,202 @@ export function Hero() {
                 <StatTile {...s} />
               </div>
             ))}
-            {/* Building card spanning 2 */}
-            <div className="col-span-2 bg-background p-5 sm:p-6 border-t border-border">
-              <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
-                <span className="flex items-center gap-2">
-                  <span>›_ COMMIT · MAIN</span>
-                </span>
-                <span className="flex items-center gap-1.5 text-amber-warn">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber-warn animate-pulse" />
-                  BUILDING
-                </span>
-              </div>
-              <div className="mt-4 font-mono text-xs text-muted-foreground">
-                ~/projects/ecogeoguard-v2
-              </div>
-              <div className="mt-2 font-serif-display text-2xl text-foreground">EcoGeoGuard</div>
-              <div className="font-mono text-xs text-muted-foreground mt-1">
-                AI-IoT Landslide Prediction Platform
-              </div>
+             {/* Building card spanning 2 */}
+             <div className="col-span-2 bg-background p-5 sm:p-6 border-t border-border">
+               <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
+                 <span className="flex items-center gap-2">
+                   <span>›_ COMMIT · {activeProjTime ? activeProjTime.toUpperCase() : "MAIN"}</span>
+                 </span>
+                 <span className={`flex items-center gap-1.5 ${activeProjStatusColor}`}>
+                   <span className={`h-1.5 w-1.5 rounded-full ${activeProjStatusColor} bg-current animate-pulse`} />
+                   {activeProjStatus}
+                 </span>
+               </div>
+               <div className="mt-4 font-mono text-xs text-muted-foreground truncate" title={activeProjFolder}>
+                 {activeProjFolder}
+               </div>
+               <div className="mt-2 font-serif-display text-2xl text-foreground truncate" title={activeProjName}>
+                 {activeProjName}
+               </div>
+               <div className="font-mono text-xs text-muted-foreground mt-1 truncate" title={activeProjSub}>
+                 {activeProjSub}
+               </div>
+ 
+               {activeProjCommit && (
+                 <div className="mt-3 border border-border/30 bg-white/[0.02] p-2.5 rounded font-mono text-[11px] leading-snug">
+                   <span className="text-accent font-semibold">// LATEST WORK:</span>
+                   <div className="text-foreground mt-1 select-all font-light">
+                     {activeProjCommit}
+                   </div>
+                 </div>
+               )}
+ 
+               <ProjectVideo src={activeProjVideo} title={activeProjName} />
+ 
+               <div className="mt-4 flex flex-wrap gap-1.5 font-mono text-[11px]">
+                 {activeProjStack.map((t) => (
+                   <span key={t} className="px-2 py-0.5 border border-border text-muted-foreground">
+                     {t}
+                   </span>
+                 ))}
+               </div>
+             </div>
+           </div>
+         </div>
+ 
+          {/* ROW 2: Latest Live Websites */}
+          <div className="mt-px border border-border border-t-0 bg-background p-5 sm:p-6">
+            <div className="font-mono text-[10px] tracking-[0.22em] text-muted-foreground uppercase mb-4 flex items-center gap-1.5 select-none">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+              ›_ PORTAL: ACTIVE_LIVE_DEPLOYMENTS
+            </div>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {[
+                {
+                  name: "EcoGeoGuard",
+                  sub: "AI-IoT Landslide Predictor",
+                  desc: "Multi-sensor fusion pipeline on AWS returning sub-3-minute risk forecasts.",
+                  url: "https://ecogeoguard.vercel.app/",
+                  port: "PORT_443",
+                  statusColor: "text-emerald-400",
+                },
+                {
+                  name: "INVENTROX OS",
+                  sub: "AI Business Operating System",
+                  desc: "SME POS and GST billing engine with inventory telemetry and automation.",
+                  url: "https://inventrox.vercel.app/",
+                  port: "PORT_8080",
+                  statusColor: "text-emerald-400",
+                },
+                {
+                  name: "Mukul Portfolio",
+                  sub: "Cybersecurity Telemetry HUD",
+                  desc: "This site: serverless Edge-routed, voice chatbot proxy, active git feeds.",
+                  url: "https://github.com/MukulS07/Mukul-Portfolio",
+                  port: "PORT_3000",
+                  statusColor: "text-accent",
+                },
+              ].map((site) => (
+                <div
+                  key={site.name}
+                  onClick={() => window.open(site.url, "_blank", "noopener,noreferrer")}
+                  className="border border-border/60 hover:border-accent hover:bg-white/[0.02] p-4 rounded transition-all duration-300 cursor-pointer flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between font-mono text-[9px] text-muted-foreground tracking-wider">
+                      <span>{site.port}</span>
+                      <span className={`flex items-center gap-1 ${site.statusColor}`}>
+                        <span className="h-1 w-1 rounded-full bg-current animate-ping" />
+                        ONLINE
+                      </span>
+                    </div>
+                    <h4 className="mt-3 font-serif-display text-lg text-foreground group-hover:text-accent transition-colors">
+                      {site.name}
+                    </h4>
+                    <p className="font-mono text-[10px] text-muted-foreground mt-0.5">{site.sub}</p>
+                    <p className="mt-2.5 font-mono text-[11px] leading-relaxed text-muted-foreground/80 line-clamp-2">
+                      {site.desc}
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-border/30 flex justify-between items-center font-mono text-[10px] text-muted-foreground group-hover:text-accent transition-colors">
+                    <span>LAUNCH PORTAL</span>
+                    <span>→</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-              <ProjectVideo src="/videooutput/My Video.mp4" title="EcoGeoGuard" />
+          {/* ROW 3: split-screen telemetry feed (GitHub + LinkedIn) */}
+          <div className="mt-px grid lg:grid-cols-2 gap-px bg-border border border-border border-t-0">
+            {/* Left Terminal: GITHUB TELEMETRY */}
+            <div className="bg-background flex flex-col min-w-0">
+              <div className="px-5 sm:px-6 py-2.5 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground border-b border-border select-none bg-black/15">
+                <span className="flex items-center gap-1.5 font-semibold text-accent">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                  ›_ UPLINK: GITHUB_LOGS
+                </span>
+                <span className="tabular-nums text-muted-foreground/60">{eventsList.length} / 30</span>
+              </div>
+              <div className="max-h-[300px] overflow-y-auto">
+                <table className="w-full font-mono text-xs">
+                  <tbody>
+                    {eventsList.map((e, i) => (
+                      <tr
+                        key={i}
+                        onClick={e.link ? () => window.open(e.link, "_blank", "noopener,noreferrer") : undefined}
+                        className={`border-b border-border/40 last:border-0 hover:bg-white/[0.03] transition-colors ${
+                          e.link ? "cursor-pointer" : ""
+                        }`}
+                      >
+                        <td className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground w-28 tabular-nums">
+                          {e.t}
+                        </td>
+                        <td className="py-3 w-16 sm:w-20">
+                          <span className={`px-2 py-0.5 border text-[9px] tracking-wider uppercase font-semibold ${e.tagColor} border-current/20 bg-current/5`}>
+                            {e.tag}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 font-semibold text-accent break-all sm:break-normal w-1/4">
+                          {e.repo}
+                        </td>
+                        <td className="py-3 text-foreground break-all sm:break-normal pr-4">
+                          {e.msg}
+                        </td>
+                        <td className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground text-right font-light italic truncate max-w-[120px]" title={e.note}>
+                          {e.note}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-              <div className="mt-4 flex flex-wrap gap-1.5 font-mono text-[11px]">
-                {["Python", "AWS Lambda", "DynamoDB", "LoRa", "Next.js"].map((t) => (
-                  <span key={t} className="px-2 py-0.5 border border-border text-muted-foreground">
-                    {t}
-                  </span>
-                ))}
+            {/* Right Terminal: LINKEDIN TELEMETRY */}
+            <div className="bg-background flex flex-col min-w-0 border-t lg:border-t-0 lg:border-l border-border">
+              <div className="px-5 sm:px-6 py-2.5 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground border-b border-border select-none bg-black/15">
+                <span className="flex items-center gap-1.5 font-semibold text-accent">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
+                  ›_ UPLINK: LINKEDIN_FEED
+                </span>
+                <span className="tabular-nums text-muted-foreground/60">{linkedinEvents.length} / 10</span>
+              </div>
+              <div className="max-h-[300px] overflow-y-auto">
+                <table className="w-full font-mono text-xs">
+                  <tbody>
+                    {linkedinEvents.map((e, i) => (
+                      <tr
+                        key={i}
+                        onClick={e.link ? () => window.open(e.link, "_blank", "noopener,noreferrer") : undefined}
+                        className={`border-b border-border/40 last:border-0 hover:bg-white/[0.03] transition-colors ${
+                          e.link ? "cursor-pointer" : ""
+                        }`}
+                      >
+                        <td className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground w-28 tabular-nums">
+                          {e.t}
+                        </td>
+                        <td className="py-3 w-16 sm:w-20">
+                          <span className={`px-2 py-0.5 border text-[9px] tracking-wider uppercase font-semibold ${e.tagColor} border-current/20 bg-current/5`}>
+                            {e.tag}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 font-semibold text-accent break-all sm:break-normal w-1/4">
+                          {e.repo}
+                        </td>
+                        <td className="py-3 text-foreground break-all sm:break-normal pr-4">
+                          {e.msg}
+                        </td>
+                        <td className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground text-right font-light italic truncate max-w-[120px]" title={e.note}>
+                          {e.note}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* ROW 2: events log */}
-        <div className="mt-px border border-border border-t-0">
-          <div className="px-5 sm:px-6 py-3 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground border-b border-border">
-            <span className="flex items-center gap-2">
-              <span className="text-accent">((·))</span>
-              <span className="text-foreground">LIVE</span>
-              <span>· /EVENTS</span>
-            </span>
-            <span>5 / 28</span>
-          </div>
-          <table className="w-full font-mono text-xs">
-            <tbody>
-              {events.map((e, i) => (
-                <tr key={i} className="border-b border-border last:border-0">
-                  <td className="hidden sm:table-cell px-5 sm:px-6 py-2.5 text-muted-foreground w-28 tabular-nums">
-                    {e.t}
-                  </td>
-                  <td className={`py-2.5 w-16 sm:w-20 ${e.tagColor}`}>{e.tag}</td>
-                  <td className="py-2.5 text-foreground break-all sm:break-normal">{e.msg}</td>
-                  <td className="hidden sm:table-cell px-5 sm:px-6 py-2.5 text-muted-foreground text-right">{e.note}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </div>
 
       {/* Tech ticker */}
@@ -447,7 +793,7 @@ export function Hero() {
           <div className="lg:col-span-5 bg-background p-6 sm:p-8 flex flex-col gap-6">
             <div>
               <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
-                <span>⌧ GITHUB · @MUKULSHARMAMS007</span>
+                <span>⌧ GITHUB · @MUKULS07</span>
                 <span>26W</span>
               </div>
               <div className="mt-5 overflow-x-auto">

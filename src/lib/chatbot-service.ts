@@ -34,7 +34,7 @@ Here is the telemetry data about Mukul Sharma:
 - Certifications: Google UX Design (Coursera), Cloud Computing (NPTEL), Core & Advanced Java, DSA using C/C++.
 - Contact Telemetry:
   - Email: mukulsharmaworks@gmail.com
-  - GitHub: github.com/mukulsharmams007
+  - GitHub: github.com/MukulS07
   - LinkedIn: linkedin.com/in/mukul-sharma-514634214
   - Mobile: +91-7737360788
   - Location: Jaipur, India (IST)

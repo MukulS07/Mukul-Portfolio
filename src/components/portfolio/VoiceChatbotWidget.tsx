@@ -1076,8 +1076,8 @@ function queryOfflineExpert(query: string, avengersMode: boolean): string {
   }
   if (q.includes("contact") || q.includes("email") || q.includes("phone") || q.includes("github") || q.includes("linkedin") || q.includes("hire") || q.includes("reach") || q.includes("number")) {
     return avengersMode
-      ? "Comms up. Email: mukulsharmaworks@gmail.com. Mobile: +91 77373 60788. GitHub: mukulsharmams007. LinkedIn active, Boss."
-      : "Contact info: Email: mukulsharmaworks@gmail.com. Mobile: +91-7737360788. GitHub: mukulsharmams007. LinkedIn: mukul-sharma-514634214.";
+      ? "Comms up. Email: mukulsharmaworks@gmail.com. Mobile: +91 77373 60788. GitHub: MukulS07. LinkedIn active, Boss."
+      : "Contact info: Email: mukulsharmaworks@gmail.com. Mobile: +91-7737360788. GitHub: MukulS07. LinkedIn: mukul-sharma-514634214.";
   }
   if (q.includes("friday") || q.includes("stark") || q.includes("suit") || q.includes("jarvis") || q.includes("avenger")) {
     return "Mark 85 armor diagnostics clear, Boss. Systems normal. Arc reactor capacity at 100%. Ask me anything.";

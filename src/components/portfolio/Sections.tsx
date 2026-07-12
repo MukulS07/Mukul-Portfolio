@@ -215,7 +215,7 @@ const projects: Project[] = [
     stack: ["Python", "ML", "AWS Lambda", "DynamoDB", "API Gateway", "IoT", "LoRa", "Next.js"],
     links: [
       { label: "live →", href: "https://ecogeoguard.vercel.app/" },
-      { label: "paper", href: "#research" },
+      { label: "paper →", href: "https://conferenceseries.adroidjournals.com/index.php/ACSET/article/view/53" },
     ],
   },
   {
@@ -244,7 +244,7 @@ const projects: Project[] = [
     description:
       "2D top-down space shooter built in Unity 6. Architected the player controller, wave spawner with escalating difficulty, multi-phase boss encounters, and a ScriptableObject-driven weapon/power-up inventory system.",
     stack: ["Unity 6", "C#", "2D Physics", "New Input System", "ScriptableObjects"],
-    links: [{ label: "github →", href: "https://github.com/mukulsharmams007" }],
+    links: [{ label: "github →", href: "https://github.com/MukulS07" }],
   },
   {
     num: "04",
@@ -364,6 +364,16 @@ export function Research() {
               pipeline on AWS, delivering sub-3-minute landslide alerts and dual-use smart
               agriculture telemetry.
             </p>
+            <div className="mt-6 font-mono text-xs">
+              <a
+                href="https://conferenceseries.adroidjournals.com/index.php/ACSET/article/view/53"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-accent hover:underline underline-offset-4"
+              >
+                [read publication →]
+              </a>
+            </div>
           </div>
           <div className="font-mono text-xs space-y-3">
             <div className="border border-border rounded-md p-3 bg-black/20">
@@ -590,8 +600,8 @@ export function Contact() {
               />
               <Row
                 k="github"
-                v="github.com/mukulsharmams007"
-                href="https://github.com/mukulsharmams007"
+                v="github.com/MukulS07"
+                href="https://github.com/MukulS07"
               />
               <Row
                 k="linkedin"
