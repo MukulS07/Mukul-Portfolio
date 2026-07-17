@@ -36,7 +36,7 @@ const ticker = [
   "Blender",
 ];
 
-const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg: string; note: string }[] = [
+const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg: string; note: string; fullMsg?: string }[] = [
   {
     t: "06:53:01",
     tag: "DESIGN",
@@ -44,6 +44,7 @@ const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg:
     repo: "Mukul-Portfolio",
     msg: "iter  portfolio · v2",
     note: "+cockpit +grid",
+    fullMsg: "iterative portfolio cockpit layout updates for v2 version",
   },
   {
     t: "06:52:59",
@@ -52,6 +53,7 @@ const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg:
     repo: "EcoGeoGuard",
     msg: "pass  ecogeoguard#218",
     note: "12 checks ✓",
+    fullMsg: "EcoGeoGuard CI/CD pipeline tests passed: all 12 checks verified successfully",
   },
   {
     t: "06:52:43",
@@ -60,6 +62,7 @@ const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg:
     repo: "landslide-risk",
     msg: "deploy lambda · landslide-risk",
     note: "rt 0.18s",
+    fullMsg: "Deployed landslide-risk monitoring AWS Lambda function. Runtime response: 0.18s",
   },
   {
     t: "06:51:10",
@@ -68,6 +71,7 @@ const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg:
     repo: "ml-pipeline-v3",
     msg: "infer ml-pipeline-v3",
     note: "f1 0.94",
+    fullMsg: "ML Pipeline Inference Run completed. Model Evaluation Metric: F1 Score = 0.94",
   },
   {
     t: "06:48:02",
@@ -76,6 +80,7 @@ const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg:
     repo: "node-187",
     msg: "ingest node-187 telemetry",
     note: "ok",
+    fullMsg: "Ingested active IoT sensor node-187 data telemetry: status OK",
   },
 ];
 
@@ -227,6 +232,7 @@ export function Hero() {
     msg: string;
     note: string;
     link?: string;
+    fullMsg?: string;
   }[]>([]);
 
   useEffect(() => {
@@ -253,19 +259,21 @@ export function Hero() {
         if (!res.ok) throw new Error("API error fetching events");
         return res.json();
       })
-      .then((data) => {
+      .then(async (data) => {
         if (!Array.isArray(data) || data.length === 0) {
           setEventsList(mockEvents);
           return;
         }
 
-        const formatted = data.slice(0, 5).map((evt: any) => {
+        const events = data.slice(0, 5);
+        const formattedPromises = events.map(async (evt: any) => {
           let tag = "ACTIVITY";
           let tagColor = "text-muted-foreground";
           let msg = "";
           let note = "";
+          let fullMsg = "";
+          let link = "";
 
-          // Calculate relative time (e.g. 2m ago, 3h ago, 5d ago)
           const createdTime = new Date(evt.created_at).getTime();
           const now = Date.now();
           const diffMs = now - createdTime;
@@ -274,88 +282,105 @@ export function Hero() {
           const diffDays = Math.floor(diffHours / 24);
 
           let t = "";
-          if (diffMins < 1) {
-            t = "just now";
-          } else if (diffMins < 60) {
-            t = `${diffMins}m ago`;
-          } else if (diffHours < 24) {
-            t = `${diffHours}h ago`;
-          } else {
-            t = `${diffDays}d ago`;
-          }
+          if (diffMins < 1) t = "just now";
+          else if (diffMins < 60) t = `${diffMins}m ago`;
+          else if (diffHours < 24) t = `${diffHours}h ago`;
+          else t = `${diffDays}d ago`;
 
           const repoName = evt.repo?.name ? evt.repo.name.replace(/^MukulS07\//, "") : "";
+          link = `https://github.com/MukulS07/${repoName}`;
 
-          switch (evt.type) {
-            case "PushEvent":
-              tag = "PUSH";
-              tagColor = "text-accent"; // sky blue
-              const commitCount = evt.payload?.commits?.length || 1;
-              const commitMsg = evt.payload?.commits?.[0]?.message?.split("\n")?.[0] || "";
-              const truncatedMsg = commitMsg.length > 30 ? commitMsg.substring(0, 30) + "..." : commitMsg;
-              msg = commitMsg ? `pushed: "${truncatedMsg}"` : "pushed commits";
-              note = evt.payload?.ref ? evt.payload.ref.replace("refs/heads/", "") : "main";
-              if (commitCount > 1) {
-                note += ` (+${commitCount - 1} commits)`;
+          if (evt.type === "PushEvent") {
+            tag = "PUSH";
+            tagColor = "text-accent";
+            note = evt.payload?.ref ? evt.payload.ref.replace("refs/heads/", "") : "main";
+            
+            try {
+              const commitsRes = await fetch(`https://api.github.com/repos/MukulS07/${repoName}/commits?per_page=5`);
+              if (commitsRes.ok) {
+                const commitsData = await commitsRes.json();
+                if (Array.isArray(commitsData) && commitsData.length > 0) {
+                  const headSha = evt.payload?.head;
+                  const targetCommit = commitsData.find((c: any) => c.sha === headSha) || commitsData[0];
+                  
+                  const commitMsg = targetCommit.commit?.message || "";
+                  const firstLineMsg = commitMsg.split("\n")?.[0] || "";
+                  const truncatedMsg = firstLineMsg.length > 30 ? firstLineMsg.substring(0, 30) + "..." : firstLineMsg;
+                  
+                  msg = firstLineMsg ? `pushed: "${truncatedMsg}"` : "pushed commits";
+                  fullMsg = commitMsg || "pushed commits";
+                  
+                  const shortSha = targetCommit.sha ? targetCommit.sha.substring(0, 7) : "";
+                  note = `${note} (${shortSha})`;
+                  link = targetCommit.html_url || link;
+                } else {
+                  msg = "pushed commits";
+                  fullMsg = "pushed commits";
+                }
+              } else {
+                msg = "pushed commits";
+                fullMsg = "pushed commits";
               }
-              break;
-
-            case "CreateEvent":
-              tag = "CREATE";
-              tagColor = "text-amber-warn"; // amber/gold
-              const refType = evt.payload?.ref_type || "repository";
-              const refName = evt.payload?.ref ? `"${evt.payload.ref}"` : "";
-              msg = `created ${refType} ${refName}`;
-              note = refType === "branch" ? "+branch" : "+repo";
-              break;
-
-            case "PullRequestEvent":
-              tag = "PR";
-              tagColor = "text-emerald-400"; // green
-              const prAction = evt.payload?.action || "opened";
-              const prNum = evt.payload?.number || "";
-              const prTitle = evt.payload?.pull_request?.title || "";
-              const truncatedPrTitle = prTitle.length > 25 ? prTitle.substring(0, 25) + "..." : prTitle;
-              msg = `${prAction} PR: "${truncatedPrTitle}"`;
-              note = `PR #${prNum}`;
-              break;
-
-            case "IssuesEvent":
-              tag = "ISSUE";
-              tagColor = "text-rose-500"; // red
-              const issueAction = evt.payload?.action || "opened";
-              const issueNum = evt.payload?.issue?.number || "";
-              const issueTitle = evt.payload?.issue?.title || "";
-              const truncatedIssueTitle = issueTitle.length > 25 ? issueTitle.substring(0, 25) + "..." : issueTitle;
-              msg = `${issueAction} issue: "${truncatedIssueTitle}"`;
-              note = `issue #${issueNum}`;
-              break;
-
-            case "WatchEvent":
-              tag = "STAR";
-              tagColor = "text-yellow-400"; // bright yellow
-              msg = `starred the repository`;
-              note = "★ star";
-              break;
-
-            case "ForkEvent":
-              tag = "FORK";
-              tagColor = "text-indigo-400"; // indigo
-              msg = `forked to ${evt.payload?.forkee?.name || "fork"}`;
-              note = "forked";
-              break;
-
-            default:
-              tag = "ACTIVITY";
-              tagColor = "text-muted-foreground";
-              msg = `active in repository`;
-              note = "uplink ok";
-              break;
+            } catch (err) {
+              console.error("Failed to fetch commits for repo:", repoName, err);
+              msg = "pushed commits";
+              fullMsg = "pushed commits";
+            }
+          } else if (evt.type === "CreateEvent") {
+            tag = "CREATE";
+            tagColor = "text-amber-warn";
+            const refType = evt.payload?.ref_type || "repository";
+            const refName = evt.payload?.ref ? `"${evt.payload.ref}"` : "";
+            msg = `created ${refType} ${refName}`;
+            fullMsg = msg;
+            note = refType === "branch" ? "+branch" : "+repo";
+          } else if (evt.type === "PullRequestEvent") {
+            tag = "PR";
+            tagColor = "text-emerald-400";
+            const prAction = evt.payload?.action || "opened";
+            const prNum = evt.payload?.number || "";
+            const prTitle = evt.payload?.pull_request?.title || "";
+            const truncatedPrTitle = prTitle.length > 25 ? prTitle.substring(0, 25) + "..." : prTitle;
+            msg = `${prAction} PR: "${truncatedPrTitle}"`;
+            fullMsg = prTitle ? `PR #${prNum}: ${prTitle}` : msg;
+            note = `PR #${prNum}`;
+            link = evt.payload?.pull_request?.html_url || link;
+          } else if (evt.type === "IssuesEvent") {
+            tag = "ISSUE";
+            tagColor = "text-rose-500";
+            const issueAction = evt.payload?.action || "opened";
+            const issueNum = evt.payload?.issue?.number || "";
+            const issueTitle = evt.payload?.issue?.title || "";
+            const truncatedIssueTitle = issueTitle.length > 25 ? issueTitle.substring(0, 25) + "..." : issueTitle;
+            msg = `${issueAction} issue: "${truncatedIssueTitle}"`;
+            fullMsg = issueTitle ? `Issue #${issueNum}: ${issueTitle}` : msg;
+            note = `issue #${issueNum}`;
+            link = evt.payload?.issue?.html_url || link;
+          } else if (evt.type === "WatchEvent") {
+            tag = "STAR";
+            tagColor = "text-yellow-400";
+            msg = `starred the repository`;
+            fullMsg = msg;
+            note = "★ star";
+          } else if (evt.type === "ForkEvent") {
+            tag = "FORK";
+            tagColor = "text-indigo-400";
+            msg = `forked to ${evt.payload?.forkee?.name || "fork"}`;
+            fullMsg = msg;
+            note = "forked";
+            link = evt.payload?.forkee?.html_url || link;
+          } else {
+            tag = "ACTIVITY";
+            tagColor = "text-muted-foreground";
+            msg = `active in repository`;
+            fullMsg = msg;
+            note = "uplink ok";
           }
 
-          return { t, tag, tagColor, repo: repoName, msg, note };
+          return { t, tag, tagColor, repo: repoName, msg, note, fullMsg, link };
         });
 
+        const formatted = await Promise.all(formattedPromises);
         setEventsList(formatted);
       })
       .catch((err) => {
@@ -677,6 +702,7 @@ export function Hero() {
                       <tr
                         key={i}
                         onClick={e.link ? () => window.open(e.link, "_blank", "noopener,noreferrer") : undefined}
+                        title={e.fullMsg || e.msg}
                         className={`border-b border-border/40 last:border-0 hover:bg-white/[0.03] transition-colors ${
                           e.link ? "cursor-pointer" : ""
                         }`}
@@ -721,6 +747,7 @@ export function Hero() {
                       <tr
                         key={i}
                         onClick={e.link ? () => window.open(e.link, "_blank", "noopener,noreferrer") : undefined}
+                        title={e.msg}
                         className={`border-b border-border/40 last:border-0 hover:bg-white/[0.03] transition-colors ${
                           e.link ? "cursor-pointer" : ""
                         }`}
