@@ -16,10 +16,11 @@ Here is the telemetry data about Mukul Sharma:
   - Accepted at: DASGRI Congress 2026 (April 2026).
   - Summary: A multi-sensor fusion model on AWS (using LoRa-based IoT nodes) that bypasses standard telemetry delays, outputting landslide risk scores every 30 seconds with sub-3-minute alert latency and an F1 score of 0.94.
 - Core Projects:
-  1. EcoGeoGuard: AI-IoT Landslide Prediction and Smart Agriculture Platform. ML F1 Score of 0.94, alert latency under 3 minutes, 187 active nodes. Tech Stack: Python, ML, AWS Lambda, DynamoDB, API Gateway, IoT, LoRa, Next.js.
-  2. INVENTROX: AI Business Operating System for Indian SMEs. Smart POS, GST invoicing, CRM, inventory, live analytics, AI assistant. Tech Stack: Next.js, Node.js, Express, MongoDB, AI APIs.
-  3. Space Galactus: 2D space shooter in Unity 6 using C# and ScriptableObjects (weapon/power-up inventory, waves spawner).
-  4. SIH - AYUSH VR Herbal Garden (Smart India Hackathon, Sep 2024): VR immersive Ayurvedic learning garden. Unity 3D, Oculus SDK, Node.js, Express, MongoDB.
+  1. ApexF1: Ultimate Formula 1 2026 Dashboard. Integrates live simulated telemetry, 3D interactive car customization, calendar tracking, and a paddock AI chatbot. Tech Stack: TanStack Start, Three.js, Web Audio API, Tailwind CSS v4, NVIDIA NIM.
+  2. EcoGeoGuard: AI-IoT Landslide Prediction and Smart Agriculture Platform. ML F1 Score of 0.94, alert latency under 3 minutes, 187 active nodes. Tech Stack: Python, ML, AWS Lambda, DynamoDB, API Gateway, IoT, LoRa, Next.js.
+  3. INVENTROX: AI Business Operating System for Indian SMEs. Smart POS, GST invoicing, CRM, inventory, live analytics, AI assistant. Tech Stack: Next.js, Node.js, Express, MongoDB, AI APIs.
+  4. Space Galactus: 2D space shooter in Unity 6 using C# and ScriptableObjects (weapon/power-up inventory, waves spawner).
+  5. SIH - AYUSH VR Herbal Garden (Smart India Hackathon, Sep 2024): VR immersive Ayurvedic learning garden. Unity 3D, Oculus SDK, Node.js, Express, MongoDB.
 - Skills & Technologies:
   - Cyber Security: Network Security, IAM, Cloud Security (AWS), Secure Architecture, Ethical Hacking.
   - AI & ML: ML Algorithms, AI-IoT systems, LLM/GenAI APIs, Prompt Engineering.
@@ -123,3 +124,39 @@ export const queryChatbot = createServerFn({ method: "POST" })
       };
     }
   });
+
+export const checkDeployments = createServerFn({ method: "POST" })
+  .validator((urls: string[]) => urls)
+  .handler(async ({ data: urls }) => {
+    const results = await Promise.all(
+      urls.map(async (url) => {
+        const start = Date.now();
+        try {
+          const controller = new AbortController();
+          const id = setTimeout(() => controller.abort(), 4000);
+          const response = await fetch(url, {
+            method: "GET",
+            signal: controller.signal,
+            headers: {
+              "User-Agent": "Mukul-Portfolio-Ping/1.0",
+            },
+          });
+          clearTimeout(id);
+          const latency = Date.now() - start;
+          return {
+            url,
+            online: response.status < 500,
+            latency,
+          };
+        } catch (err) {
+          return {
+            url,
+            online: false,
+            latency: null,
+          };
+        }
+      })
+    );
+    return results;
+  });
+

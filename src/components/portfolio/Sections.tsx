@@ -200,6 +200,25 @@ type Project = {
 const projects: Project[] = [
   {
     num: "01",
+    title: "ApexF1 — Ultimate F1 2026 Dashboard",
+    type: "Personal Product",
+    period: "Jul 2026",
+    status: "live",
+    description:
+      "Formula 1 dashboard designed for the upcoming 2026 season. Built with performance, interactivity, and premium aesthetics. Integrates real-time telemetry, 3D interactive model customization in Three.js/WebGL, F1 calendars, driver statistics, and an AI paddock assistant powered by NVIDIA NIM.",
+    stats: [
+      { k: "3D Designer", v: "Three.js / WebGL" },
+      { k: "AI Engine", v: "NVIDIA NIM" },
+      { k: "Audio Synth", v: "Web Audio" },
+    ],
+    stack: ["TanStack Start", "Three.js", "Tailwind CSS v4", "GSAP", "NVIDIA NIM", "Web Audio API"],
+    links: [
+      { label: "live →", href: "https://apex-f1-eosin.vercel.app" },
+      { label: "github →", href: "https://github.com/MukulS07/ApexF1" },
+    ],
+  },
+  {
+    num: "02",
     title: "EcoGeoGuard — AI-IoT Landslide Prediction",
     type: "Personal Research Project",
     period: "Dec 2025 – May 2026",
@@ -219,7 +238,7 @@ const projects: Project[] = [
     ],
   },
   {
-    num: "02",
+    num: "03",
     title: "INVENTROX — AI Business Operating System",
     type: "Personal Product",
     period: "2026",
@@ -236,7 +255,7 @@ const projects: Project[] = [
     links: [{ label: "live →", href: "https://inventrox.vercel.app/" }],
   },
   {
-    num: "03",
+    num: "04",
     title: "Space Galactus",
     type: "LPU Academic · Team of 3",
     period: "Jan – Apr 2026",
@@ -247,7 +266,7 @@ const projects: Project[] = [
     links: [{ label: "github →", href: "https://github.com/MukulS07" }],
   },
   {
-    num: "04",
+    num: "05",
     title: "SIH — AYUSH VR Herbal Garden",
     type: "Smart India Hackathon",
     period: "Sep 2024",

@@ -101,9 +101,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Builder of secure cloud-native systems. EcoGeoGuard, INVENTROX, DASGRI 2026 publication.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/portrait.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "/portrait.jpg" },
     ],
     links: [
+      { rel: "icon", href: "/portrait.jpg", type: "image/jpeg" },
+      { rel: "apple-touch-icon", href: "/portrait.jpg" },
       {
         rel: "stylesheet",
         href: appCss,

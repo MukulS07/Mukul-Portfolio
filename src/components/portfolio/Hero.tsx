@@ -3,6 +3,7 @@ import portrait from "@/assets/portrait.jpg";
 import { ProjectVideo } from "./ProjectVideo";
 import { Link } from "@tanstack/react-router";
 import linkedinUpdates from "@/data/linkedin-updates.json";
+import { checkDeployments } from "@/lib/chatbot-service";
 
 const roles = ["Security Engineer", "Cloud Architect", "AI/IoT Builder", "Full-Stack Developer"];
 
@@ -235,6 +236,59 @@ export function Hero() {
     fullMsg?: string;
   }[]>([]);
 
+  const [deploymentStatuses, setDeploymentStatuses] = useState<Record<string, { online: boolean; latency: number | null; loading: boolean }>>({
+    "ApexF1": { online: true, latency: null, loading: true },
+    "EcoGeoGuard": { online: true, latency: null, loading: true },
+    "INVENTROX OS": { online: true, latency: null, loading: true },
+    "Mukul Portfolio": { online: true, latency: null, loading: true },
+    "Space Galactus": { online: true, latency: null, loading: true },
+    "AYUSH VR Herbal Garden": { online: true, latency: null, loading: true },
+  });
+
+  useEffect(() => {
+    const sites = [
+      { name: "ApexF1", url: "https://apex-f1-eosin.vercel.app" },
+      { name: "EcoGeoGuard", url: "https://ecogeoguard.vercel.app/" },
+      { name: "INVENTROX OS", url: "https://inventrox.vercel.app/" },
+      { name: "Mukul Portfolio", url: "https://github.com/MukulS07/Mukul-Portfolio" },
+      { name: "Space Galactus", url: "https://github.com/MukulS07" },
+      { name: "AYUSH VR Herbal Garden", url: "https://github.com/MukulS07" },
+    ];
+
+    const pingAll = async () => {
+      try {
+        const portfolioUrl = window.location.origin;
+        const urlsToPing = sites.map(s => s.name === "Mukul Portfolio" ? portfolioUrl : s.url);
+        
+        const results = await checkDeployments({ data: urlsToPing });
+        
+        const newStatuses: typeof deploymentStatuses = {};
+        sites.forEach((site, index) => {
+          const res = results[index];
+          newStatuses[site.name] = {
+            online: res.online,
+            latency: res.latency,
+            loading: false,
+          };
+        });
+        setDeploymentStatuses(newStatuses);
+      } catch (err) {
+        console.error("Failed to ping deployments:", err);
+        setDeploymentStatuses(prev => {
+          const updated = { ...prev };
+          Object.keys(updated).forEach(k => {
+            updated[k].loading = false;
+          });
+          return updated;
+        });
+      }
+    };
+
+    pingAll();
+    const interval = setInterval(pingAll, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     const id = setInterval(() => setRoleIdx((i) => (i + 1) % roles.length), 2200);
     return () => clearInterval(id);
@@ -242,7 +296,12 @@ export function Hero() {
 
   useEffect(() => {
     // 1. Fetch public profile stats
-    fetch("https://api.github.com/users/MukulS07")
+    fetch(`https://api.github.com/users/MukulS07?t=${Date.now()}`, {
+      headers: {
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data && typeof data.public_repos === "number") {
@@ -254,7 +313,12 @@ export function Hero() {
       });
 
     // 2. Fetch public events activity feed
-    fetch("https://api.github.com/users/MukulS07/events/public")
+    fetch(`https://api.github.com/users/MukulS07/events/public?t=${Date.now()}`, {
+      headers: {
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+      },
+    })
       .then((res) => {
         if (!res.ok) throw new Error("API error fetching events");
         return res.json();
@@ -296,7 +360,12 @@ export function Hero() {
             note = evt.payload?.ref ? evt.payload.ref.replace("refs/heads/", "") : "main";
             
             try {
-              const commitsRes = await fetch(`https://api.github.com/repos/MukulS07/${repoName}/commits?per_page=5`);
+              const commitsRes = await fetch(`https://api.github.com/repos/MukulS07/${repoName}/commits?per_page=5&t=${Date.now()}`, {
+                headers: {
+                  "Cache-Control": "no-cache",
+                  "Pragma": "no-cache",
+                },
+              });
               if (commitsRes.ok) {
                 const commitsData = await commitsRes.json();
                 if (Array.isArray(commitsData) && commitsData.length > 0) {
@@ -630,12 +699,18 @@ export function Hero() {
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
               {[
                 {
+                  name: "ApexF1",
+                  sub: "Ultimate F1 2026 Dashboard",
+                  desc: "Three.js 3D car livery designer, simulated track telemetry, and NVIDIA NIM chatbot.",
+                  url: "https://apex-f1-eosin.vercel.app",
+                  port: "PORT_80",
+                },
+                {
                   name: "EcoGeoGuard",
                   sub: "AI-IoT Landslide Predictor",
                   desc: "Multi-sensor fusion pipeline on AWS returning sub-3-minute risk forecasts.",
                   url: "https://ecogeoguard.vercel.app/",
                   port: "PORT_443",
-                  statusColor: "text-emerald-400",
                 },
                 {
                   name: "INVENTROX OS",
@@ -643,7 +718,6 @@ export function Hero() {
                   desc: "SME POS and GST billing engine with inventory telemetry and automation.",
                   url: "https://inventrox.vercel.app/",
                   port: "PORT_8080",
-                  statusColor: "text-emerald-400",
                 },
                 {
                   name: "Mukul Portfolio",
@@ -651,36 +725,62 @@ export function Hero() {
                   desc: "This site: serverless Edge-routed, voice chatbot proxy, active git feeds.",
                   url: "https://github.com/MukulS07/Mukul-Portfolio",
                   port: "PORT_3000",
-                  statusColor: "text-accent",
                 },
-              ].map((site) => (
-                <div
-                  key={site.name}
-                  onClick={() => window.open(site.url, "_blank", "noopener,noreferrer")}
-                  className="border border-border/60 hover:border-accent hover:bg-white/[0.02] p-4 rounded transition-all duration-300 cursor-pointer flex flex-col justify-between group"
-                >
-                  <div>
-                    <div className="flex items-center justify-between font-mono text-[9px] text-muted-foreground tracking-wider">
-                      <span>{site.port}</span>
-                      <span className={`flex items-center gap-1 ${site.statusColor}`}>
-                        <span className="h-1 w-1 rounded-full bg-current animate-ping" />
-                        ONLINE
-                      </span>
+                {
+                  name: "Space Galactus",
+                  sub: "2D Top-Down Space Shooter",
+                  desc: "Unity 6 game with boss battles and ScriptableObject weapons system.",
+                  url: "https://github.com/MukulS07",
+                  port: "PORT_2026",
+                },
+                {
+                  name: "AYUSH VR Herbal Garden",
+                  sub: "VR Learning Experience",
+                  desc: "Oculus VR virtual garden with Node.js/Express/MongoDB cloud backend.",
+                  url: "https://github.com/MukulS07",
+                  port: "PORT_9000",
+                },
+              ].map((site) => {
+                const status = deploymentStatuses[site.name];
+                return (
+                  <div
+                    key={site.name}
+                    onClick={() => window.open(site.url, "_blank", "noopener,noreferrer")}
+                    className="border border-border/60 hover:border-accent hover:bg-white/[0.02] p-4 rounded transition-all duration-300 cursor-pointer flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between font-mono text-[9px] text-muted-foreground tracking-wider">
+                        <span>{site.port}</span>
+                        <span className={`flex items-center gap-1 ${
+                          status?.loading 
+                            ? "text-muted-foreground/60 animate-pulse" 
+                            : status?.online 
+                              ? "text-emerald-400" 
+                              : "text-red-400"
+                        }`}>
+                          <span className={`h-1 w-1 rounded-full bg-current ${status?.online && !status.loading ? "animate-ping" : ""}`} />
+                          {status?.loading 
+                            ? "PINGING" 
+                            : status?.online 
+                              ? `ONLINE${status.latency !== null ? ` (${status.latency}ms)` : ""}` 
+                              : "OFFLINE"}
+                        </span>
+                      </div>
+                      <h4 className="mt-3 font-serif-display text-lg text-foreground group-hover:text-accent transition-colors">
+                        {site.name}
+                      </h4>
+                      <p className="font-mono text-[10px] text-muted-foreground mt-0.5">{site.sub}</p>
+                      <p className="mt-2.5 font-mono text-[11px] leading-relaxed text-muted-foreground/80 line-clamp-2">
+                        {site.desc}
+                      </p>
                     </div>
-                    <h4 className="mt-3 font-serif-display text-lg text-foreground group-hover:text-accent transition-colors">
-                      {site.name}
-                    </h4>
-                    <p className="font-mono text-[10px] text-muted-foreground mt-0.5">{site.sub}</p>
-                    <p className="mt-2.5 font-mono text-[11px] leading-relaxed text-muted-foreground/80 line-clamp-2">
-                      {site.desc}
-                    </p>
+                    <div className="mt-4 pt-3 border-t border-border/30 flex justify-between items-center font-mono text-[10px] text-muted-foreground group-hover:text-accent transition-colors">
+                      <span>LAUNCH PORTAL</span>
+                      <span>→</span>
+                    </div>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-border/30 flex justify-between items-center font-mono text-[10px] text-muted-foreground group-hover:text-accent transition-colors">
-                    <span>LAUNCH PORTAL</span>
-                    <span>→</span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

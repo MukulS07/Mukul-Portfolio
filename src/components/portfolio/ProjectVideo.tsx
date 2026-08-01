@@ -134,6 +134,8 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
           onEnded={handleEnded}
           muted={isMuted}
           playsInline
+          controlsList="nodownload"
+          onContextMenu={(e) => e.preventDefault()}
           className="w-full h-full object-cover filter contrast-[1.02]"
         />
 
@@ -206,7 +208,6 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
               </button>
             </div>
 
-            {/* Video container */}
             <div className="relative aspect-video bg-black flex items-center justify-center">
               <video
                 ref={modalVideoRef}
@@ -215,6 +216,9 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
                 autoPlay
                 loop
                 onEnded={handleModalEnded}
+                playsInline
+                controlsList="nodownload"
+                onContextMenu={(e) => e.preventDefault()}
                 className="w-full h-full"
               />
             </div>

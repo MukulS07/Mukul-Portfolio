@@ -888,11 +888,18 @@ function queryOfflineExpert(query: string, avengersMode: boolean): string {
       : "Project detail retrieved: INVENTROX. A commercial AI Business OS for small and medium businesses in India. Replaces isolated invoicing and inventory trackers with a unified stack. Featuring real-time analytics and an AI dashboard helper. Built on Next.js, Node, and MongoDB Atlas.";
   }
 
-  // 5. PROJECTS GENERAL
+  // 5. APEXF1 DETAILS
+  if (q.includes("apexf1") || q.includes("apex f1") || q.includes("f1") || q.includes("dashboard")) {
+    return avengersMode
+      ? "Uplink to ApexF1 online, Boss. It is a premium Formula 1 dashboard designed for the 2026 season. It features an interactive 3D car livery designer using Three.js and WebGL, real-time simulated track telemetry, and an AI paddock assistant powered by NVIDIA NIM."
+      : "Project detail retrieved: ApexF1. A cutting-edge Formula 1 dashboard for the 2026 season. Features a WebGL-based 3D car livery editor, real-time simulated track telemetry, and an AI paddock assistant powered by NVIDIA NIM. Built with TanStack Start and Tailwind CSS v4.";
+  }
+
+  // 6. PROJECTS GENERAL
   if (q.includes("project") || q.includes("portfolio") || q.includes("shipped") || q.includes("make") || q.includes("build") || q.includes("game") || q.includes("galactus")) {
     return avengersMode
-      ? "Mukul's projects directory includes: First, EcoGeoGuard, the AI-IoT landslide framework. Second, INVENTROX, the SME Business Operating System. Third, Space Galactus, a 2D shooter developed in Unity 6. And fourth, a Virtual Reality Herbal Garden for the Smart India Hackathon. Systems are ready to detail any of these, Boss."
-      : "Mukul has completed four major engineering projects: EcoGeoGuard (AI-IoT warning node system), INVENTROX (AI POS and billing system for SMEs), Space Galactus (C# game in Unity 6), and the AYUSH VR Garden backend for the SIH Hackathon. Contact links contain live demos.";
+      ? "Mukul's projects directory includes: First, Apex F1, the ultimate Formula 1 2026 dashboard. Second, EcoGeoGuard, the AI-IoT landslide framework. Third, INVENTROX, the SME Business Operating System. Fourth, Space Galactus, a 2D shooter developed in Unity 6. And fifth, a Virtual Reality Herbal Garden for the Smart India Hackathon. Systems are ready to detail any of these, Boss."
+      : "Mukul has completed five major engineering projects: ApexF1 (Formula 1 2026 dashboard), EcoGeoGuard (AI-IoT warning node system), INVENTROX (AI POS and billing system for SMEs), Space Galactus (C# game in Unity 6), and the AYUSH VR Garden backend for the SIH Hackathon. Contact links contain live demos.";
   }
 
   // 6. SKILLS & STACK

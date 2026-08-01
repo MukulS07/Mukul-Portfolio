@@ -1059,10 +1059,15 @@ function queryOfflineExpert(query: string, avengersMode: boolean): string {
       ? "INVENTROX records loaded. An AI Business Operating System assisting Indian SMEs. POS billing, inventory, CRM, and GST invoicing. Stacks NextJS, Express, and MongoDB."
       : "INVENTROX is a commercial AI Business OS for small businesses. Replaces fragmented billing and inventory software. Developed with React, Node.js, and MongoDB.";
   }
+  if (q.includes("apexf1") || q.includes("apex f1") || q.includes("f1") || q.includes("dashboard")) {
+    return avengersMode
+      ? "ApexF1 dashboard online, Boss. Formula 1 2026 season board. Features interactive 3D car livery designer in Three.js, live track telemetry, and NVIDIA NIM paddock AI."
+      : "ApexF1 is a 2026 Formula 1 dashboard. It features a Three.js WebGL livery editor, simulated track telemetry, and an NVIDIA NIM paddock assistant chatbot.";
+  }
   if (q.includes("project") || q.includes("portfolio") || q.includes("shipped") || q.includes("make") || q.includes("build") || q.includes("game") || q.includes("galactus")) {
     return avengersMode
-      ? "Projects include: EcoGeoGuard (AI-IoT warning), INVENTROX (SME OS), Space Galactus (C# Unity 6 game), and VR Herbal Garden. Ask for telemetry on any of these, Boss."
-      : "Mukul completed: EcoGeoGuard (landslide prediction), INVENTROX (business CRM/billing OS), Space Galactus (Unity C# shooter), and VR Herbal Garden (SIH Hackathon).";
+      ? "Projects include: ApexF1 (F1 Dashboard), EcoGeoGuard (AI-IoT warning), INVENTROX (SME OS), Space Galactus (C# Unity 6 game), and VR Herbal Garden. Ask for telemetry on any of these, Boss."
+      : "Mukul completed: ApexF1 (F1 Dashboard), EcoGeoGuard (landslide prediction), INVENTROX (business CRM/billing OS), Space Galactus (Unity C# shooter), and VR Herbal Garden (SIH Hackathon).";
   }
   if (q.includes("skill") || q.includes("stack") || q.includes("languages") || q.includes("python") || q.includes("aws") || q.includes("java") || q.includes("security") || q.includes("cyber")) {
     return avengersMode
