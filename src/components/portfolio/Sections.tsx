@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import { Section, TerminalCard } from "./Section";
 import { ProjectVideo } from "./ProjectVideo";
-import { Github, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, MapPin, ExternalLink, Star, GitFork } from "lucide-react";
+import { fetchGitHubRepos, type GitHubRepo } from "@/lib/github-service";
 
 export function About() {
   return (
@@ -285,78 +287,209 @@ const statusColor: Record<Project["status"], string> = {
 };
 
 export function Projects() {
+  const [gitHubRepos, setGitHubRepos] = useState<GitHubRepo[]>([]);
+  const [viewMode, setViewMode] = useState<"featured" | "all_repos">("featured");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    setLoading(true);
+    fetchGitHubRepos().then((repos) => {
+      if (active) {
+        setGitHubRepos(repos);
+        setLoading(false);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <Section id="projects" label="projects/" title="// shipped & in production">
-      <div className="grid lg:grid-cols-2 gap-6">
-        {projects.map((p) => (
-          <article
-            key={p.num}
-            className="border border-border bg-background group hover:border-accent/50 transition"
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 font-mono text-xs border-b border-border pb-4">
+        <div className="flex items-center gap-2 text-accent">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+          </span>
+          <span>LIVE GITHUB SYNC (MukulS07)</span>
+          {gitHubRepos.length > 0 && (
+            <span className="text-muted-foreground">({gitHubRepos.length} public repos)</span>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setViewMode("featured")}
+            className={`px-3 py-1.5 rounded border transition ${
+              viewMode === "featured"
+                ? "border-accent bg-accent/10 text-accent font-semibold"
+                : "border-border text-muted-foreground hover:text-foreground"
+            }`}
           >
-            <header className="flex items-center justify-between px-5 py-3 border-b border-border font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
-              <span>PROJECT · {p.num}</span>
-              <span
-                className={
-                  "px-2 py-0.5 border text-[10px] tracking-[0.22em] " + statusColor[p.status]
-                }
-              >
-                {p.status}
-              </span>
-            </header>
-
-            <div className="p-5 sm:p-6">
-              <h3 className="font-sans text-xl font-semibold text-foreground">{p.title}</h3>
-              <div className="mt-1 font-mono text-xs text-muted-foreground">
-                {p.type} <span className="text-dim">·</span> {p.period}
-              </div>
-
-              <ProjectVideo src={p.video} title={p.title} />
-
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
-
-              {p.stats && (
-                <div className="mt-5 grid grid-cols-3 gap-2 font-mono text-[9px] sm:text-xs">
-                  {p.stats.map((s) => (
-                    <div key={s.k} className="border border-border rounded-md p-1.5 sm:p-2.5 bg-black/20">
-                      <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.18em] text-muted-foreground truncate" title={s.k}>
-                        {s.k}
-                      </div>
-                      <div className="mt-1 text-foreground font-semibold sm:font-normal">{s.v}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <div className="mt-5 flex flex-wrap gap-1.5 font-mono text-[11px]">
-                {p.stack.map((t) => (
-                  <span
-                    key={t}
-                    className="px-2 py-0.5 rounded border border-border text-muted-foreground"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              {p.links.length > 0 && (
-                <div className="mt-5 flex gap-3 font-mono text-xs">
-                  {p.links.map((l) => (
-                    <a
-                      key={l.label}
-                      href={l.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-accent hover:underline underline-offset-4"
-                    >
-                      [{l.label}]
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          </article>
-        ))}
+            Showcase ({projects.length})
+          </button>
+          <button
+            onClick={() => setViewMode("all_repos")}
+            className={`px-3 py-1.5 rounded border transition ${
+              viewMode === "all_repos"
+                ? "border-accent bg-accent/10 text-accent font-semibold"
+                : "border-border text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            All Repos ({gitHubRepos.length > 0 ? gitHubRepos.length : "..."})
+          </button>
+        </div>
       </div>
+
+      {viewMode === "featured" ? (
+        <div className="grid lg:grid-cols-2 gap-6">
+          {projects.map((p) => {
+            const matchedRepo = gitHubRepos.find(
+              (r) =>
+                r.name.toLowerCase() === p.title.toLowerCase().split(" ")[0] ||
+                p.links.some((l) => l.href.toLowerCase().includes(r.name.toLowerCase()))
+            );
+
+            return (
+              <article
+                key={p.num}
+                className="border border-border bg-background group hover:border-accent/50 transition"
+              >
+                <header className="flex items-center justify-between px-5 py-3 border-b border-border font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <span>PROJECT · {p.num}</span>
+                    {matchedRepo && matchedRepo.stargazers_count > 0 && (
+                      <span className="text-accent text-[9px] flex items-center gap-1">
+                        ★ {matchedRepo.stargazers_count}
+                      </span>
+                    )}
+                  </div>
+                  <span
+                    className={
+                      "px-2 py-0.5 border text-[10px] tracking-[0.22em] " + statusColor[p.status]
+                    }
+                  >
+                    {p.status}
+                  </span>
+                </header>
+
+                <div className="p-5 sm:p-6">
+                  <h3 className="font-sans text-xl font-semibold text-foreground">{p.title}</h3>
+                  <div className="mt-1 font-mono text-xs text-muted-foreground flex items-center justify-between">
+                    <span>
+                      {p.type} <span className="text-dim">·</span> {p.period}
+                    </span>
+                    {matchedRepo && (
+                      <span className="text-[10px] text-dim">
+                        Updated {new Date(matchedRepo.pushed_at || matchedRepo.updated_at).toLocaleDateString()}
+                      </span>
+                    )}
+                  </div>
+
+                  <ProjectVideo src={p.video} title={p.title} />
+
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                    {p.description}
+                  </p>
+
+                  {p.stats && (
+                    <div className="mt-5 grid grid-cols-3 gap-2 font-mono text-[9px] sm:text-xs">
+                      {p.stats.map((s) => (
+                        <div
+                          key={s.k}
+                          className="border border-border rounded-md p-1.5 sm:p-2.5 bg-black/20"
+                        >
+                          <div
+                            className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.18em] text-muted-foreground truncate"
+                            title={s.k}
+                          >
+                            {s.k}
+                          </div>
+                          <div className="mt-1 text-foreground font-semibold sm:font-normal">
+                            {s.v}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="mt-5 flex flex-wrap gap-1.5 font-mono text-[11px]">
+                    {p.stack.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2 py-0.5 rounded border border-border text-muted-foreground"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  {p.links.length > 0 && (
+                    <div className="mt-5 flex gap-3 font-mono text-xs">
+                      {p.links.map((l) => (
+                        <a
+                          key={l.label}
+                          href={l.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-accent hover:underline underline-offset-4"
+                        >
+                          [{l.label}]
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 font-mono">
+          {loading && (
+            <div className="col-span-full text-center py-12 text-muted-foreground animate-pulse">
+              Fetching live repositories from GitHub @MukulS07...
+            </div>
+          )}
+
+          {!loading && gitHubRepos.length === 0 && (
+            <div className="col-span-full text-center py-12 text-muted-foreground">
+              Unable to load GitHub repositories.
+            </div>
+          )}
+
+          {gitHubRepos.map((repo) => (
+            <a
+              key={repo.id}
+              href={repo.html_url}
+              target="_blank"
+              rel="noreferrer"
+              className="border border-border bg-background/50 hover:bg-background hover:border-accent p-4 rounded-lg flex flex-col justify-between transition group"
+            >
+              <div>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1.5 text-foreground font-semibold group-hover:text-accent truncate">
+                    <Github className="w-3.5 h-3.5 shrink-0" /> {repo.name}
+                  </span>
+                  {repo.stargazers_count > 0 && (
+                    <span className="text-accent text-[10px] shrink-0">★ {repo.stargazers_count}</span>
+                  )}
+                </div>
+                <p className="mt-2.5 text-xs text-muted-foreground line-clamp-3 leading-relaxed">
+                  {repo.description || "No description provided."}
+                </p>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-border/50 flex items-center justify-between text-[10px] text-dim">
+                <span className="text-muted-foreground">{repo.language || "Code"}</span>
+                <span>{new Date(repo.pushed_at || repo.updated_at).toLocaleDateString()}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
     </Section>
   );
 }
