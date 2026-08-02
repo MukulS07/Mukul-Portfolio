@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Section, TerminalCard } from "./Section";
 import { ProjectVideo } from "./ProjectVideo";
 import { Github, Linkedin, Mail, Phone, MapPin, ExternalLink, Star, GitFork } from "lucide-react";
-import { fetchGitHubRepos, type GitHubRepo } from "@/lib/github-service";
+import { fetchGitHubRepos, matchRepoForProject, type GitHubRepo } from "@/lib/github-service";
 
 export function About() {
   return (
@@ -236,6 +236,7 @@ const projects: Project[] = [
     stack: ["Python", "ML", "AWS Lambda", "DynamoDB", "API Gateway", "IoT", "LoRa", "Next.js"],
     links: [
       { label: "live →", href: "https://ecogeoguard.vercel.app/" },
+      { label: "github →", href: "https://github.com/MukulS07/ecogeoguard-community-platform" },
       { label: "paper →", href: "https://conferenceseries.adroidjournals.com/index.php/ACSET/article/view/53" },
     ],
   },
@@ -254,7 +255,10 @@ const projects: Project[] = [
       { k: "Pricing", v: "₹999/mo" },
     ],
     stack: ["Next.js", "Node.js", "React", "MongoDB", "AI APIs", "Vercel"],
-    links: [{ label: "live →", href: "https://inventrox.vercel.app/" }],
+    links: [
+      { label: "live →", href: "https://inventrox.vercel.app/" },
+      { label: "github →", href: "https://github.com/MukulS07/inventrox-os-The-Operating-System-for-Modern-Businesses." },
+    ],
   },
   {
     num: "04",
@@ -346,11 +350,7 @@ export function Projects() {
       {viewMode === "featured" ? (
         <div className="grid lg:grid-cols-2 gap-6">
           {projects.map((p) => {
-            const matchedRepo = gitHubRepos.find(
-              (r) =>
-                r.name.toLowerCase() === p.title.toLowerCase().split(" ")[0] ||
-                p.links.some((l) => l.href.toLowerCase().includes(r.name.toLowerCase()))
-            );
+            const matchedRepo = matchRepoForProject(gitHubRepos, p.title, p.links);
 
             return (
               <article
