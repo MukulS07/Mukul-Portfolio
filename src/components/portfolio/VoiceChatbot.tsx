@@ -27,15 +27,40 @@ interface Message {
 const generateSphereData = () => {
   const t = (1 + Math.sqrt(5)) / 2;
   const baseVerts: [number, number, number][] = [
-    [-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0],
-    [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t],
-    [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]
+    [-1, t, 0],
+    [1, t, 0],
+    [-1, -t, 0],
+    [1, -t, 0],
+    [0, -1, t],
+    [0, 1, t],
+    [0, -1, -t],
+    [0, 1, -t],
+    [t, 0, -1],
+    [t, 0, 1],
+    [-t, 0, -1],
+    [-t, 0, 1],
   ];
   const baseFaces: [number, number, number][] = [
-    [0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11],
-    [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8],
-    [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9],
-    [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]
+    [0, 11, 5],
+    [0, 5, 1],
+    [0, 1, 7],
+    [0, 7, 10],
+    [0, 10, 11],
+    [1, 5, 9],
+    [5, 11, 4],
+    [11, 10, 2],
+    [10, 7, 6],
+    [7, 1, 8],
+    [3, 9, 4],
+    [3, 4, 2],
+    [3, 2, 6],
+    [3, 6, 8],
+    [3, 8, 9],
+    [4, 9, 5],
+    [2, 4, 11],
+    [6, 2, 10],
+    [8, 6, 7],
+    [9, 8, 1],
   ];
 
   const verts: [number, number, number][] = [];
@@ -43,7 +68,7 @@ const generateSphereData = () => {
   const addVert = (v: [number, number, number]) => {
     const len = Math.hypot(v[0], v[1], v[2]);
     const n: [number, number, number] = [v[0] / len, v[1] / len, v[2] / len];
-    const key = n.map(x => x.toFixed(5)).join(",");
+    const key = n.map((x) => x.toFixed(5)).join(",");
     const existing = vIndex.get(key);
     if (existing !== undefined) return existing;
     const idx = verts.length;
@@ -52,7 +77,7 @@ const generateSphereData = () => {
     return idx;
   };
 
-  baseVerts.forEach(v => addVert(v));
+  baseVerts.forEach((v) => addVert(v));
   const edgeSet = new Set<string>();
   const edges: [number, number][] = [];
   const addEdge = (a: number, b: number) => {
@@ -63,15 +88,27 @@ const generateSphereData = () => {
   };
 
   baseFaces.forEach(([a, b, c]) => {
-    const va = baseVerts[a], vb = baseVerts[b], vc = baseVerts[c];
-    const mid = (p: number[], q: number[]) => [(p[0]+q[0])/2, (p[1]+q[1])/2, (p[2]+q[2])/2] as [number, number, number];
+    const va = baseVerts[a],
+      vb = baseVerts[b],
+      vc = baseVerts[c];
+    const mid = (p: number[], q: number[]) =>
+      [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2, (p[2] + q[2]) / 2] as [number, number, number];
     const ab = addVert(mid(va, vb));
     const bc = addVert(mid(vb, vc));
     const ca = addVert(mid(vc, va));
-    const ia = addVert(va), ib = addVert(vb), ic = addVert(vc);
+    const ia = addVert(va),
+      ib = addVert(vb),
+      ic = addVert(vc);
     [
-      [ia, ab], [ab, ib], [ib, bc], [bc, ic], [ic, ca], [ca, ia],
-      [ab, bc], [bc, ca], [ca, ab]
+      [ia, ab],
+      [ab, ib],
+      [ib, bc],
+      [bc, ic],
+      [ic, ca],
+      [ca, ia],
+      [ab, bc],
+      [bc, ca],
+      [ca, ab],
     ].forEach(([x, y]) => addEdge(x, y));
   });
 
@@ -79,7 +116,6 @@ const generateSphereData = () => {
 };
 
 const SPHERE_DATA = generateSphereData();
-
 
 export function VoiceChatbot() {
   const [messages, setMessages] = useState<Message[]>([
@@ -163,7 +199,7 @@ export function VoiceChatbot() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsAvengers(document.body.classList.contains("avengers"));
-      
+
       const observer = new MutationObserver(() => {
         setIsAvengers(document.body.classList.contains("avengers"));
       });
@@ -173,20 +209,22 @@ export function VoiceChatbot() {
         const loadVoices = () => {
           const engVoices = window.speechSynthesis.getVoices().filter((v) => {
             const name = v.name.toLowerCase();
-            return v.lang.startsWith("en") && 
-                   !name.includes("david") && 
-                   !name.includes("guy") && 
-                   !name.includes("james") && 
-                   !name.includes("george") && 
-                   !name.includes("mark") && 
-                   !name.includes("male") && 
-                   !name.includes("ravi") && 
-                   !name.includes("richard") && 
-                   !name.includes("stefan") && 
-                   !name.includes("patrick") && 
-                   !name.includes("sean") && 
-                   !name.includes("samuel") && 
-                   !name.includes("harry");
+            return (
+              v.lang.startsWith("en") &&
+              !name.includes("david") &&
+              !name.includes("guy") &&
+              !name.includes("james") &&
+              !name.includes("george") &&
+              !name.includes("mark") &&
+              !name.includes("male") &&
+              !name.includes("ravi") &&
+              !name.includes("richard") &&
+              !name.includes("stefan") &&
+              !name.includes("patrick") &&
+              !name.includes("sean") &&
+              !name.includes("samuel") &&
+              !name.includes("harry")
+            );
           });
           setAvailableVoices(engVoices);
 
@@ -274,9 +312,11 @@ export function VoiceChatbot() {
           stopMicrophone();
           setBotState("idle");
           setRecognitionActive(false);
-          
+
           if (event.error === "not-allowed") {
-            addSystemMessage("Microphone permission denied. Please allow mic access or use text mode.");
+            addSystemMessage(
+              "Microphone permission denied. Please allow mic access or use text mode.",
+            );
           }
         };
 
@@ -303,7 +343,7 @@ export function VoiceChatbot() {
   async function initMicrophone() {
     try {
       if (!navigator.mediaDevices?.getUserMedia) return;
-      
+
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaStreamRef.current = stream;
 
@@ -350,8 +390,8 @@ export function VoiceChatbot() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let rotation = 0;
-    let waveOffset = 0;
+    const rotation = 0;
+    const waveOffset = 0;
 
     let rotationX = 0;
     let rotationY = 0;
@@ -395,7 +435,7 @@ export function VoiceChatbot() {
             sum += dataArray[i];
           }
           const avg = sum / bufferLength;
-          voiceMultiplier = 1.0 + (avg / 40);
+          voiceMultiplier = 1.0 + avg / 40;
         } else {
           voiceMultiplier = 1.0 + Math.sin(Date.now() / 150) * 0.08;
         }
@@ -405,14 +445,27 @@ export function VoiceChatbot() {
       ctx.strokeStyle = `rgba(${primaryColor}, 0.05)`;
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.arc(cx, cy, Math.max(0.1, (size * 0.44) * (botState === "listening" ? voiceMultiplier : 1.0)), 0, Math.PI * 2);
+      ctx.arc(
+        cx,
+        cy,
+        Math.max(0.1, size * 0.44 * (botState === "listening" ? voiceMultiplier : 1.0)),
+        0,
+        Math.PI * 2,
+      );
       ctx.stroke();
 
       // Project and draw 3D wireframe sphere
-      const cosY = Math.cos(rotationY), sinY = Math.sin(rotationY);
-      const cosX = Math.cos(rotationX), sinX = Math.sin(rotationX);
+      const cosY = Math.cos(rotationY),
+        sinY = Math.sin(rotationY);
+      const cosX = Math.cos(rotationX),
+        sinX = Math.sin(rotationX);
 
-      const R = Math.max(0.1, (size * 0.36) * (botState === "listening" ? voiceMultiplier : 1.0 + Math.sin(Date.now() / 300) * 0.03));
+      const R = Math.max(
+        0.1,
+        size *
+          0.36 *
+          (botState === "listening" ? voiceMultiplier : 1.0 + Math.sin(Date.now() / 300) * 0.03),
+      );
       const persp = R * 2.5;
 
       const proj = SPHERE_DATA.verts.map(([x, y, z], index) => {
@@ -444,7 +497,8 @@ export function VoiceChatbot() {
       ctx.strokeStyle = `rgba(${primaryColor}, 0.35)`;
       ctx.lineWidth = 0.8;
       for (const [a, b] of SPHERE_DATA.edges) {
-        const pa = proj[a], pb = proj[b];
+        const pa = proj[a],
+          pb = proj[b];
         ctx.beginPath();
         ctx.moveTo(pa.x, pa.y);
         ctx.lineTo(pb.x, pb.y);
@@ -477,12 +531,12 @@ export function VoiceChatbot() {
     ]);
   }
 
-
-
   // Toggle Mic Activation
   const toggleMic = () => {
     if (!recognitionRef.current) {
-      addSystemMessage("Web Speech API is not supported in this browser. Please use Chrome, Edge, or Safari.");
+      addSystemMessage(
+        "Web Speech API is not supported in this browser. Please use Chrome, Edge, or Safari.",
+      );
       return;
     }
 
@@ -531,20 +585,22 @@ export function VoiceChatbot() {
     if (!selectedVoice) {
       selectedVoice = voices.find((v) => {
         const name = v.name.toLowerCase();
-        return v.lang.startsWith("en") && 
-               !name.includes("david") && 
-               !name.includes("guy") && 
-               !name.includes("james") && 
-               !name.includes("george") && 
-               !name.includes("mark") && 
-               !name.includes("male") && 
-               !name.includes("ravi") && 
-               !name.includes("richard") && 
-               !name.includes("stefan") && 
-               !name.includes("patrick") && 
-               !name.includes("sean") && 
-               !name.includes("samuel") && 
-               !name.includes("harry");
+        return (
+          v.lang.startsWith("en") &&
+          !name.includes("david") &&
+          !name.includes("guy") &&
+          !name.includes("james") &&
+          !name.includes("george") &&
+          !name.includes("mark") &&
+          !name.includes("male") &&
+          !name.includes("ravi") &&
+          !name.includes("richard") &&
+          !name.includes("stefan") &&
+          !name.includes("patrick") &&
+          !name.includes("sean") &&
+          !name.includes("samuel") &&
+          !name.includes("harry")
+        );
       });
     }
 
@@ -639,13 +695,13 @@ export function VoiceChatbot() {
     } else {
       // Handle fallback offline logic if no API key or server error
       const offlineAnswer = queryOfflineExpert(text, isAvengers);
-      
+
       const botMsg: Message = {
         role: "bot",
         text: offlineAnswer,
         timestamp: getFormattedTime(),
       };
-      
+
       setMessages((prev) => [...prev, botMsg]);
       setStatusLog("DOWNLINK_RECEIVED::LOCAL_FALLBACK");
       speakOutput(offlineAnswer);
@@ -655,21 +711,25 @@ export function VoiceChatbot() {
   return (
     <Section id="chatbot" label="bot.sh" title="> AI TELEMETRY ENGINE">
       <div className="grid lg:grid-cols-5 gap-6">
-        
         {/* Left Side: Visual Hologram Canvas + Controls */}
         <div className="lg:col-span-2 flex flex-col justify-between glass-panel p-5 items-center relative overflow-hidden min-h-[350px] lg:min-h-[420px]">
-          
           {/* Scanning Line overlay */}
           <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-[0.02]" />
 
           {/* Status HUD top banner */}
           <div className="w-full flex items-center justify-between border-b border-border pb-3 mb-2 font-mono text-[10px] tracking-[0.2em] text-muted-foreground select-none">
             <span className="flex items-center gap-1.5">
-              <span className={`inline-block h-2 w-2 rounded-full ${
-                botState === "listening" ? "bg-red-500 animate-pulse" : 
-                botState === "thinking" ? "bg-yellow-500 animate-spin" : 
-                botState === "speaking" ? "bg-green-500 animate-pulse" : "bg-accent"
-              }`} />
+              <span
+                className={`inline-block h-2 w-2 rounded-full ${
+                  botState === "listening"
+                    ? "bg-red-500 animate-pulse"
+                    : botState === "thinking"
+                      ? "bg-yellow-500 animate-spin"
+                      : botState === "speaking"
+                        ? "bg-green-500 animate-pulse"
+                        : "bg-accent"
+                }`}
+              />
               CORE STATUS: {botState.toUpperCase()}
             </span>
             <span className="text-dim">UPLINK_SYS_v2.5</span>
@@ -687,7 +747,6 @@ export function VoiceChatbot() {
 
           {/* Core Info Display */}
           <div className="w-full border-t border-border/80 pt-4 mt-3 flex flex-col items-center">
-            
             {/* Live Status Telemetry Log */}
             <div className="font-mono text-[10px] tracking-[0.15em] text-accent mb-4 text-center select-none uppercase truncate max-w-full">
               {isAvengers ? "🛰️ FRIDAY ACTIVE ⌁ " : "💻 FRIDAY AI ⌁ "}
@@ -696,7 +755,6 @@ export function VoiceChatbot() {
 
             {/* Main Interactive Mic Button */}
             <div className="flex items-center justify-center gap-4 w-full">
-              
               {/* Mic toggle */}
               <button
                 onClick={toggleMic}
@@ -757,7 +815,6 @@ export function VoiceChatbot() {
                 <span>{continuousVoiceMode ? "LIVE ON" : "LIVE CHAT"}</span>
               </button>
 
-
               {/* Voice Dropdown Selector */}
               {availableVoices.length > 0 && (
                 <select
@@ -768,7 +825,10 @@ export function VoiceChatbot() {
                 >
                   {availableVoices.map((v) => (
                     <option key={v.name} value={v.name} className="bg-black text-foreground">
-                      {v.name.replace("Microsoft", "MS").replace("English", "EN").replace("Desktop", "")}
+                      {v.name
+                        .replace("Microsoft", "MS")
+                        .replace("English", "EN")
+                        .replace("Desktop", "")}
                     </option>
                   ))}
                 </select>
@@ -779,7 +839,6 @@ export function VoiceChatbot() {
 
         {/* Right Side: Chat Logger Terminal Console */}
         <div className="lg:col-span-3 flex flex-col justify-between glass-panel p-5 min-h-[380px] lg:min-h-[420px]">
-          
           {/* Header information */}
           <div className="flex items-center justify-between border-b border-border pb-3 mb-3 font-mono text-[10px] tracking-[0.2em] text-muted-foreground select-none">
             <span>📡 DECODED COMMS LOG</span>
@@ -799,19 +858,21 @@ export function VoiceChatbot() {
               >
                 {/* Micro heading for system sender */}
                 <div className="flex justify-between items-center text-[9px] tracking-wider text-dim border-b border-border/10 pb-1 mb-1.5 uppercase select-none">
-                  <span>{msg.role === "user" ? "👤 VISITOR_INPUT" : isAvengers ? "🎙️ FRIDAY.AI" : "🤖 FRIDAY.AI"}</span>
+                  <span>
+                    {msg.role === "user"
+                      ? "👤 VISITOR_INPUT"
+                      : isAvengers
+                        ? "🎙️ FRIDAY.AI"
+                        : "🤖 FRIDAY.AI"}
+                  </span>
                   <span>{msg.timestamp}</span>
                 </div>
 
-                <p className="whitespace-pre-wrap font-sans text-sm text-foreground">
-                  {msg.text}
-                </p>
+                <p className="whitespace-pre-wrap font-sans text-sm text-foreground">{msg.text}</p>
               </div>
             ))}
             <div ref={chatEndRef} />
           </div>
-
-
 
           {/* Bottom Prompt input bar */}
           <form
@@ -829,13 +890,13 @@ export function VoiceChatbot() {
                 botState === "listening"
                   ? "🎙️ Transcribing mic..."
                   : isAvengers
-                  ? "// Ask Friday a question, Boss..."
-                  : "// Ask Friday a question..."
+                    ? "// Ask Friday a question, Boss..."
+                    : "// Ask Friday a question..."
               }
               disabled={botState === "thinking"}
               className="flex-1 bg-transparent border-0 px-3 py-2 text-sm text-foreground focus:outline-none placeholder:text-dim font-mono focus:ring-0 disabled:opacity-50"
             />
-            
+
             <button
               type="submit"
               disabled={!inputText.trim() || botState === "thinking"}
@@ -843,7 +904,9 @@ export function VoiceChatbot() {
               title="Transmit query"
             >
               <Send size={14} />
-              <span className="hidden sm:inline font-mono text-[10px] tracking-widest font-semibold uppercase">[SEND]</span>
+              <span className="hidden sm:inline font-mono text-[10px] tracking-widest font-semibold uppercase">
+                [SEND]
+              </span>
             </button>
           </form>
         </div>
@@ -857,18 +920,32 @@ export function VoiceChatbot() {
 // ---------------------------------------------------------
 function queryOfflineExpert(query: string, avengersMode: boolean): string {
   const q = query.toLowerCase();
-  
+
   const greetingResponse = avengersMode
     ? "Hi, I am Friday. Ready for your command, Boss."
     : "Hi, I am Friday. How can I help you explore Mukul's portfolio?";
 
   // 1. GREETINGS
-  if (q.includes("hello") || q.includes("hi ") || q.includes("hey") || q.includes("greet") || q.includes("who are you") || q.includes("introduce") || q.includes("your name")) {
+  if (
+    q.includes("hello") ||
+    q.includes("hi ") ||
+    q.includes("hey") ||
+    q.includes("greet") ||
+    q.includes("who are you") ||
+    q.includes("introduce") ||
+    q.includes("your name")
+  ) {
     return greetingResponse;
   }
 
   // 2. RESEARCH PAPER
-  if (q.includes("paper") || q.includes("research") || q.includes("publication") || q.includes("dasgri") || q.includes("landslide")) {
+  if (
+    q.includes("paper") ||
+    q.includes("research") ||
+    q.includes("publication") ||
+    q.includes("dasgri") ||
+    q.includes("landslide")
+  ) {
     return avengersMode
       ? "Analyzing publication archives. Mukul's primary research paper is titled: 'EcoGeoGuard: AI-IoT Based Landslide Prediction and Smart Agriculture System'. It was accepted at the DASGRI Congress 2026. The architecture feeds real-time multi-sensor telemetry into an AWS cloud pipeline, achieving sub-3-minute alert latency."
       : "Accessing research database. Mukul Sharma published a paper titled: 'EcoGeoGuard: AI-IoT Based Landslide Prediction and Smart Agriculture System' accepted at the DASGRI Congress 2026. It documents a LoRa IoT edge network and AWS serverless risk scoring pipeline with an F1 score of 0.94.";
@@ -889,42 +966,87 @@ function queryOfflineExpert(query: string, avengersMode: boolean): string {
   }
 
   // 5. APEXF1 DETAILS
-  if (q.includes("apexf1") || q.includes("apex f1") || q.includes("f1") || q.includes("dashboard")) {
+  if (
+    q.includes("apexf1") ||
+    q.includes("apex f1") ||
+    q.includes("f1") ||
+    q.includes("dashboard")
+  ) {
     return avengersMode
       ? "Uplink to ApexF1 online, Boss. It is a premium Formula 1 dashboard designed for the 2026 season. It features an interactive 3D car livery designer using Three.js and WebGL, real-time simulated track telemetry, and an AI paddock assistant powered by NVIDIA NIM."
       : "Project detail retrieved: ApexF1. A cutting-edge Formula 1 dashboard for the 2026 season. Features a WebGL-based 3D car livery editor, real-time simulated track telemetry, and an AI paddock assistant powered by NVIDIA NIM. Built with TanStack Start and Tailwind CSS v4.";
   }
 
   // 6. PROJECTS GENERAL
-  if (q.includes("project") || q.includes("portfolio") || q.includes("shipped") || q.includes("make") || q.includes("build") || q.includes("game") || q.includes("galactus")) {
+  if (
+    q.includes("project") ||
+    q.includes("portfolio") ||
+    q.includes("shipped") ||
+    q.includes("make") ||
+    q.includes("build") ||
+    q.includes("game") ||
+    q.includes("galactus")
+  ) {
     return avengersMode
       ? "Mukul's projects directory includes: First, Apex F1, the ultimate Formula 1 2026 dashboard. Second, EcoGeoGuard, the AI-IoT landslide framework. Third, INVENTROX, the SME Business Operating System. Fourth, Space Galactus, a 2D shooter developed in Unity 6. And fifth, a Virtual Reality Herbal Garden for the Smart India Hackathon. Systems are ready to detail any of these, Boss."
       : "Mukul has completed five major engineering projects: ApexF1 (Formula 1 2026 dashboard), EcoGeoGuard (AI-IoT warning node system), INVENTROX (AI POS and billing system for SMEs), Space Galactus (C# game in Unity 6), and the AYUSH VR Garden backend for the SIH Hackathon. Contact links contain live demos.";
   }
 
   // 6. SKILLS & STACK
-  if (q.includes("skill") || q.includes("stack") || q.includes("languages") || q.includes("python") || q.includes("aws") || q.includes("java") || q.includes("security") || q.includes("cyber")) {
+  if (
+    q.includes("skill") ||
+    q.includes("stack") ||
+    q.includes("languages") ||
+    q.includes("python") ||
+    q.includes("aws") ||
+    q.includes("java") ||
+    q.includes("security") ||
+    q.includes("cyber")
+  ) {
     return avengersMode
       ? "Checking core arsenal. Mukul specializes in Cyber Security, AWS Cloud Architecture, and AI-IoT integrations. His language telemetry lists Python, Java, C++, and C#. His cloud capabilities include Lambda, DynamoDB, API Gateway, SQS, and CodePipeline. He is highly proficient, Boss."
       : "Mukul's engineering stack consists of: Cyber Security (IAM, Network Security, Secure Cloud Design), Cloud Computing (AWS serverless microservices, Step Functions), AI and Machine Learning (AI-IoT models, GenAI APIs), and Web Development (React, Next, Node, Express, MongoDB).";
   }
 
   // 7. EXPERIENCE
-  if (q.includes("experience") || q.includes("work") || q.includes("job") || q.includes("trailblazer") || q.includes("salesforce") || q.includes("sapphire") || q.includes("training")) {
+  if (
+    q.includes("experience") ||
+    q.includes("work") ||
+    q.includes("job") ||
+    q.includes("trailblazer") ||
+    q.includes("salesforce") ||
+    q.includes("sapphire") ||
+    q.includes("training")
+  ) {
     return avengersMode
       ? "Extracting service records. Mukul completed training in Cloud DevOps at Programming Pathsala and Salesforce Developer Catalyst Plus. He also served as the CEO of LPU Student Organisation SAPPHIRE, managing a unit of over 20 developers and coordinators."
       : "Mukul's professional history includes a role as CEO of LPU Student Organisation SAPPHIRE, where he led 20 team members. He also completed DevOps & AWS Training at Programming Pathsala, and Salesforce Apex/LWC development under Trailblazer Connect.";
   }
 
   // 8. CONTACTS
-  if (q.includes("contact") || q.includes("email") || q.includes("phone") || q.includes("github") || q.includes("linkedin") || q.includes("hire") || q.includes("reach") || q.includes("number")) {
+  if (
+    q.includes("contact") ||
+    q.includes("email") ||
+    q.includes("phone") ||
+    q.includes("github") ||
+    q.includes("linkedin") ||
+    q.includes("hire") ||
+    q.includes("reach") ||
+    q.includes("number")
+  ) {
     return avengersMode
       ? "Comms uplink ready, Boss. You can email Mukul at mukulsharmaworks@gmail.com, or dial plus 91 77373 60788. You can also view his GitHub at MukulS07 or message him on LinkedIn. Direct buttons are printed in the log panel."
       : "To contact Mukul Sharma, transmit an email to mukulsharmaworks@gmail.com or call plus 91 77373 60788. Social links are active on the terminal: GitHub at github.com/MukulS07 and LinkedIn at mukul-sharma-514634214.";
   }
 
   // 9. FRIDAY / STARK REFERENCES
-  if (q.includes("friday") || q.includes("stark") || q.includes("suit") || q.includes("jarvis") || q.includes("avenger")) {
+  if (
+    q.includes("friday") ||
+    q.includes("stark") ||
+    q.includes("suit") ||
+    q.includes("jarvis") ||
+    q.includes("avenger")
+  ) {
     return "All systems are green, Boss. Mark 85 armor telemetry is normal. Holographic visualizers are calibrated. The Arc Reactor is stable at 100%. Ready for your next request.";
   }
 

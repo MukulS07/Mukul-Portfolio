@@ -48,7 +48,13 @@ INSTRUCTIONS FOR OUTPUT:
 `;
 
 export const queryChatbot = createServerFn({ method: "POST" })
-  .validator((d: { prompt: string; avengersMode: boolean; history?: { role: "user" | "model"; parts: { text: string }[] }[] }) => d)
+  .validator(
+    (d: {
+      prompt: string;
+      avengersMode: boolean;
+      history?: { role: "user" | "model"; parts: { text: string }[] }[];
+    }) => d,
+  )
   .handler(async ({ data }) => {
     const apiKey = process.env.GEMINI_API_KEY;
 
@@ -62,20 +68,22 @@ export const queryChatbot = createServerFn({ method: "POST" })
 
     try {
       const isFriday = data.avengersMode;
-      const systemInstructionText = SYSTEM_INSTRUCTION + (isFriday 
-        ? "\nRemember, Avenger Mode is ACTIVE. You are F.R.I.D.A.Y. Be energetic, calling the user 'Boss', 'Sir', or 'Ma'am', referencing Stark systems or iron man suit telemetry occasionally, and keep it crisp!" 
-        : "\nAvenger Mode is INACTIVE. You are still Friday (acting as a professional, calm cybernetic assistant named Friday AI). Help the visitor navigate and understand Mukul's publications, publications, projects, and skills.");
+      const systemInstructionText =
+        SYSTEM_INSTRUCTION +
+        (isFriday
+          ? "\nRemember, Avenger Mode is ACTIVE. You are F.R.I.D.A.Y. Be energetic, calling the user 'Boss', 'Sir', or 'Ma'am', referencing Stark systems or iron man suit telemetry occasionally, and keep it crisp!"
+          : "\nAvenger Mode is INACTIVE. You are still Friday (acting as a professional, calm cybernetic assistant named Friday AI). Help the visitor navigate and understand Mukul's publications, publications, projects, and skills.");
 
       // Prepare conversation contents
       const contents = [];
-      
+
       // If history is provided, use it, else just add the current prompt
       if (data.history && data.history.length > 0) {
         contents.push(...data.history);
       }
       contents.push({
         role: "user",
-        parts: [{ text: data.prompt }]
+        parts: [{ text: data.prompt }],
       });
 
       const response = await fetch(
@@ -88,14 +96,14 @@ export const queryChatbot = createServerFn({ method: "POST" })
           body: JSON.stringify({
             contents,
             systemInstruction: {
-              parts: [{ text: systemInstructionText }]
+              parts: [{ text: systemInstructionText }],
             },
             generationConfig: {
               temperature: 0.7,
               maxOutputTokens: 250,
-            }
+            },
           }),
-        }
+        },
       );
 
       if (!response.ok) {
@@ -109,18 +117,20 @@ export const queryChatbot = createServerFn({ method: "POST" })
       }
 
       const json = await response.json();
-      const answerText = json.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
-      
+      const answerText =
+        json.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
+
       return {
         success: true,
         text: answerText.trim(),
       };
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred.";
       console.error("Chatbot backend handler error:", err);
       return {
         success: false,
         error: "INTERNAL_ERROR",
-        message: err.message || "An unexpected error occurred.",
+        message: errorMessage,
       };
     }
   });
@@ -155,8 +165,7 @@ export const checkDeployments = createServerFn({ method: "POST" })
             latency: null,
           };
         }
-      })
+      }),
     );
     return results;
   });
-

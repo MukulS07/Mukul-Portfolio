@@ -37,7 +37,16 @@ const ticker = [
   "Blender",
 ];
 
-const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg: string; note: string; fullMsg?: string; link?: string }[] = [
+const mockEvents: {
+  t: string;
+  tag: string;
+  tagColor: string;
+  repo: string;
+  msg: string;
+  note: string;
+  fullMsg?: string;
+  link?: string;
+}[] = [
   {
     t: "just now",
     tag: "PUSH",
@@ -210,20 +219,24 @@ function Radar() {
 export function Hero() {
   const [roleIdx, setRoleIdx] = useState(0);
   const [repoCount, setRepoCount] = useState("7");
-  const [eventsList, setEventsList] = useState<{
-    t: string;
-    tag: string;
-    tagColor: string;
-    repo: string;
-    msg: string;
-    note: string;
-    link?: string;
-    fullMsg?: string;
-  }[]>(mockEvents);
+  const [eventsList, setEventsList] = useState<
+    {
+      t: string;
+      tag: string;
+      tagColor: string;
+      repo: string;
+      msg: string;
+      note: string;
+      link?: string;
+      fullMsg?: string;
+    }[]
+  >(mockEvents);
 
-  const [deploymentStatuses, setDeploymentStatuses] = useState<Record<string, { online: boolean; latency: number | null; loading: boolean }>>({
-    "ApexF1": { online: true, latency: null, loading: true },
-    "EcoGeoGuard": { online: true, latency: null, loading: true },
+  const [deploymentStatuses, setDeploymentStatuses] = useState<
+    Record<string, { online: boolean; latency: number | null; loading: boolean }>
+  >({
+    ApexF1: { online: true, latency: null, loading: true },
+    EcoGeoGuard: { online: true, latency: null, loading: true },
     "INVENTROX OS": { online: true, latency: null, loading: true },
     "Mukul Portfolio": { online: true, latency: null, loading: true },
     "Space Galactus": { online: true, latency: null, loading: true },
@@ -243,10 +256,10 @@ export function Hero() {
     const pingAll = async () => {
       try {
         const portfolioUrl = window.location.origin;
-        const urlsToPing = sites.map(s => s.name === "Mukul Portfolio" ? portfolioUrl : s.url);
-        
+        const urlsToPing = sites.map((s) => (s.name === "Mukul Portfolio" ? portfolioUrl : s.url));
+
         const results = await checkDeployments({ data: urlsToPing });
-        
+
         const newStatuses: typeof deploymentStatuses = {};
         sites.forEach((site, index) => {
           const res = results[index];
@@ -259,9 +272,9 @@ export function Hero() {
         setDeploymentStatuses(newStatuses);
       } catch (err) {
         console.error("Failed to ping deployments:", err);
-        setDeploymentStatuses(prev => {
+        setDeploymentStatuses((prev) => {
           const updated = { ...prev };
-          Object.keys(updated).forEach(k => {
+          Object.keys(updated).forEach((k) => {
             updated[k].loading = false;
           });
           return updated;
@@ -284,7 +297,7 @@ export function Hero() {
     fetch(`https://api.github.com/users/MukulS07?t=${Date.now()}`, {
       headers: {
         "Cache-Control": "no-cache",
-        "Pragma": "no-cache",
+        Pragma: "no-cache",
       },
     })
       .then((res) => res.json())
@@ -301,7 +314,7 @@ export function Hero() {
     fetch(`https://api.github.com/users/MukulS07/events/public?t=${Date.now()}`, {
       headers: {
         "Cache-Control": "no-cache",
-        "Pragma": "no-cache",
+        Pragma: "no-cache",
       },
     })
       .then((res) => {
@@ -315,7 +328,7 @@ export function Hero() {
         }
 
         const events = data.slice(0, 5);
-        const formattedPromises = events.map(async (evt: any) => {
+        const formattedPromises = events.map(async (evt: Record<string, unknown>) => {
           let tag = "ACTIVITY";
           let tagColor = "text-muted-foreground";
           let msg = "";
@@ -323,7 +336,7 @@ export function Hero() {
           let fullMsg = "";
           let link = "";
 
-          const createdTime = new Date(evt.created_at).getTime();
+          const createdTime = new Date(String(evt.created_at || "")).getTime();
           const now = Date.now();
           const diffMs = now - createdTime;
           const diffMins = Math.floor(diffMs / 60000);
@@ -336,34 +349,43 @@ export function Hero() {
           else if (diffHours < 24) t = `${diffHours}h ago`;
           else t = `${diffDays}d ago`;
 
-          const repoName = evt.repo?.name ? evt.repo.name.replace(/^MukulS07\//, "") : "";
+          const evtRepo = (evt.repo as { name?: string }) || {};
+          const repoName = evtRepo.name ? evtRepo.name.replace(/^MukulS07\//, "") : "";
           link = `https://github.com/MukulS07/${repoName}`;
+
+          const evtPayload = (evt.payload as { ref?: string; head?: string }) || {};
 
           if (evt.type === "PushEvent") {
             tag = "PUSH";
             tagColor = "text-accent";
-            note = evt.payload?.ref ? evt.payload.ref.replace("refs/heads/", "") : "main";
-            
+            note = evtPayload.ref ? evtPayload.ref.replace("refs/heads/", "") : "main";
+
             try {
-              const commitsRes = await fetch(`https://api.github.com/repos/MukulS07/${repoName}/commits?per_page=5&t=${Date.now()}`, {
-                headers: {
-                  "Cache-Control": "no-cache",
-                  "Pragma": "no-cache",
+              const commitsRes = await fetch(
+                `https://api.github.com/repos/MukulS07/${repoName}/commits?per_page=5&t=${Date.now()}`,
+                {
+                  headers: {
+                    "Cache-Control": "no-cache",
+                    Pragma: "no-cache",
+                  },
                 },
-              });
+              );
               if (commitsRes.ok) {
                 const commitsData = await commitsRes.json();
                 if (Array.isArray(commitsData) && commitsData.length > 0) {
-                  const headSha = evt.payload?.head;
-                  const targetCommit = commitsData.find((c: any) => c.sha === headSha) || commitsData[0];
-                  
+                  const headSha = evtPayload.head;
+                  const targetCommit =
+                    commitsData.find((c: Record<string, unknown>) => c.sha === headSha) ||
+                    commitsData[0];
+
                   const commitMsg = targetCommit.commit?.message || "";
                   const firstLineMsg = commitMsg.split("\n")?.[0] || "";
-                  const truncatedMsg = firstLineMsg.length > 30 ? firstLineMsg.substring(0, 30) + "..." : firstLineMsg;
-                  
+                  const truncatedMsg =
+                    firstLineMsg.length > 30 ? firstLineMsg.substring(0, 30) + "..." : firstLineMsg;
+
                   msg = firstLineMsg ? `pushed: "${truncatedMsg}"` : "pushed commits";
                   fullMsg = commitMsg || "pushed commits";
-                  
+
                   const shortSha = targetCommit.sha ? targetCommit.sha.substring(0, 7) : "";
                   note = `${note} (${shortSha})`;
                   link = targetCommit.html_url || link;
@@ -394,7 +416,8 @@ export function Hero() {
             const prAction = evt.payload?.action || "opened";
             const prNum = evt.payload?.number || "";
             const prTitle = evt.payload?.pull_request?.title || "";
-            const truncatedPrTitle = prTitle.length > 25 ? prTitle.substring(0, 25) + "..." : prTitle;
+            const truncatedPrTitle =
+              prTitle.length > 25 ? prTitle.substring(0, 25) + "..." : prTitle;
             msg = `${prAction} PR: "${truncatedPrTitle}"`;
             fullMsg = prTitle ? `PR #${prNum}: ${prTitle}` : msg;
             note = `PR #${prNum}`;
@@ -405,7 +428,8 @@ export function Hero() {
             const issueAction = evt.payload?.action || "opened";
             const issueNum = evt.payload?.issue?.number || "";
             const issueTitle = evt.payload?.issue?.title || "";
-            const truncatedIssueTitle = issueTitle.length > 25 ? issueTitle.substring(0, 25) + "..." : issueTitle;
+            const truncatedIssueTitle =
+              issueTitle.length > 25 ? issueTitle.substring(0, 25) + "..." : issueTitle;
             msg = `${issueAction} issue: "${truncatedIssueTitle}"`;
             fullMsg = issueTitle ? `Issue #${issueNum}: ${issueTitle}` : msg;
             note = `issue #${issueNum}`;
@@ -444,7 +468,7 @@ export function Hero() {
   }, []);
 
   // Find the latest PUSH or CREATE event to showcase what the user is working on
-  const activeEvent = eventsList.find(e => e.tag === "PUSH" || e.tag === "CREATE");
+  const activeEvent = eventsList.find((e) => e.tag === "PUSH" || e.tag === "CREATE");
 
   const linkedinEvents = linkedinUpdates.map((item) => {
     const createdTime = new Date(item.date).getTime();
@@ -463,10 +487,18 @@ export function Hero() {
 
     let tagColor = "text-muted-foreground";
     switch (item.type) {
-      case "RESEARCH": tagColor = "text-accent"; break;
-      case "MILESTONE": tagColor = "text-yellow-400"; break;
-      case "PRODUCT": tagColor = "text-amber-warn"; break;
-      case "ARTICLE": tagColor = "text-emerald-400"; break;
+      case "RESEARCH":
+        tagColor = "text-accent";
+        break;
+      case "MILESTONE":
+        tagColor = "text-yellow-400";
+        break;
+      case "PRODUCT":
+        tagColor = "text-amber-warn";
+        break;
+      case "ARTICLE":
+        tagColor = "text-emerald-400";
+        break;
     }
 
     return {
@@ -476,7 +508,7 @@ export function Hero() {
       repo: "linkedin.com",
       msg: item.text,
       note: "transmit →",
-      link: item.link
+      link: item.link,
     };
   });
 
@@ -644,235 +676,272 @@ export function Hero() {
                 <StatTile {...s} />
               </div>
             ))}
-             {/* Building card spanning 2 */}
-             <div className="col-span-2 bg-background p-5 sm:p-6 border-t border-border">
-               <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
-                 <span className="flex items-center gap-2">
-                   <span>›_ COMMIT · {activeProjTime ? activeProjTime.toUpperCase() : "MAIN"}</span>
-                 </span>
-                 <span className={`flex items-center gap-1.5 ${activeProjStatusColor}`}>
-                   <span className={`h-1.5 w-1.5 rounded-full ${activeProjStatusColor} bg-current animate-pulse`} />
-                   {activeProjStatus}
-                 </span>
-               </div>
-               <div className="mt-4 font-mono text-xs text-muted-foreground truncate" title={activeProjFolder}>
-                 {activeProjFolder}
-               </div>
-               <div className="mt-2 font-serif-display text-2xl text-foreground truncate" title={activeProjName}>
-                 {activeProjName}
-               </div>
-               <div className="font-mono text-xs text-muted-foreground mt-1 truncate" title={activeProjSub}>
-                 {activeProjSub}
-               </div>
- 
-               {activeProjCommit && (
-                 <div className="mt-3 border border-border/30 bg-white/[0.02] p-2.5 rounded font-mono text-[11px] leading-snug">
-                   <span className="text-accent font-semibold">// LATEST WORK:</span>
-                   <div className="text-foreground mt-1 select-all font-light">
-                     {activeProjCommit}
-                   </div>
-                 </div>
-               )}
- 
-               <ProjectVideo src={activeProjVideo} title={activeProjName} />
- 
-               <div className="mt-4 flex flex-wrap gap-1.5 font-mono text-[11px]">
-                 {activeProjStack.map((t) => (
-                   <span key={t} className="px-2 py-0.5 border border-border text-muted-foreground">
-                     {t}
-                   </span>
-                 ))}
-               </div>
-             </div>
-           </div>
-         </div>
- 
-          {/* ROW 2: Latest Live Websites */}
-          <div className="mt-px border border-border border-t-0 bg-background p-5 sm:p-6">
-            <div className="font-mono text-[10px] tracking-[0.22em] text-muted-foreground uppercase mb-4 flex items-center gap-1.5 select-none">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-              ›_ PORTAL: ACTIVE_LIVE_DEPLOYMENTS
-            </div>
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {[
-                {
-                  name: "ApexF1",
-                  sub: "Ultimate F1 2026 Dashboard",
-                  desc: "Three.js 3D car livery designer, simulated track telemetry, and NVIDIA NIM chatbot.",
-                  url: "https://apex-f1-eosin.vercel.app",
-                  port: "PORT_80",
-                },
-                {
-                  name: "EcoGeoGuard",
-                  sub: "AI-IoT Landslide Predictor",
-                  desc: "Multi-sensor fusion pipeline on AWS returning sub-3-minute risk forecasts.",
-                  url: "https://ecogeoguard.vercel.app/",
-                  port: "PORT_443",
-                },
-                {
-                  name: "INVENTROX OS",
-                  sub: "AI Business Operating System",
-                  desc: "SME POS and GST billing engine with inventory telemetry and automation.",
-                  url: "https://inventrox.vercel.app/",
-                  port: "PORT_8080",
-                },
-                {
-                  name: "Mukul Portfolio",
-                  sub: "Cybersecurity Telemetry HUD",
-                  desc: "This site: serverless Edge-routed, voice chatbot proxy, active git feeds.",
-                  url: "https://github.com/MukulS07/Mukul-Portfolio",
-                  port: "PORT_3000",
-                },
-                {
-                  name: "Space Galactus",
-                  sub: "2D Top-Down Space Shooter",
-                  desc: "Unity 6 game with boss battles and ScriptableObject weapons system.",
-                  url: "https://github.com/MukulS07",
-                  port: "PORT_2026",
-                },
-                {
-                  name: "AYUSH VR Herbal Garden",
-                  sub: "VR Learning Experience",
-                  desc: "Oculus VR virtual garden with Node.js/Express/MongoDB cloud backend.",
-                  url: "https://github.com/MukulS07",
-                  port: "PORT_9000",
-                },
-              ].map((site) => {
-                const status = deploymentStatuses[site.name];
-                return (
-                  <div
-                    key={site.name}
-                    onClick={() => window.open(site.url, "_blank", "noopener,noreferrer")}
-                    className="border border-border/60 hover:border-accent hover:bg-white/[0.02] p-4 rounded transition-all duration-300 cursor-pointer flex flex-col justify-between group"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between font-mono text-[9px] text-muted-foreground tracking-wider">
-                        <span>{site.port}</span>
-                        <span className={`flex items-center gap-1 ${
-                          status?.loading 
-                            ? "text-muted-foreground/60 animate-pulse" 
-                            : status?.online 
-                              ? "text-emerald-400" 
-                              : "text-red-400"
-                        }`}>
-                          <span className={`h-1 w-1 rounded-full bg-current ${status?.online && !status.loading ? "animate-ping" : ""}`} />
-                          {status?.loading 
-                            ? "PINGING" 
-                            : status?.online 
-                              ? `ONLINE${status.latency !== null ? ` (${status.latency}ms)` : ""}` 
-                              : "OFFLINE"}
-                        </span>
-                      </div>
-                      <h4 className="mt-3 font-serif-display text-lg text-foreground group-hover:text-accent transition-colors">
-                        {site.name}
-                      </h4>
-                      <p className="font-mono text-[10px] text-muted-foreground mt-0.5">{site.sub}</p>
-                      <p className="mt-2.5 font-mono text-[11px] leading-relaxed text-muted-foreground/80 line-clamp-2">
-                        {site.desc}
-                      </p>
-                    </div>
-                    <div className="mt-4 pt-3 border-t border-border/30 flex justify-between items-center font-mono text-[10px] text-muted-foreground group-hover:text-accent transition-colors">
-                      <span>LAUNCH PORTAL</span>
-                      <span>→</span>
-                    </div>
+            {/* Building card spanning 2 */}
+            <div className="col-span-2 bg-background p-5 sm:p-6 border-t border-border">
+              <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
+                <span className="flex items-center gap-2">
+                  <span>›_ COMMIT · {activeProjTime ? activeProjTime.toUpperCase() : "MAIN"}</span>
+                </span>
+                <span className={`flex items-center gap-1.5 ${activeProjStatusColor}`}>
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full ${activeProjStatusColor} bg-current animate-pulse`}
+                  />
+                  {activeProjStatus}
+                </span>
+              </div>
+              <div
+                className="mt-4 font-mono text-xs text-muted-foreground truncate"
+                title={activeProjFolder}
+              >
+                {activeProjFolder}
+              </div>
+              <div
+                className="mt-2 font-serif-display text-2xl text-foreground truncate"
+                title={activeProjName}
+              >
+                {activeProjName}
+              </div>
+              <div
+                className="font-mono text-xs text-muted-foreground mt-1 truncate"
+                title={activeProjSub}
+              >
+                {activeProjSub}
+              </div>
+
+              {activeProjCommit && (
+                <div className="mt-3 border border-border/30 bg-white/[0.02] p-2.5 rounded font-mono text-[11px] leading-snug">
+                  <span className="text-accent font-semibold">// LATEST WORK:</span>
+                  <div className="text-foreground mt-1 select-all font-light">
+                    {activeProjCommit}
                   </div>
-                );
-              })}
-            </div>
-          </div>
+                </div>
+              )}
 
-          {/* ROW 3: split-screen telemetry feed (GitHub + LinkedIn) */}
-          <div className="mt-px grid lg:grid-cols-2 gap-px bg-border border border-border border-t-0">
-            {/* Left Terminal: GITHUB TELEMETRY */}
-            <div className="bg-background flex flex-col min-w-0">
-              <div className="px-5 sm:px-6 py-2.5 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground border-b border-border select-none bg-black/15">
-                <span className="flex items-center gap-1.5 font-semibold text-accent">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-                  ›_ UPLINK: GITHUB_LOGS
-                </span>
-                <span className="tabular-nums text-muted-foreground/60">{eventsList.length} / 30</span>
-              </div>
-              <div className="max-h-[300px] overflow-y-auto">
-                <table className="w-full font-mono text-xs">
-                  <tbody>
-                    {eventsList.map((e, i) => (
-                      <tr
-                        key={i}
-                        onClick={e.link ? () => window.open(e.link, "_blank", "noopener,noreferrer") : undefined}
-                        title={e.fullMsg || e.msg}
-                        className={`border-b border-border/40 last:border-0 hover:bg-white/[0.03] transition-colors ${
-                          e.link ? "cursor-pointer" : ""
-                        }`}
-                      >
-                        <td className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground w-28 tabular-nums">
-                          {e.t}
-                        </td>
-                        <td className="py-3 w-16 sm:w-20">
-                          <span className={`px-2 py-0.5 border text-[9px] tracking-wider uppercase font-semibold ${e.tagColor} border-current/20 bg-current/5`}>
-                            {e.tag}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 font-semibold text-accent break-all sm:break-normal w-1/4">
-                          {e.repo}
-                        </td>
-                        <td className="py-3 text-foreground break-all sm:break-normal pr-4">
-                          {e.msg}
-                        </td>
-                        <td className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground text-right font-light italic truncate max-w-[120px]" title={e.note}>
-                          {e.note}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <ProjectVideo src={activeProjVideo} title={activeProjName} />
 
-            {/* Right Terminal: LINKEDIN TELEMETRY */}
-            <div className="bg-background flex flex-col min-w-0 border-t lg:border-t-0 lg:border-l border-border">
-              <div className="px-5 sm:px-6 py-2.5 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground border-b border-border select-none bg-black/15">
-                <span className="flex items-center gap-1.5 font-semibold text-accent">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
-                  ›_ UPLINK: LINKEDIN_FEED
-                </span>
-                <span className="tabular-nums text-muted-foreground/60">{linkedinEvents.length} / 10</span>
-              </div>
-              <div className="max-h-[300px] overflow-y-auto">
-                <table className="w-full font-mono text-xs">
-                  <tbody>
-                    {linkedinEvents.map((e, i) => (
-                      <tr
-                        key={i}
-                        onClick={e.link ? () => window.open(e.link, "_blank", "noopener,noreferrer") : undefined}
-                        title={e.msg}
-                        className={`border-b border-border/40 last:border-0 hover:bg-white/[0.03] transition-colors ${
-                          e.link ? "cursor-pointer" : ""
-                        }`}
-                      >
-                        <td className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground w-28 tabular-nums">
-                          {e.t}
-                        </td>
-                        <td className="py-3 w-16 sm:w-20">
-                          <span className={`px-2 py-0.5 border text-[9px] tracking-wider uppercase font-semibold ${e.tagColor} border-current/20 bg-current/5`}>
-                            {e.tag}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 font-semibold text-accent break-all sm:break-normal w-1/4">
-                          {e.repo}
-                        </td>
-                        <td className="py-3 text-foreground break-all sm:break-normal pr-4">
-                          {e.msg}
-                        </td>
-                        <td className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground text-right font-light italic truncate max-w-[120px]" title={e.note}>
-                          {e.note}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="mt-4 flex flex-wrap gap-1.5 font-mono text-[11px]">
+                {activeProjStack.map((t) => (
+                  <span key={t} className="px-2 py-0.5 border border-border text-muted-foreground">
+                    {t}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
+        </div>
+
+        {/* ROW 2: Latest Live Websites */}
+        <div className="mt-px border border-border border-t-0 bg-background p-5 sm:p-6">
+          <div className="font-mono text-[10px] tracking-[0.22em] text-muted-foreground uppercase mb-4 flex items-center gap-1.5 select-none">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+            ›_ PORTAL: ACTIVE_LIVE_DEPLOYMENTS
+          </div>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              {
+                name: "ApexF1",
+                sub: "Ultimate F1 2026 Dashboard",
+                desc: "Three.js 3D car livery designer, simulated track telemetry, and NVIDIA NIM chatbot.",
+                url: "https://apex-f1-eosin.vercel.app",
+                port: "PORT_80",
+              },
+              {
+                name: "EcoGeoGuard",
+                sub: "AI-IoT Landslide Predictor",
+                desc: "Multi-sensor fusion pipeline on AWS returning sub-3-minute risk forecasts.",
+                url: "https://ecogeoguard.vercel.app/",
+                port: "PORT_443",
+              },
+              {
+                name: "INVENTROX OS",
+                sub: "AI Business Operating System",
+                desc: "SME POS and GST billing engine with inventory telemetry and automation.",
+                url: "https://inventrox.vercel.app/",
+                port: "PORT_8080",
+              },
+              {
+                name: "Mukul Portfolio",
+                sub: "Cybersecurity Telemetry HUD",
+                desc: "This site: serverless Edge-routed, voice chatbot proxy, active git feeds.",
+                url: "https://github.com/MukulS07/Mukul-Portfolio",
+                port: "PORT_3000",
+              },
+              {
+                name: "Space Galactus",
+                sub: "2D Top-Down Space Shooter",
+                desc: "Unity 6 game with boss battles and ScriptableObject weapons system.",
+                url: "https://github.com/MukulS07",
+                port: "PORT_2026",
+              },
+              {
+                name: "AYUSH VR Herbal Garden",
+                sub: "VR Learning Experience",
+                desc: "Oculus VR virtual garden with Node.js/Express/MongoDB cloud backend.",
+                url: "https://github.com/MukulS07",
+                port: "PORT_9000",
+              },
+            ].map((site) => {
+              const status = deploymentStatuses[site.name];
+              return (
+                <div
+                  key={site.name}
+                  onClick={() => window.open(site.url, "_blank", "noopener,noreferrer")}
+                  className="border border-border/60 hover:border-accent hover:bg-white/[0.02] p-4 rounded transition-all duration-300 cursor-pointer flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between font-mono text-[9px] text-muted-foreground tracking-wider">
+                      <span>{site.port}</span>
+                      <span
+                        className={`flex items-center gap-1 ${
+                          status?.loading
+                            ? "text-muted-foreground/60 animate-pulse"
+                            : status?.online
+                              ? "text-emerald-400"
+                              : "text-red-400"
+                        }`}
+                      >
+                        <span
+                          className={`h-1 w-1 rounded-full bg-current ${status?.online && !status.loading ? "animate-ping" : ""}`}
+                        />
+                        {status?.loading
+                          ? "PINGING"
+                          : status?.online
+                            ? `ONLINE${status.latency !== null ? ` (${status.latency}ms)` : ""}`
+                            : "OFFLINE"}
+                      </span>
+                    </div>
+                    <h4 className="mt-3 font-serif-display text-lg text-foreground group-hover:text-accent transition-colors">
+                      {site.name}
+                    </h4>
+                    <p className="font-mono text-[10px] text-muted-foreground mt-0.5">{site.sub}</p>
+                    <p className="mt-2.5 font-mono text-[11px] leading-relaxed text-muted-foreground/80 line-clamp-2">
+                      {site.desc}
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-border/30 flex justify-between items-center font-mono text-[10px] text-muted-foreground group-hover:text-accent transition-colors">
+                    <span>LAUNCH PORTAL</span>
+                    <span>→</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ROW 3: split-screen telemetry feed (GitHub + LinkedIn) */}
+        <div className="mt-px grid lg:grid-cols-2 gap-px bg-border border border-border border-t-0">
+          {/* Left Terminal: GITHUB TELEMETRY */}
+          <div className="bg-background flex flex-col min-w-0">
+            <div className="px-5 sm:px-6 py-2.5 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground border-b border-border select-none bg-black/15">
+              <span className="flex items-center gap-1.5 font-semibold text-accent">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                ›_ UPLINK: GITHUB_LOGS
+              </span>
+              <span className="tabular-nums text-muted-foreground/60">
+                {eventsList.length} / 30
+              </span>
+            </div>
+            <div className="max-h-[300px] overflow-y-auto">
+              <table className="w-full font-mono text-xs">
+                <tbody>
+                  {eventsList.map((e, i) => (
+                    <tr
+                      key={i}
+                      onClick={
+                        e.link
+                          ? () => window.open(e.link, "_blank", "noopener,noreferrer")
+                          : undefined
+                      }
+                      title={e.fullMsg || e.msg}
+                      className={`border-b border-border/40 last:border-0 hover:bg-white/[0.03] transition-colors ${
+                        e.link ? "cursor-pointer" : ""
+                      }`}
+                    >
+                      <td className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground w-28 tabular-nums">
+                        {e.t}
+                      </td>
+                      <td className="py-3 w-16 sm:w-20">
+                        <span
+                          className={`px-2 py-0.5 border text-[9px] tracking-wider uppercase font-semibold ${e.tagColor} border-current/20 bg-current/5`}
+                        >
+                          {e.tag}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 font-semibold text-accent break-all sm:break-normal w-1/4">
+                        {e.repo}
+                      </td>
+                      <td className="py-3 text-foreground break-all sm:break-normal pr-4">
+                        {e.msg}
+                      </td>
+                      <td
+                        className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground text-right font-light italic truncate max-w-[120px]"
+                        title={e.note}
+                      >
+                        {e.note}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Right Terminal: LINKEDIN TELEMETRY */}
+          <div className="bg-background flex flex-col min-w-0 border-t lg:border-t-0 lg:border-l border-border">
+            <div className="px-5 sm:px-6 py-2.5 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground border-b border-border select-none bg-black/15">
+              <span className="flex items-center gap-1.5 font-semibold text-accent">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
+                ›_ UPLINK: LINKEDIN_FEED
+              </span>
+              <span className="tabular-nums text-muted-foreground/60">
+                {linkedinEvents.length} / 10
+              </span>
+            </div>
+            <div className="max-h-[300px] overflow-y-auto">
+              <table className="w-full font-mono text-xs">
+                <tbody>
+                  {linkedinEvents.map((e, i) => (
+                    <tr
+                      key={i}
+                      onClick={
+                        e.link
+                          ? () => window.open(e.link, "_blank", "noopener,noreferrer")
+                          : undefined
+                      }
+                      title={e.msg}
+                      className={`border-b border-border/40 last:border-0 hover:bg-white/[0.03] transition-colors ${
+                        e.link ? "cursor-pointer" : ""
+                      }`}
+                    >
+                      <td className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground w-28 tabular-nums">
+                        {e.t}
+                      </td>
+                      <td className="py-3 w-16 sm:w-20">
+                        <span
+                          className={`px-2 py-0.5 border text-[9px] tracking-wider uppercase font-semibold ${e.tagColor} border-current/20 bg-current/5`}
+                        >
+                          {e.tag}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 font-semibold text-accent break-all sm:break-normal w-1/4">
+                        {e.repo}
+                      </td>
+                      <td className="py-3 text-foreground break-all sm:break-normal pr-4">
+                        {e.msg}
+                      </td>
+                      <td
+                        className="hidden sm:table-cell px-5 sm:px-6 py-3 text-muted-foreground text-right font-light italic truncate max-w-[120px]"
+                        title={e.note}
+                      >
+                        {e.note}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Tech ticker */}

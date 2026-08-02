@@ -13,11 +13,10 @@ export const Route = createFileRoute("/chatbot")({
       { property: "og:title", content: "AI Assistant — Mukul Sharma" },
       {
         property: "og:description",
-        content: "Voice-enabled portfolio chatbot assistant. Supports offline expert mode & Gemini AI.",
+        content:
+          "Voice-enabled portfolio chatbot assistant. Supports offline expert mode & Gemini AI.",
       },
     ],
   }),
   component: () => <VoiceChatbot />,
 });
-
-

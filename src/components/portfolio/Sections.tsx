@@ -237,7 +237,10 @@ const projects: Project[] = [
     links: [
       { label: "live →", href: "https://ecogeoguard.vercel.app/" },
       { label: "github →", href: "https://github.com/MukulS07/ecogeoguard-community-platform" },
-      { label: "paper →", href: "https://conferenceseries.adroidjournals.com/index.php/ACSET/article/view/53" },
+      {
+        label: "paper →",
+        href: "https://conferenceseries.adroidjournals.com/index.php/ACSET/article/view/53",
+      },
     ],
   },
   {
@@ -257,7 +260,10 @@ const projects: Project[] = [
     stack: ["Next.js", "Node.js", "React", "MongoDB", "AI APIs", "Vercel"],
     links: [
       { label: "live →", href: "https://inventrox.vercel.app/" },
-      { label: "github →", href: "https://github.com/MukulS07/inventrox-os-The-Operating-System-for-Modern-Businesses." },
+      {
+        label: "github →",
+        href: "https://github.com/MukulS07/inventrox-os-The-Operating-System-for-Modern-Businesses.",
+      },
     ],
   },
   {
@@ -383,7 +389,10 @@ export function Projects() {
                     </span>
                     {matchedRepo && (
                       <span className="text-[10px] text-dim">
-                        Updated {new Date(matchedRepo.pushed_at || matchedRepo.updated_at).toLocaleDateString()}
+                        Updated{" "}
+                        {new Date(
+                          matchedRepo.pushed_at || matchedRepo.updated_at,
+                        ).toLocaleDateString()}
                       </span>
                     )}
                   </div>
@@ -474,7 +483,9 @@ export function Projects() {
                     <Github className="w-3.5 h-3.5 shrink-0" /> {repo.name}
                   </span>
                   {repo.stargazers_count > 0 && (
-                    <span className="text-accent text-[10px] shrink-0">★ {repo.stargazers_count}</span>
+                    <span className="text-accent text-[10px] shrink-0">
+                      ★ {repo.stargazers_count}
+                    </span>
                   )}
                 </div>
                 <p className="mt-2.5 text-xs text-muted-foreground line-clamp-3 leading-relaxed">
@@ -688,8 +699,8 @@ export function Experience() {
               target="_blank"
               rel="noopener noreferrer"
               className={`glass-panel overflow-hidden flex flex-col group transition-all duration-300 ${
-                c.fileUrl 
-                  ? "hover:border-accent hover:shadow-[0_0_15px_rgba(56,189,248,0.15)] cursor-pointer" 
+                c.fileUrl
+                  ? "hover:border-accent hover:shadow-[0_0_15px_rgba(56,189,248,0.15)] cursor-pointer"
                   : "opacity-85"
               }`}
             >
@@ -707,7 +718,7 @@ export function Experience() {
                     <span className="text-[7px] text-dim">{c.issuer}</span>
                   </div>
                 )}
-                
+
                 {/* View overlay */}
                 {c.fileUrl && (
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center font-mono text-[9px] tracking-widest text-accent font-bold uppercase">
@@ -722,13 +733,9 @@ export function Experience() {
                   <div className="font-mono text-[11px] leading-tight text-foreground group-hover:text-accent transition-colors font-semibold">
                     {c.name}
                   </div>
-                  <div className="font-mono text-[9px] text-muted-foreground mt-1">
-                    {c.issuer}
-                  </div>
+                  <div className="font-mono text-[9px] text-muted-foreground mt-1">{c.issuer}</div>
                 </div>
-                <div className="font-mono text-[8px] text-dim text-right">
-                  {c.date}
-                </div>
+                <div className="font-mono text-[8px] text-dim text-right">{c.date}</div>
               </div>
             </a>
           ))}
@@ -750,11 +757,7 @@ export function Contact() {
                 v="mukulsharmaworks@gmail.com"
                 href="mailto:mukulsharmaworks@gmail.com"
               />
-              <Row
-                k="github"
-                v="github.com/MukulS07"
-                href="https://github.com/MukulS07"
-              />
+              <Row k="github" v="github.com/MukulS07" href="https://github.com/MukulS07" />
               <Row
                 k="linkedin"
                 v="linkedin.com/in/mukul-sharma-514634214"

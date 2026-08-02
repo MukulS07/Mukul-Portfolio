@@ -26,15 +26,40 @@ interface Message {
 const generateSphereData = () => {
   const t = (1 + Math.sqrt(5)) / 2;
   const baseVerts: [number, number, number][] = [
-    [-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0],
-    [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t],
-    [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]
+    [-1, t, 0],
+    [1, t, 0],
+    [-1, -t, 0],
+    [1, -t, 0],
+    [0, -1, t],
+    [0, 1, t],
+    [0, -1, -t],
+    [0, 1, -t],
+    [t, 0, -1],
+    [t, 0, 1],
+    [-t, 0, -1],
+    [-t, 0, 1],
   ];
   const baseFaces: [number, number, number][] = [
-    [0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11],
-    [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8],
-    [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9],
-    [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]
+    [0, 11, 5],
+    [0, 5, 1],
+    [0, 1, 7],
+    [0, 7, 10],
+    [0, 10, 11],
+    [1, 5, 9],
+    [5, 11, 4],
+    [11, 10, 2],
+    [10, 7, 6],
+    [7, 1, 8],
+    [3, 9, 4],
+    [3, 4, 2],
+    [3, 2, 6],
+    [3, 6, 8],
+    [3, 8, 9],
+    [4, 9, 5],
+    [2, 4, 11],
+    [6, 2, 10],
+    [8, 6, 7],
+    [9, 8, 1],
   ];
 
   const verts: [number, number, number][] = [];
@@ -42,7 +67,7 @@ const generateSphereData = () => {
   const addVert = (v: [number, number, number]) => {
     const len = Math.hypot(v[0], v[1], v[2]);
     const n: [number, number, number] = [v[0] / len, v[1] / len, v[2] / len];
-    const key = n.map(x => x.toFixed(5)).join(",");
+    const key = n.map((x) => x.toFixed(5)).join(",");
     const existing = vIndex.get(key);
     if (existing !== undefined) return existing;
     const idx = verts.length;
@@ -51,7 +76,7 @@ const generateSphereData = () => {
     return idx;
   };
 
-  baseVerts.forEach(v => addVert(v));
+  baseVerts.forEach((v) => addVert(v));
   const edgeSet = new Set<string>();
   const edges: [number, number][] = [];
   const addEdge = (a: number, b: number) => {
@@ -62,15 +87,27 @@ const generateSphereData = () => {
   };
 
   baseFaces.forEach(([a, b, c]) => {
-    const va = baseVerts[a], vb = baseVerts[b], vc = baseVerts[c];
-    const mid = (p: number[], q: number[]) => [(p[0]+q[0])/2, (p[1]+q[1])/2, (p[2]+q[2])/2] as [number, number, number];
+    const va = baseVerts[a],
+      vb = baseVerts[b],
+      vc = baseVerts[c];
+    const mid = (p: number[], q: number[]) =>
+      [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2, (p[2] + q[2]) / 2] as [number, number, number];
     const ab = addVert(mid(va, vb));
     const bc = addVert(mid(vb, vc));
     const ca = addVert(mid(vc, va));
-    const ia = addVert(va), ib = addVert(vb), ic = addVert(vc);
+    const ia = addVert(va),
+      ib = addVert(vb),
+      ic = addVert(vc);
     [
-      [ia, ab], [ab, ib], [ib, bc], [bc, ic], [ic, ca], [ca, ia],
-      [ab, bc], [bc, ca], [ca, ab]
+      [ia, ab],
+      [ab, ib],
+      [ib, bc],
+      [bc, ic],
+      [ic, ca],
+      [ca, ia],
+      [ab, bc],
+      [bc, ca],
+      [ca, ab],
     ].forEach(([x, y]) => addEdge(x, y));
   });
 
@@ -78,7 +115,6 @@ const generateSphereData = () => {
 };
 
 const SPHERE_DATA = generateSphereData();
-
 
 export function VoiceChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -168,7 +204,7 @@ export function VoiceChatbotWidget() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsAvengers(document.body.classList.contains("avengers"));
-      
+
       const observer = new MutationObserver(() => {
         setIsAvengers(document.body.classList.contains("avengers"));
       });
@@ -178,20 +214,22 @@ export function VoiceChatbotWidget() {
         const loadVoices = () => {
           const engVoices = window.speechSynthesis.getVoices().filter((v) => {
             const name = v.name.toLowerCase();
-            return v.lang.startsWith("en") && 
-                   !name.includes("david") && 
-                   !name.includes("guy") && 
-                   !name.includes("james") && 
-                   !name.includes("george") && 
-                   !name.includes("mark") && 
-                   !name.includes("male") && 
-                   !name.includes("ravi") && 
-                   !name.includes("richard") && 
-                   !name.includes("stefan") && 
-                   !name.includes("patrick") && 
-                   !name.includes("sean") && 
-                   !name.includes("samuel") && 
-                   !name.includes("harry");
+            return (
+              v.lang.startsWith("en") &&
+              !name.includes("david") &&
+              !name.includes("guy") &&
+              !name.includes("james") &&
+              !name.includes("george") &&
+              !name.includes("mark") &&
+              !name.includes("male") &&
+              !name.includes("ravi") &&
+              !name.includes("richard") &&
+              !name.includes("stefan") &&
+              !name.includes("patrick") &&
+              !name.includes("sean") &&
+              !name.includes("samuel") &&
+              !name.includes("harry")
+            );
           });
           setAvailableVoices(engVoices);
 
@@ -257,17 +295,17 @@ export function VoiceChatbotWidget() {
             console.log("Hotword 'Friday' activation detected.");
             shouldRestart = false;
             bgRecognition.stop();
-            
+
             // Expand chatbot widget
             setIsOpen(true);
             setContinuousVoiceMode(true);
             setBotState("speaking");
             setStatusLog("FRIDAY_AUDIO::ACTIVE");
-            
+
             // Speak confirmation
             setTimeout(() => {
-              const phrase = isAvengersRef.current 
-                ? "Yes, Boss. Friday is online." 
+              const phrase = isAvengersRef.current
+                ? "Yes, Boss. Friday is online."
                 : "Yes, Friday is here. Listening.";
               speakOutput(phrase);
             }, 300);
@@ -300,7 +338,9 @@ export function VoiceChatbotWidget() {
       if (bgRecognition) {
         try {
           bgRecognition.abort();
-        } catch (e) {}
+        } catch {
+          // ignore abort error
+        }
       }
     };
   }, [isOpen, hotwordEnabled]);
@@ -355,7 +395,7 @@ export function VoiceChatbotWidget() {
           stopMicrophone();
           setBotState("idle");
           setRecognitionActive(false);
-          
+
           if (event.error === "not-allowed") {
             addSystemMessage("Microphone permission denied. Please enable mic access or type.");
           }
@@ -430,8 +470,8 @@ export function VoiceChatbotWidget() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let rotation = 0;
-    let waveOffset = 0;
+    const rotation = 0;
+    const waveOffset = 0;
 
     let rotationX = 0;
     let rotationY = 0;
@@ -475,7 +515,7 @@ export function VoiceChatbotWidget() {
             sum += dataArray[i];
           }
           const avg = sum / bufferLength;
-          voiceMultiplier = 1.0 + (avg / 40);
+          voiceMultiplier = 1.0 + avg / 40;
         } else {
           voiceMultiplier = 1.0 + Math.sin(Date.now() / 150) * 0.08;
         }
@@ -485,14 +525,27 @@ export function VoiceChatbotWidget() {
       ctx.strokeStyle = `rgba(${primaryColor}, 0.05)`;
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.arc(cx, cy, Math.max(0.1, (size * 0.44) * (botState === "listening" ? voiceMultiplier : 1.0)), 0, Math.PI * 2);
+      ctx.arc(
+        cx,
+        cy,
+        Math.max(0.1, size * 0.44 * (botState === "listening" ? voiceMultiplier : 1.0)),
+        0,
+        Math.PI * 2,
+      );
       ctx.stroke();
 
       // Project and draw 3D wireframe sphere
-      const cosY = Math.cos(rotationY), sinY = Math.sin(rotationY);
-      const cosX = Math.cos(rotationX), sinX = Math.sin(rotationX);
+      const cosY = Math.cos(rotationY),
+        sinY = Math.sin(rotationY);
+      const cosX = Math.cos(rotationX),
+        sinX = Math.sin(rotationX);
 
-      const R = Math.max(0.1, (size * 0.36) * (botState === "listening" ? voiceMultiplier : 1.0 + Math.sin(Date.now() / 300) * 0.03));
+      const R = Math.max(
+        0.1,
+        size *
+          0.36 *
+          (botState === "listening" ? voiceMultiplier : 1.0 + Math.sin(Date.now() / 300) * 0.03),
+      );
       const persp = R * 2.5;
 
       const proj = SPHERE_DATA.verts.map(([x, y, z], index) => {
@@ -524,7 +577,8 @@ export function VoiceChatbotWidget() {
       ctx.strokeStyle = `rgba(${primaryColor}, 0.35)`;
       ctx.lineWidth = 0.8;
       for (const [a, b] of SPHERE_DATA.edges) {
-        const pa = proj[a], pb = proj[b];
+        const pa = proj[a],
+          pb = proj[b];
         ctx.beginPath();
         ctx.moveTo(pa.x, pa.y);
         ctx.lineTo(pb.x, pb.y);
@@ -630,7 +684,7 @@ export function VoiceChatbotWidget() {
       // 6. Central Energy Core
       ctx.shadowBlur = 10;
       ctx.shadowColor = `rgb(${primaryColor})`;
-      
+
       if (isAvengers) {
         // Triangular Core (Iron Man Mark VI)
         ctx.fillStyle = `rgba(${energyColor}, ${0.85 + pulse * 0.15})`;
@@ -690,8 +744,6 @@ export function VoiceChatbotWidget() {
     ]);
   }
 
-
-
   const toggleMic = () => {
     if (!recognitionRef.current) {
       addSystemMessage("Speech API unsupported in this browser.");
@@ -737,20 +789,22 @@ export function VoiceChatbotWidget() {
     if (!selectedVoice) {
       selectedVoice = voices.find((v) => {
         const name = v.name.toLowerCase();
-        return v.lang.startsWith("en") && 
-               !name.includes("david") && 
-               !name.includes("guy") && 
-               !name.includes("james") && 
-               !name.includes("george") && 
-               !name.includes("mark") && 
-               !name.includes("male") && 
-               !name.includes("ravi") && 
-               !name.includes("richard") && 
-               !name.includes("stefan") && 
-               !name.includes("patrick") && 
-               !name.includes("sean") && 
-               !name.includes("samuel") && 
-               !name.includes("harry");
+        return (
+          v.lang.startsWith("en") &&
+          !name.includes("david") &&
+          !name.includes("guy") &&
+          !name.includes("james") &&
+          !name.includes("george") &&
+          !name.includes("mark") &&
+          !name.includes("male") &&
+          !name.includes("ravi") &&
+          !name.includes("richard") &&
+          !name.includes("stefan") &&
+          !name.includes("patrick") &&
+          !name.includes("sean") &&
+          !name.includes("samuel") &&
+          !name.includes("harry")
+        );
       });
     }
 
@@ -849,13 +903,12 @@ export function VoiceChatbotWidget() {
 
   // Base style settings
   const accentColor = isAvengers ? "border-[#ef4444]/40" : "border-[#38bdf8]/30";
-  const glowShadow = isAvengers 
-    ? "shadow-[0_0_15px_rgba(239,68,68,0.2)]" 
+  const glowShadow = isAvengers
+    ? "shadow-[0_0_15px_rgba(239,68,68,0.2)]"
     : "shadow-[0_0_15px_rgba(56,189,248,0.15)]";
 
   return (
     <div className="fixed bottom-4 left-4 z-50 font-mono text-xs select-none">
-      
       {/* Collapsed floating orb button */}
       {!isOpen && (
         <div className="flex flex-col items-center gap-2">
@@ -872,13 +925,17 @@ export function VoiceChatbotWidget() {
                   : "bg-cyan-950/80 border-accent/50 text-accent shadow-[0_0_10px_rgba(56,189,248,0.25)] hover:bg-cyan-900/80"
                 : "bg-black/85 border-border/60 text-muted-foreground hover:bg-black/95 hover:text-foreground"
             }`}
-            title={hotwordEnabled ? "Click to disable background hotword listening" : "Click to enable background hotword listening"}
-          >
-            <span className={`h-1.5 w-1.5 rounded-full ${
+            title={
               hotwordEnabled
-                ? "bg-green-400 animate-pulse"
-                : "bg-muted-foreground/50"
-            }`} />
+                ? "Click to disable background hotword listening"
+                : "Click to enable background hotword listening"
+            }
+          >
+            <span
+              className={`h-1.5 w-1.5 rounded-full ${
+                hotwordEnabled ? "bg-green-400 animate-pulse" : "bg-muted-foreground/50"
+              }`}
+            />
             <span>{hotwordEnabled ? "SAY 'HEY FRIDAY'" : "HOTWORD: OFF"}</span>
           </button>
 
@@ -915,11 +972,17 @@ export function VoiceChatbotWidget() {
           {/* Top Panel Title Header */}
           <header className="relative z-10 flex items-center justify-between px-3.5 py-2 border-b border-border bg-black/40 text-[10px] tracking-wider text-muted-foreground">
             <span className="flex items-center gap-1.5 font-bold">
-              <span className={`h-1.5 w-1.5 rounded-full ${
-                botState === "listening" ? "bg-red-500 animate-pulse" :
-                botState === "thinking" ? "bg-yellow-500 animate-spin" :
-                botState === "speaking" ? "bg-green-500 animate-pulse" : "bg-accent"
-              }`} />
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${
+                  botState === "listening"
+                    ? "bg-red-500 animate-pulse"
+                    : botState === "thinking"
+                      ? "bg-yellow-500 animate-spin"
+                      : botState === "speaking"
+                        ? "bg-green-500 animate-pulse"
+                        : "bg-accent"
+                }`}
+              />
               {isAvengers ? "🛰️ FRIDAY ASSISTANT" : "⚙️ FRIDAY AI"}
             </span>
             <div className="flex items-center gap-1">
@@ -976,7 +1039,9 @@ export function VoiceChatbotWidget() {
                   }
                 }}
                 className={`h-9 w-9 rounded border flex items-center justify-center transition cursor-pointer shrink-0 ${
-                  voiceMuted ? "bg-black/50 border-red-500/20 text-red-400" : "bg-black/50 border-border text-muted-foreground hover:text-foreground"
+                  voiceMuted
+                    ? "bg-black/50 border-red-500/20 text-red-400"
+                    : "bg-black/50 border-border text-muted-foreground hover:text-foreground"
                 }`}
                 title="Mute Bot TTS Voice"
               >
@@ -1019,7 +1084,10 @@ export function VoiceChatbotWidget() {
               >
                 {availableVoices.map((v) => (
                   <option key={v.name} value={v.name} className="bg-black text-foreground">
-                    {v.name.replace("Microsoft", "MS").replace("English", "EN").replace("Desktop", "")}
+                    {v.name
+                      .replace("Microsoft", "MS")
+                      .replace("English", "EN")
+                      .replace("Desktop", "")}
                   </option>
                 ))}
               </select>
@@ -1036,15 +1104,29 @@ export function VoiceChatbotWidget() {
 // ---------------------------------------------------------
 function queryOfflineExpert(query: string, avengersMode: boolean): string {
   const q = query.toLowerCase();
-  
+
   const greetingResponse = avengersMode
     ? "Hi, I am Friday. Ready for your command, Boss."
     : "Hi, I am Friday. How can I help you explore Mukul's portfolio?";
 
-  if (q.includes("hello") || q.includes("hi ") || q.includes("hey") || q.includes("greet") || q.includes("who are you") || q.includes("introduce") || q.includes("your name")) {
+  if (
+    q.includes("hello") ||
+    q.includes("hi ") ||
+    q.includes("hey") ||
+    q.includes("greet") ||
+    q.includes("who are you") ||
+    q.includes("introduce") ||
+    q.includes("your name")
+  ) {
     return greetingResponse;
   }
-  if (q.includes("paper") || q.includes("research") || q.includes("publication") || q.includes("dasgri") || q.includes("landslide")) {
+  if (
+    q.includes("paper") ||
+    q.includes("research") ||
+    q.includes("publication") ||
+    q.includes("dasgri") ||
+    q.includes("landslide")
+  ) {
     return avengersMode
       ? "Mukul's paper is: 'EcoGeoGuard: AI-IoT Based Landslide Prediction and Smart Agriculture' accepted at DASGRI Congress 2026. AWS pipeline achieves sub-3-minute alert latency."
       : "Mukul Sharma published the paper: 'EcoGeoGuard: AI-IoT Based Landslide Prediction and Smart Agriculture System' accepted at DASGRI Congress 2026. ML risk scoring achieves F1 score of 0.94.";
@@ -1059,32 +1141,77 @@ function queryOfflineExpert(query: string, avengersMode: boolean): string {
       ? "INVENTROX records loaded. An AI Business Operating System assisting Indian SMEs. POS billing, inventory, CRM, and GST invoicing. Stacks NextJS, Express, and MongoDB."
       : "INVENTROX is a commercial AI Business OS for small businesses. Replaces fragmented billing and inventory software. Developed with React, Node.js, and MongoDB.";
   }
-  if (q.includes("apexf1") || q.includes("apex f1") || q.includes("f1") || q.includes("dashboard")) {
+  if (
+    q.includes("apexf1") ||
+    q.includes("apex f1") ||
+    q.includes("f1") ||
+    q.includes("dashboard")
+  ) {
     return avengersMode
       ? "ApexF1 dashboard online, Boss. Formula 1 2026 season board. Features interactive 3D car livery designer in Three.js, live track telemetry, and NVIDIA NIM paddock AI."
       : "ApexF1 is a 2026 Formula 1 dashboard. It features a Three.js WebGL livery editor, simulated track telemetry, and an NVIDIA NIM paddock assistant chatbot.";
   }
-  if (q.includes("project") || q.includes("portfolio") || q.includes("shipped") || q.includes("make") || q.includes("build") || q.includes("game") || q.includes("galactus")) {
+  if (
+    q.includes("project") ||
+    q.includes("portfolio") ||
+    q.includes("shipped") ||
+    q.includes("make") ||
+    q.includes("build") ||
+    q.includes("game") ||
+    q.includes("galactus")
+  ) {
     return avengersMode
       ? "Projects include: ApexF1 (F1 Dashboard), EcoGeoGuard (AI-IoT warning), INVENTROX (SME OS), Space Galactus (C# Unity 6 game), and VR Herbal Garden. Ask for telemetry on any of these, Boss."
       : "Mukul completed: ApexF1 (F1 Dashboard), EcoGeoGuard (landslide prediction), INVENTROX (business CRM/billing OS), Space Galactus (Unity C# shooter), and VR Herbal Garden (SIH Hackathon).";
   }
-  if (q.includes("skill") || q.includes("stack") || q.includes("languages") || q.includes("python") || q.includes("aws") || q.includes("java") || q.includes("security") || q.includes("cyber")) {
+  if (
+    q.includes("skill") ||
+    q.includes("stack") ||
+    q.includes("languages") ||
+    q.includes("python") ||
+    q.includes("aws") ||
+    q.includes("java") ||
+    q.includes("security") ||
+    q.includes("cyber")
+  ) {
     return avengersMode
       ? "Telemetry lists: Cyber Security (IAM, Networks), AWS Cloud, AI-IoT. Code skills: Python, Java, C++, C#, AWS Lambda, DynamoDB. Fully calibrated, Boss."
       : "Stack details: Cyber Security (Network & Cloud IAM), AWS (Lambda, DynamoDB, API Gateway, Step Functions), Web (Next.js, Node, MongoDB), and Python/Java/C#.";
   }
-  if (q.includes("experience") || q.includes("work") || q.includes("job") || q.includes("trailblazer") || q.includes("salesforce") || q.includes("sapphire") || q.includes("training")) {
+  if (
+    q.includes("experience") ||
+    q.includes("work") ||
+    q.includes("job") ||
+    q.includes("trailblazer") ||
+    q.includes("salesforce") ||
+    q.includes("sapphire") ||
+    q.includes("training")
+  ) {
     return avengersMode
       ? "Service records: Cloud DevOps at Programming Pathsala, Salesforce Trailblazer Connect. Served as CEO of Student Org SAPPHIRE at LPU managing 20+ members."
       : "History: CEO of Student Organisation SAPPHIRE at LPU. DevOps & AWS Cloud training from Programming Pathsala. Salesforce Catalyst Trailblazer (Apex/LWC).";
   }
-  if (q.includes("contact") || q.includes("email") || q.includes("phone") || q.includes("github") || q.includes("linkedin") || q.includes("hire") || q.includes("reach") || q.includes("number")) {
+  if (
+    q.includes("contact") ||
+    q.includes("email") ||
+    q.includes("phone") ||
+    q.includes("github") ||
+    q.includes("linkedin") ||
+    q.includes("hire") ||
+    q.includes("reach") ||
+    q.includes("number")
+  ) {
     return avengersMode
       ? "Comms up. Email: mukulsharmaworks@gmail.com. Mobile: +91 77373 60788. GitHub: MukulS07. LinkedIn active, Boss."
       : "Contact info: Email: mukulsharmaworks@gmail.com. Mobile: +91-7737360788. GitHub: MukulS07. LinkedIn: mukul-sharma-514634214.";
   }
-  if (q.includes("friday") || q.includes("stark") || q.includes("suit") || q.includes("jarvis") || q.includes("avenger")) {
+  if (
+    q.includes("friday") ||
+    q.includes("stark") ||
+    q.includes("suit") ||
+    q.includes("jarvis") ||
+    q.includes("avenger")
+  ) {
     return "Mark 85 armor diagnostics clear, Boss. Systems normal. Arc reactor capacity at 100%. Ask me anything.";
   }
 

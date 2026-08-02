@@ -53,14 +53,20 @@ export function Nav() {
           <Link to="/" className="font-serif-display text-2xl text-foreground leading-none">
             MS<span className="text-accent">.</span>
           </Link>
-          <div className={`hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded border font-mono text-[8px] tracking-[0.2em] select-none ${
-            avengers 
-              ? "border-[#ef4444]/30 bg-[#ef4444]/5 text-[#ef4444]/90" 
-              : "border-accent/20 bg-accent/5 text-accent/85"
-          }`}>
-            <span className={`h-1 w-1 rounded-full animate-pulse ${
-              avengers ? "bg-[#ef4444] shadow-[0_0_6px_#ef4444]" : "bg-accent shadow-[0_0_6px_var(--accent)]"
-            }`} />
+          <div
+            className={`hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded border font-mono text-[8px] tracking-[0.2em] select-none ${
+              avengers
+                ? "border-[#ef4444]/30 bg-[#ef4444]/5 text-[#ef4444]/90"
+                : "border-accent/20 bg-accent/5 text-accent/85"
+            }`}
+          >
+            <span
+              className={`h-1 w-1 rounded-full animate-pulse ${
+                avengers
+                  ? "bg-[#ef4444] shadow-[0_0_6px_#ef4444]"
+                  : "bg-accent shadow-[0_0_6px_var(--accent)]"
+              }`}
+            />
             <span>{avengers ? "PORTFOLIO // HUD" : "PORTFOLIO // SYSTEM"}</span>
           </div>
         </div>
