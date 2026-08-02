@@ -37,51 +37,36 @@ const ticker = [
   "Blender",
 ];
 
-const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg: string; note: string; fullMsg?: string }[] = [
+const mockEvents: { t: string; tag: string; tagColor: string; repo: string; msg: string; note: string; fullMsg?: string; link?: string }[] = [
   {
-    t: "06:53:01",
-    tag: "DESIGN",
+    t: "just now",
+    tag: "PUSH",
     tagColor: "text-accent",
     repo: "Mukul-Portfolio",
-    msg: "iter  portfolio · v2",
-    note: "+cockpit +grid",
-    fullMsg: "iterative portfolio cockpit layout updates for v2 version",
+    msg: 'pushed: "ci: GitHub Pages deployment & live sync"',
+    note: "main",
+    fullMsg: "pushed commits to main on MukulS07/Mukul-Portfolio",
+    link: "https://github.com/MukulS07/Mukul-Portfolio",
   },
   {
-    t: "06:52:59",
-    tag: "CI",
-    tagColor: "text-amber-warn",
-    repo: "EcoGeoGuard",
-    msg: "pass  ecogeoguard#218",
-    note: "12 checks ✓",
-    fullMsg: "EcoGeoGuard CI/CD pipeline tests passed: all 12 checks verified successfully",
-  },
-  {
-    t: "06:52:43",
-    tag: "AWS",
-    tagColor: "text-foreground",
-    repo: "landslide-risk",
-    msg: "deploy lambda · landslide-risk",
-    note: "rt 0.18s",
-    fullMsg: "Deployed landslide-risk monitoring AWS Lambda function. Runtime response: 0.18s",
-  },
-  {
-    t: "06:51:10",
-    tag: "AI",
-    tagColor: "text-muted-foreground",
-    repo: "ml-pipeline-v3",
-    msg: "infer ml-pipeline-v3",
-    note: "f1 0.94",
-    fullMsg: "ML Pipeline Inference Run completed. Model Evaluation Metric: F1 Score = 0.94",
-  },
-  {
-    t: "06:48:02",
-    tag: "IOT",
+    t: "1d ago",
+    tag: "PUSH",
     tagColor: "text-accent",
-    repo: "node-187",
-    msg: "ingest node-187 telemetry",
-    note: "ok",
-    fullMsg: "Ingested active IoT sensor node-187 data telemetry: status OK",
+    repo: "ApexF1",
+    msg: 'pushed: "feat: F1 2026 telemetry dashboard"',
+    note: "main",
+    fullMsg: "ApexF1 Formula 1 telemetry dashboard update",
+    link: "https://github.com/MukulS07/ApexF1",
+  },
+  {
+    t: "6d ago",
+    tag: "CREATE",
+    tagColor: "text-amber-warn",
+    repo: "MukulS07",
+    msg: 'created repository "MukulS07"',
+    note: "+repo",
+    fullMsg: "Created new public profile repository MukulS07",
+    link: "https://github.com/MukulS07/MukulS07",
   },
 ];
 
@@ -224,7 +209,7 @@ function Radar() {
 
 export function Hero() {
   const [roleIdx, setRoleIdx] = useState(0);
-  const [repoCount, setRepoCount] = useState("24");
+  const [repoCount, setRepoCount] = useState("7");
   const [eventsList, setEventsList] = useState<{
     t: string;
     tag: string;
@@ -234,7 +219,7 @@ export function Hero() {
     note: string;
     link?: string;
     fullMsg?: string;
-  }[]>([]);
+  }[]>(mockEvents);
 
   const [deploymentStatuses, setDeploymentStatuses] = useState<Record<string, { online: boolean; latency: number | null; loading: boolean }>>({
     "ApexF1": { online: true, latency: null, loading: true },
@@ -495,15 +480,15 @@ export function Hero() {
     };
   });
 
-  let activeProjName = "EcoGeoGuard";
-  let activeProjSub = "AI-IoT Landslide Prediction Platform";
-  let activeProjFolder = "~/projects/ecogeoguard-v2";
+  let activeProjName = "Mukul Portfolio";
+  let activeProjSub = "Personal Developer System & AI Hub";
+  let activeProjFolder = "~/github/Mukul-Portfolio";
   let activeProjVideo = "/videooutput/My Video.mp4";
-  let activeProjStack = ["Python", "AWS Lambda", "DynamoDB", "LoRa", "Next.js"];
-  let activeProjCommit = "";
-  let activeProjTime = "";
-  let activeProjStatus = "BUILDING";
-  let activeProjStatusColor = "text-amber-warn";
+  let activeProjStack = ["TanStack Start", "React", "TypeScript", "Tailwind CSS v4", "Vite"];
+  let activeProjCommit = 'pushed: "ci: GitHub Pages deployment & live sync"';
+  let activeProjTime = "JUST NOW";
+  let activeProjStatus = "ACTIVE";
+  let activeProjStatusColor = "text-accent";
 
   if (activeEvent) {
     const repoLower = activeEvent.repo.toLowerCase();
