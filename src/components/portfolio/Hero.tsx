@@ -10,7 +10,7 @@ const roles = ["Security Engineer", "Cloud Architect", "AI/IoT Builder", "Full-S
 const stats: { label: string; value: string }[] = [
   { label: "LINES OF CODE", value: "1.5K" },
   { label: "CGPA", value: "7.25" },
-  { label: "GITHUB REPOS", value: "24" },
+  { label: "GITHUB REPOS", value: "7" },
   { label: "AWS SERVICES", value: "10+" },
 ];
 
@@ -524,11 +524,23 @@ export function Hero() {
       activeProjFolder = `~/github/${activeEvent.repo}`;
       activeProjVideo = "/videooutput/My Video.mp4";
       activeProjStack = ["Python", "AWS Lambda", "DynamoDB", "LoRa", "Next.js"];
+    } else if (repoLower.includes("apexf1")) {
+      activeProjName = "ApexF1";
+      activeProjSub = "Formula 1 2026 Telemetry Dashboard";
+      activeProjFolder = `~/github/${activeEvent.repo}`;
+      activeProjVideo = "/videooutput/My Video.mp4";
+      activeProjStack = ["TanStack Start", "Three.js", "Tailwind CSS v4", "NVIDIA NIM"];
+    } else if (repoLower.includes("mukul-portfolio") || repoLower.includes("mukuls07")) {
+      activeProjName = "Mukul Portfolio";
+      activeProjSub = "Personal Developer System & AI Hub";
+      activeProjFolder = `~/github/${activeEvent.repo}`;
+      activeProjVideo = "/videooutput/My Video.mp4";
+      activeProjStack = ["TanStack Start", "React", "TypeScript", "Tailwind CSS v4", "Vite"];
     } else {
       activeProjName = activeEvent.repo;
-      activeProjSub = "Active Developer Sandbox";
+      activeProjSub = "Active GitHub Repository";
       activeProjFolder = `~/github/${activeEvent.repo}`;
-      activeProjVideo = "/videooutput/My Video.mp4"; // default project preview
+      activeProjVideo = "/videooutput/My Video.mp4";
       activeProjStack = ["React", "TypeScript", "Vite", "TanStack", "TailwindCSS"];
     }
   }
