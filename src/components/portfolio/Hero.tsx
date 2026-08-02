@@ -353,7 +353,17 @@ export function Hero() {
           const repoName = evtRepo.name ? evtRepo.name.replace(/^MukulS07\//, "") : "";
           link = `https://github.com/MukulS07/${repoName}`;
 
-          const evtPayload = (evt.payload as { ref?: string; head?: string }) || {};
+          const evtPayload =
+            (evt.payload as {
+              ref?: string;
+              ref_type?: string;
+              head?: string;
+              action?: string;
+              number?: number | string;
+              pull_request?: { title?: string; html_url?: string };
+              issue?: { number?: number | string; title?: string; html_url?: string };
+              forkee?: { name?: string; html_url?: string };
+            }) || {};
 
           if (evt.type === "PushEvent") {
             tag = "PUSH";
@@ -405,35 +415,35 @@ export function Hero() {
           } else if (evt.type === "CreateEvent") {
             tag = "CREATE";
             tagColor = "text-amber-warn";
-            const refType = evt.payload?.ref_type || "repository";
-            const refName = evt.payload?.ref ? `"${evt.payload.ref}"` : "";
+            const refType = evtPayload.ref_type || "repository";
+            const refName = evtPayload.ref ? `"${evtPayload.ref}"` : "";
             msg = `created ${refType} ${refName}`;
             fullMsg = msg;
             note = refType === "branch" ? "+branch" : "+repo";
           } else if (evt.type === "PullRequestEvent") {
             tag = "PR";
             tagColor = "text-emerald-400";
-            const prAction = evt.payload?.action || "opened";
-            const prNum = evt.payload?.number || "";
-            const prTitle = evt.payload?.pull_request?.title || "";
+            const prAction = evtPayload.action || "opened";
+            const prNum = evtPayload.number || "";
+            const prTitle = evtPayload.pull_request?.title || "";
             const truncatedPrTitle =
               prTitle.length > 25 ? prTitle.substring(0, 25) + "..." : prTitle;
             msg = `${prAction} PR: "${truncatedPrTitle}"`;
             fullMsg = prTitle ? `PR #${prNum}: ${prTitle}` : msg;
             note = `PR #${prNum}`;
-            link = evt.payload?.pull_request?.html_url || link;
+            link = evtPayload.pull_request?.html_url || link;
           } else if (evt.type === "IssuesEvent") {
             tag = "ISSUE";
             tagColor = "text-rose-500";
-            const issueAction = evt.payload?.action || "opened";
-            const issueNum = evt.payload?.issue?.number || "";
-            const issueTitle = evt.payload?.issue?.title || "";
+            const issueAction = evtPayload.action || "opened";
+            const issueNum = evtPayload.issue?.number || "";
+            const issueTitle = evtPayload.issue?.title || "";
             const truncatedIssueTitle =
               issueTitle.length > 25 ? issueTitle.substring(0, 25) + "..." : issueTitle;
             msg = `${issueAction} issue: "${truncatedIssueTitle}"`;
             fullMsg = issueTitle ? `Issue #${issueNum}: ${issueTitle}` : msg;
             note = `issue #${issueNum}`;
-            link = evt.payload?.issue?.html_url || link;
+            link = evtPayload.issue?.html_url || link;
           } else if (evt.type === "WatchEvent") {
             tag = "STAR";
             tagColor = "text-yellow-400";
@@ -443,10 +453,10 @@ export function Hero() {
           } else if (evt.type === "ForkEvent") {
             tag = "FORK";
             tagColor = "text-indigo-400";
-            msg = `forked to ${evt.payload?.forkee?.name || "fork"}`;
+            msg = `forked to ${evtPayload.forkee?.name || "fork"}`;
             fullMsg = msg;
             note = "forked";
-            link = evt.payload?.forkee?.html_url || link;
+            link = evtPayload.forkee?.html_url || link;
           } else {
             tag = "ACTIVITY";
             tagColor = "text-muted-foreground";

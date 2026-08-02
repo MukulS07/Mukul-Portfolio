@@ -38,12 +38,13 @@ interface CacheItem<T> {
   data: T;
 }
 
-const cache: Record<string, CacheItem<unknown>> = {};
+let reposCache: CacheItem<GitHubRepo[]> | null = null;
+let eventsCache: CacheItem<GitHubEvent[]> | null = null;
+let profileCache: CacheItem<{ public_repos: number; followers: number }> | null = null;
 
 export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
-  const cacheKey = "github_repos";
-  if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_TTL_MS) {
-    return cache[cacheKey].data;
+  if (reposCache && Date.now() - reposCache.timestamp < CACHE_TTL_MS) {
+    return reposCache.data;
   }
 
   try {
@@ -59,18 +60,17 @@ export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
     );
     if (!res.ok) throw new Error(`GitHub API error: ${res.statusText}`);
     const data: GitHubRepo[] = await res.json();
-    cache[cacheKey] = { timestamp: Date.now(), data };
+    reposCache = { timestamp: Date.now(), data };
     return data;
   } catch (err) {
     console.warn("Failed to fetch GitHub repos, using fallback:", err);
-    return cache[cacheKey]?.data || [];
+    return reposCache?.data || [];
   }
 }
 
 export async function fetchGitHubEvents(): Promise<GitHubEvent[]> {
-  const cacheKey = "github_events";
-  if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_TTL_MS) {
-    return cache[cacheKey].data;
+  if (eventsCache && Date.now() - eventsCache.timestamp < CACHE_TTL_MS) {
+    return eventsCache.data;
   }
 
   try {
@@ -86,11 +86,11 @@ export async function fetchGitHubEvents(): Promise<GitHubEvent[]> {
     );
     if (!res.ok) throw new Error(`GitHub API error: ${res.statusText}`);
     const data: GitHubEvent[] = await res.json();
-    cache[cacheKey] = { timestamp: Date.now(), data };
+    eventsCache = { timestamp: Date.now(), data };
     return data;
   } catch (err) {
     console.warn("Failed to fetch GitHub events, using fallback:", err);
-    return cache[cacheKey]?.data || [];
+    return eventsCache?.data || [];
   }
 }
 
@@ -98,9 +98,8 @@ export async function fetchGitHubProfile(): Promise<{
   public_repos: number;
   followers: number;
 } | null> {
-  const cacheKey = "github_profile";
-  if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_TTL_MS) {
-    return cache[cacheKey].data;
+  if (profileCache && Date.now() - profileCache.timestamp < CACHE_TTL_MS) {
+    return profileCache.data;
   }
 
   try {
@@ -114,10 +113,10 @@ export async function fetchGitHubProfile(): Promise<{
     if (!res.ok) throw new Error(`GitHub API error: ${res.statusText}`);
     const data = await res.json();
     const result = { public_repos: data.public_repos, followers: data.followers };
-    cache[cacheKey] = { timestamp: Date.now(), data: result };
+    profileCache = { timestamp: Date.now(), data: result };
     return result;
   } catch (err) {
-    return cache[cacheKey]?.data || null;
+    return profileCache?.data || null;
   }
 }
 
