@@ -663,9 +663,12 @@ export function Hero() {
                 <div className="relative aspect-[4/5] overflow-hidden bg-surface">
                   <img
                     src={portrait}
-                    alt="Mukul Sharma"
+                    alt="Mukul Sharma — Cyber Security Engineer & Cloud Architect"
                     width={768}
                     height={896}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
                     className="h-full w-full object-cover grayscale contrast-[1.05]"
                   />
                 </div>

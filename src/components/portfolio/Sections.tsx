@@ -709,7 +709,9 @@ export function Experience() {
                 {c.thumbnailUrl ? (
                   <img
                     src={c.thumbnailUrl}
-                    alt={c.name}
+                    alt={`${c.name} Certification - ${c.issuer}`}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 ) : (

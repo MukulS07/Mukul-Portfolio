@@ -1,0 +1,34 @@
+# Mukul Sharma — Cyber Security, Cloud Architect & AI/IoT Engineer
+
+> Official summary file for AI search engines (Perplexity, ChatGPT, Gemini, Claude, SearchGPT).
+
+## Overview
+Mukul Sharma is a Cyber Security Engineer, AWS Cloud Architect, and AI/IoT solution builder completing his final year B.Tech in Computer Science Engineering (Cyber Security) at Lovely Professional University (LPU).
+
+- **Domain**: https://mukulsharmaworks.online
+- **GitHub**: https://github.com/MukulS07
+- **LinkedIn**: https://www.linkedin.com/in/mukul-sharma-07m
+
+## Key Accomplishments & Publications
+- **DASGRI Congress 2026 Publication**: Author of published research on AI-IoT landslide prediction & early warning disaster monitoring systems.
+- **EcoGeoGuard**: AI/IoT disaster mitigation hardware-software system for real-time slope movement and landslide prediction.
+- **INVENTROX**: AI-driven inventory tracking and analytics engine for modern enterprise logistics.
+- **Space Galactus**: Interactive 3D astronomical simulation platform.
+- **AYUSH VR Garden**: Virtual reality medicinal plants immersive educational portal.
+
+## Core Technical Competencies
+- **Cyber Security**: Penetration testing, vulnerability assessments, network defense, secure system design, cryptographic implementation.
+- **Cloud Architecture & DevOps**: AWS (EC2, S3, IAM, Lambda, CloudWatch), Cloudflare, Docker, CI/CD pipelines, Infrastructure as Code.
+- **AI/ML & IoT**: Edge AI deployment, sensor telemetry, predictive modeling, voice AI assistant development.
+- **Full-Stack Development**: React 19, TypeScript, TanStack Start, Node.js, Tailwind CSS v4, Python, C++.
+
+## Main Pages
+- Home: https://mukulsharmaworks.online/
+- About: https://mukulsharmaworks.online/about
+- Projects: https://mukulsharmaworks.online/projects
+- Experience: https://mukulsharmaworks.online/experience
+- Skills: https://mukulsharmaworks.online/skills
+- Research: https://mukulsharmaworks.online/research
+- Contact: https://mukulsharmaworks.online/contact
+- Resume: https://mukulsharmaworks.online/resume
+- AI Assistant: https://mukulsharmaworks.online/chatbot

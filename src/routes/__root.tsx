@@ -87,7 +87,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Mukul Sharma — Cyber Security · Cloud Architect · AI/IoT Builder" },
+      { name: "theme-color", content: "#0a0a0c" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-title", content: "Mukul Sharma" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { title: "Mukul Sharma — Cyber Security · Cloud Architect · AI/IoT Engineer" },
       {
         name: "description",
         content:
@@ -123,6 +127,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "canonical", href: "https://mukulsharmaworks.online" },
+      { rel: "manifest", href: "/manifest.json" },
       { rel: "icon", href: "/portrait.jpg", type: "image/jpeg" },
       { rel: "apple-touch-icon", href: "/portrait.jpg" },
       {
@@ -174,6 +179,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               "publisher": {
                 "@id": "https://mukulsharmaworks.online/#person"
               }
+            },
+            {
+              "@type": "ProfilePage",
+              "@id": "https://mukulsharmaworks.online/#profilepage",
+              "url": "https://mukulsharmaworks.online",
+              "name": "Mukul Sharma — Portfolio & Dossier",
+              "mainEntity": {
+                "@id": "https://mukulsharmaworks.online/#person"
+              }
+            },
+            {
+              "@type": "ProfessionalService",
+              "@id": "https://mukulsharmaworks.online/#service",
+              "name": "Mukul Sharma Engineering & Consulting",
+              "url": "https://mukulsharmaworks.online",
+              "provider": {
+                "@id": "https://mukulsharmaworks.online/#person"
+              },
+              "description": "Cyber Security Assessment, AWS Cloud Architecture & AI/IoT Solution Engineering.",
+              "areaServed": "Worldwide"
             }
           ]
         })
