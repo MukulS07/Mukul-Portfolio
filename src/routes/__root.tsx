@@ -203,23 +203,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           ]
         })
       },
-      // Google Analytics (GA4) - Replace G-XXXXXXXXXX or set VITE_GA_MEASUREMENT_ID
-      ...(import.meta.env.VITE_GA_MEASUREMENT_ID
-        ? [
-            {
-              src: `https://www.googletagmanager.com/gtag/js?id=${import.meta.env.VITE_GA_MEASUREMENT_ID}`,
-              async: true,
-            },
-            {
-              children: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${import.meta.env.VITE_GA_MEASUREMENT_ID}');
-              `,
-            },
-          ]
-        : [])
+      // Google Analytics (GA4) Tracking
+      {
+        src: `https://www.googletagmanager.com/gtag/js?id=${import.meta.env.VITE_GA_MEASUREMENT_ID || "G-7VYW42X5Q4"}`,
+        async: true,
+      },
+      {
+        children: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${import.meta.env.VITE_GA_MEASUREMENT_ID || "G-7VYW42X5Q4"}');
+        `,
+      },
     ],
   }),
   shellComponent: RootShell,
