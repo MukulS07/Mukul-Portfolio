@@ -87,25 +87,42 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Mukul Sharma — Cyber Security · Cloud · AI/IoT Builder" },
+      { title: "Mukul Sharma — Cyber Security · Cloud Architect · AI/IoT Builder" },
       {
         name: "description",
         content:
-          "Portfolio of Mukul Sharma — B.Tech CSE (Cyber Security) at LPU. Published researcher, AWS cloud architect, builder of EcoGeoGuard & INVENTROX.",
+          "Official portfolio of Mukul Sharma — B.Tech CSE (Cyber Security) at LPU. Published researcher (DASGRI 2026), AWS cloud architect, builder of EcoGeoGuard & INVENTROX.",
       },
       { name: "author", content: "Mukul Sharma" },
-      { property: "og:title", content: "Mukul Sharma — Cyber Security · Cloud · AI/IoT" },
+      {
+        name: "keywords",
+        content:
+          "Mukul Sharma, Cyber Security, Cloud Architect, AWS, AI IoT, EcoGeoGuard, INVENTROX, DASGRI 2026, LPU, Full Stack Developer, Security Engineer",
+      },
+      { property: "og:title", content: "Mukul Sharma — Cyber Security · Cloud Architect · AI/IoT" },
       {
         property: "og:description",
         content:
-          "Builder of secure cloud-native systems. EcoGeoGuard, INVENTROX, DASGRI 2026 publication.",
+          "Builder of secure cloud-native systems, EcoGeoGuard, INVENTROX, and DASGRI 2026 published researcher.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "/portrait.jpg" },
+      { property: "og:url", content: "https://mukulsharmaworks.online" },
+      { property: "og:site_name", content: "Mukul Sharma Portfolio" },
+      { property: "og:locale", content: "en_US" },
+      { property: "og:image", content: "https://mukulsharmaworks.online/portrait.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "/portrait.jpg" },
+      { name: "twitter:title", content: "Mukul Sharma — Cyber Security · Cloud Architect · AI/IoT" },
+      {
+        name: "twitter:description",
+        content:
+          "Portfolio of Mukul Sharma — Published researcher, cloud architect & cybersecurity engineer.",
+      },
+      { name: "twitter:image", content: "https://mukulsharmaworks.online/portrait.jpg" },
     ],
     links: [
+      { rel: "canonical", href: "https://mukulsharmaworks.online" },
       { rel: "icon", href: "/portrait.jpg", type: "image/jpeg" },
       { rel: "apple-touch-icon", href: "/portrait.jpg" },
       {
@@ -118,6 +135,66 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap",
       },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Person",
+              "@id": "https://mukulsharmaworks.online/#person",
+              "name": "Mukul Sharma",
+              "url": "https://mukulsharmaworks.online",
+              "image": "https://mukulsharmaworks.online/portrait.jpg",
+              "jobTitle": "Cyber Security Engineer & Cloud Architect",
+              "alumniOf": {
+                "@type": "EducationalOrganization",
+                "name": "Lovely Professional University (LPU)"
+              },
+              "sameAs": [
+                "https://github.com/MukulS07",
+                "https://www.linkedin.com/in/mukul-sharma-07m"
+              ],
+              "knowsAbout": [
+                "Cyber Security",
+                "Cloud Architecture",
+                "AWS",
+                "AI/IoT",
+                "Landslide Prediction",
+                "Full Stack Development"
+              ]
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://mukulsharmaworks.online/#website",
+              "url": "https://mukulsharmaworks.online",
+              "name": "Mukul Sharma Portfolio",
+              "publisher": {
+                "@id": "https://mukulsharmaworks.online/#person"
+              }
+            }
+          ]
+        })
+      },
+      // Google Analytics (GA4) - Replace G-XXXXXXXXXX or set VITE_GA_MEASUREMENT_ID
+      ...(import.meta.env.VITE_GA_MEASUREMENT_ID
+        ? [
+            {
+              src: `https://www.googletagmanager.com/gtag/js?id=${import.meta.env.VITE_GA_MEASUREMENT_ID}`,
+              async: true,
+            },
+            {
+              children: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${import.meta.env.VITE_GA_MEASUREMENT_ID}');
+              `,
+            },
+          ]
+        : [])
     ],
   }),
   shellComponent: RootShell,
