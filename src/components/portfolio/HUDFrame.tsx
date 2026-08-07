@@ -7,8 +7,8 @@ export function HUDFrame() {
     <div aria-hidden className="pointer-events-none fixed inset-0 z-30">
       {/* corner brackets */}
       {[
-        "top-3 left-3 border-l border-t",
-        "top-3 right-3 border-r border-t",
+        "top-16 sm:top-3 left-3 border-l border-t",
+        "top-16 sm:top-3 right-3 border-r border-t",
         "bottom-3 left-3 border-l border-b",
         "bottom-3 right-3 border-r border-b",
       ].map((c) => (
@@ -16,13 +16,13 @@ export function HUDFrame() {
       ))}
 
       {/* top + bottom crosshair ticks */}
-      <span className="absolute top-3 left-1/2 -translate-x-1/2 h-2 w-px bg-foreground/40" />
+      <span className="absolute top-16 sm:top-3 left-1/2 -translate-x-1/2 h-2 w-px bg-foreground/40" />
       <span className="absolute bottom-3 left-1/2 -translate-x-1/2 h-2 w-px bg-foreground/40" />
       <span className="absolute left-3 top-1/2 -translate-y-1/2 w-2 h-px bg-foreground/40" />
       <span className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-px bg-foreground/40" />
 
       {/* center crosshair tick label */}
-      <div className="absolute top-3 left-1/2 -translate-x-1/2 translate-y-3 font-mono text-[9px] tracking-[0.3em] text-foreground/35">
+      <div className="hidden sm:block absolute top-3 left-1/2 -translate-x-1/2 translate-y-3 font-mono text-[9px] tracking-[0.3em] text-foreground/35">
         N · 0°
       </div>
 

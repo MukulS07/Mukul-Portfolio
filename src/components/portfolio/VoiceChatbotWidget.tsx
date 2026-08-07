@@ -908,7 +908,7 @@ export function VoiceChatbotWidget() {
     : "shadow-[0_0_15px_rgba(56,189,248,0.15)]";
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 font-mono text-xs select-none">
+    <div className="fixed bottom-3 left-3 sm:bottom-4 sm:left-4 z-50 font-mono text-xs select-none max-w-[calc(100vw-24px)]">
       {/* Collapsed floating orb button */}
       {!isOpen && (
         <div className="flex flex-col items-center gap-2">
@@ -948,7 +948,7 @@ export function VoiceChatbotWidget() {
                 window.speechSynthesis.cancel();
               }
             }}
-            className={`h-[72px] w-[72px] rounded-full border bg-background/90 backdrop-blur-md cursor-pointer transition flex items-center justify-center hover:scale-110 active:scale-95 duration-300 ${accentColor} ${glowShadow}`}
+            className={`h-[64px] w-[64px] sm:h-[72px] sm:w-[72px] rounded-full border bg-background/90 backdrop-blur-md cursor-pointer transition flex items-center justify-center hover:scale-110 active:scale-95 duration-300 ${accentColor} ${glowShadow}`}
             title="Open Friday Assistant"
           >
             <canvas
@@ -964,7 +964,7 @@ export function VoiceChatbotWidget() {
       {/* Expanded Floating AI Widget Panel */}
       {isOpen && (
         <div
-          className={`w-[calc(100vw-32px)] sm:w-[360px] h-[260px] bg-background/90 backdrop-blur-lg border rounded-lg flex flex-col justify-between overflow-hidden shadow-2xl transition-all duration-300 ${accentColor} ${glowShadow}`}
+          className={`w-[calc(100vw-24px)] max-w-[360px] sm:w-[360px] h-[260px] bg-background/90 backdrop-blur-lg border rounded-lg flex flex-col justify-between overflow-hidden shadow-2xl transition-all duration-300 ${accentColor} ${glowShadow}`}
         >
           {/* Scanline overlay */}
           <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-[0.02] z-0" />
@@ -1011,8 +1011,8 @@ export function VoiceChatbotWidget() {
           </div>
 
           {/* Voice controls footer */}
-          <footer className="relative z-10 p-2 border-t border-border bg-black/50 flex items-center justify-between gap-2.5">
-            <div className="flex items-center gap-2">
+          <footer className="relative z-10 p-2 border-t border-border bg-black/50 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2.5">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {/* Toggle mic */}
               <button
                 onClick={toggleMic}
@@ -1060,7 +1060,7 @@ export function VoiceChatbotWidget() {
                     recognitionRef.current?.stop();
                   }
                 }}
-                className={`h-9 px-2.5 rounded border flex items-center gap-1.5 transition cursor-pointer shrink-0 text-[9px] font-bold ${
+                className={`h-9 px-2 sm:px-2.5 rounded border flex items-center gap-1 sm:gap-1.5 transition cursor-pointer shrink-0 text-[9px] font-bold ${
                   continuousVoiceMode
                     ? isAvengers
                       ? "bg-red-500/20 border-red-500 text-red-400 shadow-[0_0_8px_rgba(239,68,68,0.3)]"
@@ -1079,7 +1079,7 @@ export function VoiceChatbotWidget() {
               <select
                 value={selectedVoiceName}
                 onChange={(e) => setSelectedVoiceName(e.target.value)}
-                className="bg-black/70 border border-border/80 rounded px-1.5 h-9 text-[9px] text-foreground focus:outline-none focus:border-accent font-mono max-w-[125px] shrink-0 cursor-pointer"
+                className="bg-black/70 border border-border/80 rounded px-1 h-9 text-[9px] text-foreground focus:outline-none focus:border-accent font-mono max-w-[95px] sm:max-w-[125px] shrink-0 cursor-pointer"
                 title="Select Friday Voice Accent"
               >
                 {availableVoices.map((v) => (

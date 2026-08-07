@@ -4,6 +4,7 @@ import { ProjectVideo } from "./ProjectVideo";
 import { Link } from "@tanstack/react-router";
 import linkedinUpdates from "@/data/linkedin-updates.json";
 import { checkDeployments } from "@/lib/chatbot-service";
+import { fetchGitHubEvents, fetchGitHubProfile, fetchCommitMessage } from "@/lib/github-service";
 
 const roles = ["Security Engineer", "Cloud Architect", "AI/IoT Builder", "Full-Stack Developer"];
 
@@ -98,9 +99,11 @@ function useCountUp(target: number, duration = 1400) {
 
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border border-border p-5 sm:p-6 min-h-[110px] flex flex-col justify-between">
-      <div className="text-[10px] tracking-[0.22em] text-muted-foreground font-mono">{label}</div>
-      <div className="font-serif-display text-4xl sm:text-5xl text-foreground leading-none">
+    <div className="border border-border p-4 sm:p-6 min-h-[95px] sm:min-h-[110px] flex flex-col justify-between">
+      <div className="text-[9px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.22em] text-muted-foreground font-mono truncate">
+        {label}
+      </div>
+      <div className="font-serif-display text-3xl sm:text-5xl text-foreground leading-none">
         {value}
       </div>
     </div>
@@ -294,187 +297,132 @@ export function Hero() {
 
   useEffect(() => {
     // 1. Fetch public profile stats
-    fetch(`https://api.github.com/users/MukulS07?t=${Date.now()}`, {
-      headers: {
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && typeof data.public_repos === "number") {
-          setRepoCount(String(data.public_repos));
-        }
-      })
-      .catch((err) => {
-        console.error("Failed to fetch GitHub repos count:", err);
-      });
+    fetchGitHubProfile().then((profile) => {
+      if (profile && typeof profile.public_repos === "number") {
+        setRepoCount(String(profile.public_repos));
+      }
+    });
 
-    // 2. Fetch public events activity feed
-    fetch(`https://api.github.com/users/MukulS07/events/public?t=${Date.now()}`, {
-      headers: {
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
-      },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("API error fetching events");
-        return res.json();
-      })
-      .then(async (data) => {
-        if (!Array.isArray(data) || data.length === 0) {
-          setEventsList(mockEvents);
-          return;
-        }
+    // 2. Fetch public events activity feed with SHA-memoized commit resolution
+    fetchGitHubEvents().then(async (data) => {
+      if (!Array.isArray(data) || data.length === 0) {
+        setEventsList(mockEvents);
+        return;
+      }
 
-        const events = data.slice(0, 5);
-        const formattedPromises = events.map(async (evt: Record<string, unknown>) => {
-          let tag = "ACTIVITY";
-          let tagColor = "text-muted-foreground";
-          let msg = "";
-          let note = "";
-          let fullMsg = "";
-          let link = "";
+      const events = data.slice(0, 10);
+      const formattedPromises = events.map(async (evt) => {
+        let tag = "ACTIVITY";
+        let tagColor = "text-muted-foreground";
+        let msg = "";
+        let note = "";
+        let fullMsg = "";
+        let link = "";
 
-          const createdTime = new Date(String(evt.created_at || "")).getTime();
-          const now = Date.now();
-          const diffMs = now - createdTime;
-          const diffMins = Math.floor(diffMs / 60000);
-          const diffHours = Math.floor(diffMins / 60);
-          const diffDays = Math.floor(diffHours / 24);
+        const createdTime = new Date(String(evt.created_at || "")).getTime();
+        const now = Date.now();
+        const diffMs = now - createdTime;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMins / 60);
+        const diffDays = Math.floor(diffHours / 24);
 
-          let t = "";
-          if (diffMins < 1) t = "just now";
-          else if (diffMins < 60) t = `${diffMins}m ago`;
-          else if (diffHours < 24) t = `${diffHours}h ago`;
-          else t = `${diffDays}d ago`;
+        let t = "";
+        if (diffMins < 1) t = "just now";
+        else if (diffMins < 60) t = `${diffMins}m ago`;
+        else if (diffHours < 24) t = `${diffHours}h ago`;
+        else t = `${diffDays}d ago`;
 
-          const evtRepo = (evt.repo as { name?: string }) || {};
-          const repoName = evtRepo.name ? evtRepo.name.replace(/^MukulS07\//, "") : "";
-          link = `https://github.com/MukulS07/${repoName}`;
+        const evtRepo = evt.repo || {};
+        const repoName = evtRepo.name ? evtRepo.name.replace(/^MukulS07\//, "") : "";
+        link = `https://github.com/MukulS07/${repoName}`;
 
-          const evtPayload =
-            (evt.payload as {
-              ref?: string;
-              ref_type?: string;
-              head?: string;
-              action?: string;
-              number?: number | string;
-              pull_request?: { title?: string; html_url?: string };
-              issue?: { number?: number | string; title?: string; html_url?: string };
-              forkee?: { name?: string; html_url?: string };
-            }) || {};
+        const evtPayload = evt.payload || {};
 
-          if (evt.type === "PushEvent") {
-            tag = "PUSH";
-            tagColor = "text-accent";
-            note = evtPayload.ref ? evtPayload.ref.replace("refs/heads/", "") : "main";
+        if (evt.type === "PushEvent") {
+          tag = "PUSH";
+          tagColor = "text-accent";
+          note = evtPayload.ref ? evtPayload.ref.replace("refs/heads/", "") : "main";
 
-            try {
-              const commitsRes = await fetch(
-                `https://api.github.com/repos/MukulS07/${repoName}/commits?per_page=5&t=${Date.now()}`,
-                {
-                  headers: {
-                    "Cache-Control": "no-cache",
-                    Pragma: "no-cache",
-                  },
-                },
-              );
-              if (commitsRes.ok) {
-                const commitsData = await commitsRes.json();
-                if (Array.isArray(commitsData) && commitsData.length > 0) {
-                  const headSha = evtPayload.head;
-                  const targetCommit =
-                    commitsData.find((c: Record<string, unknown>) => c.sha === headSha) ||
-                    commitsData[0];
-
-                  const commitMsg = targetCommit.commit?.message || "";
-                  const firstLineMsg = commitMsg.split("\n")?.[0] || "";
-                  const truncatedMsg =
-                    firstLineMsg.length > 30 ? firstLineMsg.substring(0, 30) + "..." : firstLineMsg;
-
-                  msg = firstLineMsg ? `pushed: "${truncatedMsg}"` : "pushed commits";
-                  fullMsg = commitMsg || "pushed commits";
-
-                  const shortSha = targetCommit.sha ? targetCommit.sha.substring(0, 7) : "";
-                  note = `${note} (${shortSha})`;
-                  link = targetCommit.html_url || link;
-                } else {
-                  msg = "pushed commits";
-                  fullMsg = "pushed commits";
-                }
-              } else {
-                msg = "pushed commits";
-                fullMsg = "pushed commits";
-              }
-            } catch (err) {
-              console.error("Failed to fetch commits for repo:", repoName, err);
-              msg = "pushed commits";
-              fullMsg = "pushed commits";
-            }
-          } else if (evt.type === "CreateEvent") {
-            tag = "CREATE";
-            tagColor = "text-amber-warn";
-            const refType = evtPayload.ref_type || "repository";
-            const refName = evtPayload.ref ? `"${evtPayload.ref}"` : "";
-            msg = `created ${refType} ${refName}`;
-            fullMsg = msg;
-            note = refType === "branch" ? "+branch" : "+repo";
-          } else if (evt.type === "PullRequestEvent") {
-            tag = "PR";
-            tagColor = "text-emerald-400";
-            const prAction = evtPayload.action || "opened";
-            const prNum = evtPayload.number || "";
-            const prTitle = evtPayload.pull_request?.title || "";
-            const truncatedPrTitle =
-              prTitle.length > 25 ? prTitle.substring(0, 25) + "..." : prTitle;
-            msg = `${prAction} PR: "${truncatedPrTitle}"`;
-            fullMsg = prTitle ? `PR #${prNum}: ${prTitle}` : msg;
-            note = `PR #${prNum}`;
-            link = evtPayload.pull_request?.html_url || link;
-          } else if (evt.type === "IssuesEvent") {
-            tag = "ISSUE";
-            tagColor = "text-rose-500";
-            const issueAction = evtPayload.action || "opened";
-            const issueNum = evtPayload.issue?.number || "";
-            const issueTitle = evtPayload.issue?.title || "";
-            const truncatedIssueTitle =
-              issueTitle.length > 25 ? issueTitle.substring(0, 25) + "..." : issueTitle;
-            msg = `${issueAction} issue: "${truncatedIssueTitle}"`;
-            fullMsg = issueTitle ? `Issue #${issueNum}: ${issueTitle}` : msg;
-            note = `issue #${issueNum}`;
-            link = evtPayload.issue?.html_url || link;
-          } else if (evt.type === "WatchEvent") {
-            tag = "STAR";
-            tagColor = "text-yellow-400";
-            msg = `starred the repository`;
-            fullMsg = msg;
-            note = "★ star";
-          } else if (evt.type === "ForkEvent") {
-            tag = "FORK";
-            tagColor = "text-indigo-400";
-            msg = `forked to ${evtPayload.forkee?.name || "fork"}`;
-            fullMsg = msg;
-            note = "forked";
-            link = evtPayload.forkee?.html_url || link;
-          } else {
-            tag = "ACTIVITY";
-            tagColor = "text-muted-foreground";
-            msg = `active in repository`;
-            fullMsg = msg;
-            note = "uplink ok";
+          const headSha = evtPayload.head;
+          let commitMsg: string | null = null;
+          if (headSha && repoName) {
+            commitMsg = await fetchCommitMessage(repoName, headSha);
           }
 
-          return { t, tag, tagColor, repo: repoName, msg, note, fullMsg, link };
-        });
+          if (commitMsg) {
+            const firstLineMsg = commitMsg.split("\n")?.[0] || "";
+            const truncatedMsg =
+              firstLineMsg.length > 30 ? firstLineMsg.substring(0, 30) + "..." : firstLineMsg;
+            msg = `pushed: "${truncatedMsg}"`;
+            fullMsg = commitMsg;
+          } else {
+            msg = `pushed commits to ${repoName}`;
+            fullMsg = `Pushed commits to ${repoName}`;
+          }
 
-        const formatted = await Promise.all(formattedPromises);
-        setEventsList(formatted);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch GitHub events:", err);
-        setEventsList(mockEvents);
+          const shortSha = headSha ? headSha.substring(0, 7) : "";
+          if (shortSha) note = `${note} (${shortSha})`;
+        } else if (evt.type === "CreateEvent") {
+          tag = "CREATE";
+          tagColor = "text-amber-warn";
+          const refType = evtPayload.ref_type || "repository";
+          const refName = evtPayload.ref ? `"${evtPayload.ref}"` : "";
+          msg = `created ${refType} ${refName}`;
+          fullMsg = msg;
+          note = refType === "branch" ? "+branch" : "+repo";
+        } else if (evt.type === "PullRequestEvent") {
+          tag = "PR";
+          tagColor = "text-emerald-400";
+          const prAction = evtPayload.action || "opened";
+          const prNum = evtPayload.number || "";
+          const prTitle = evtPayload.pull_request?.title || "";
+          const truncatedPrTitle =
+            prTitle.length > 25 ? prTitle.substring(0, 25) + "..." : prTitle;
+          msg = `${prAction} PR: "${truncatedPrTitle}"`;
+          fullMsg = prTitle ? `PR #${prNum}: ${prTitle}` : msg;
+          note = `PR #${prNum}`;
+          link = evtPayload.pull_request?.html_url || link;
+        } else if (evt.type === "IssuesEvent") {
+          tag = "ISSUE";
+          tagColor = "text-rose-500";
+          const issueAction = evtPayload.action || "opened";
+          const issueNum = evtPayload.issue?.number || "";
+          const issueTitle = evtPayload.issue?.title || "";
+          const truncatedIssueTitle =
+            issueTitle.length > 25 ? issueTitle.substring(0, 25) + "..." : issueTitle;
+          msg = `${issueAction} issue: "${truncatedIssueTitle}"`;
+          fullMsg = issueTitle ? `Issue #${issueNum}: ${issueTitle}` : msg;
+          note = `issue #${issueNum}`;
+          link = evtPayload.issue?.html_url || link;
+        } else if (evt.type === "WatchEvent") {
+          tag = "STAR";
+          tagColor = "text-yellow-400";
+          msg = `starred the repository`;
+          fullMsg = msg;
+          note = "★ star";
+        } else if (evt.type === "ForkEvent") {
+          tag = "FORK";
+          tagColor = "text-indigo-400";
+          msg = `forked to ${evtPayload.forkee?.name || "fork"}`;
+          fullMsg = msg;
+          note = "forked";
+          link = evtPayload.forkee?.html_url || link;
+        } else {
+          tag = "ACTIVITY";
+          tagColor = "text-muted-foreground";
+          msg = `active in repository ${repoName}`;
+          fullMsg = msg;
+          note = "uplink ok";
+        }
+
+        return { t, tag, tagColor, repo: repoName, msg, note, fullMsg, link };
       });
+
+      const formatted = await Promise.all(formattedPromises);
+      if (formatted.length > 0) {
+        setEventsList(formatted);
+      }
+    });
   }, []);
 
   // Find the latest PUSH or CREATE event to showcase what the user is working on
@@ -587,7 +535,7 @@ export function Hero() {
         {/* ROW 1: Identity + stats */}
         <div className="grid lg:grid-cols-12 gap-px bg-border border border-border">
           {/* Identity card */}
-          <div className="lg:col-span-8 bg-background p-6 sm:p-10 grid sm:grid-cols-5 gap-6 sm:gap-10 items-start relative overflow-hidden group/shield-identity">
+          <div className="lg:col-span-8 bg-background p-4 sm:p-10 grid sm:grid-cols-5 gap-6 sm:gap-10 items-start relative overflow-hidden group/shield-identity">
             <div className="sm:col-span-3 z-10">
               <div className="font-mono text-[10px] tracking-[0.28em] text-muted-foreground flex justify-between">
                 <span>IDENTITY · 01</span>
@@ -595,10 +543,10 @@ export function Hero() {
                   S.H.I.E.L.D. AGENT ACCESS
                 </span>
               </div>
-              <h1 className="mt-8 font-serif-display text-foreground leading-[0.92] text-5xl sm:text-7xl lg:text-[88px]">
+              <h1 className="mt-6 sm:mt-8 font-serif-display text-foreground leading-[0.92] text-4xl sm:text-7xl lg:text-[88px]">
                 Mukul
                 <br />
-                <span className="pl-4 sm:pl-10">
+                <span className="pl-2 sm:pl-10">
                   Sharma<span className="text-accent">.</span>
                 </span>
               </h1>

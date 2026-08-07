@@ -404,11 +404,11 @@ export function Projects() {
                   </p>
 
                   {p.stats && (
-                    <div className="mt-5 grid grid-cols-3 gap-2 font-mono text-[9px] sm:text-xs">
+                    <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-2 font-mono text-[9px] sm:text-xs">
                       {p.stats.map((s) => (
                         <div
                           key={s.k}
-                          className="border border-border rounded-md p-1.5 sm:p-2.5 bg-black/20"
+                          className="border border-border rounded-md p-2 sm:p-2.5 bg-black/20"
                         >
                           <div
                             className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.18em] text-muted-foreground truncate"

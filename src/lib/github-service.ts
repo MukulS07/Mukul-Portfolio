@@ -27,11 +27,18 @@ export interface GitHubEvent {
       message: string;
     }>;
     ref?: string;
+    ref_type?: string;
+    head?: string;
+    action?: string;
+    number?: number | string;
+    pull_request?: { title?: string; html_url?: string };
+    issue?: { number?: number | string; title?: string; html_url?: string };
+    forkee?: { name?: string; html_url?: string };
   };
 }
 
 const GITHUB_USERNAME = "MukulS07";
-const CACHE_TTL_MS = 2 * 60 * 1000; // 2 minutes cache for live dynamic syncing
+const CACHE_TTL_MS = 2 * 60 * 1000; // 2 minutes in-memory cache
 
 interface CacheItem<T> {
   timestamp: number;
@@ -42,9 +49,33 @@ let reposCache: CacheItem<GitHubRepo[]> | null = null;
 let eventsCache: CacheItem<GitHubEvent[]> | null = null;
 let profileCache: CacheItem<{ public_repos: number; followers: number }> | null = null;
 
+function getStoredItem<T>(key: string): T | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? (JSON.parse(raw) as T) : null;
+  } catch (err) {
+    return null;
+  }
+}
+
+function setStoredItem<T>(key: string, data: T): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (err) {
+    // Ignore storage quota errors
+  }
+}
+
 export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
   if (reposCache && Date.now() - reposCache.timestamp < CACHE_TTL_MS) {
     return reposCache.data;
+  }
+
+  const stored = getStoredItem<GitHubRepo[]>("ms_gh_repos");
+  if (stored && stored.length > 0 && (!reposCache || Date.now() - reposCache.timestamp >= CACHE_TTL_MS)) {
+    reposCache = { timestamp: Date.now(), data: stored };
   }
 
   try {
@@ -58,14 +89,18 @@ export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
         },
       },
     );
-    if (!res.ok) throw new Error(`GitHub API error: ${res.statusText}`);
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
     const data: GitHubRepo[] = await res.json();
-    reposCache = { timestamp: Date.now(), data };
-    return data;
+    if (Array.isArray(data) && data.length > 0) {
+      reposCache = { timestamp: Date.now(), data };
+      setStoredItem("ms_gh_repos", data);
+      return data;
+    }
   } catch (err) {
-    console.warn("Failed to fetch GitHub repos, using fallback:", err);
-    return reposCache?.data || [];
+    console.warn("Failed to fetch GitHub repos, using cached storage fallback:", err);
   }
+
+  return reposCache?.data || stored || [];
 }
 
 export async function fetchGitHubEvents(): Promise<GitHubEvent[]> {
@@ -73,9 +108,14 @@ export async function fetchGitHubEvents(): Promise<GitHubEvent[]> {
     return eventsCache.data;
   }
 
+  const stored = getStoredItem<GitHubEvent[]>("ms_gh_events");
+  if (stored && stored.length > 0 && (!eventsCache || Date.now() - eventsCache.timestamp >= CACHE_TTL_MS)) {
+    eventsCache = { timestamp: Date.now(), data: stored };
+  }
+
   try {
     const res = await fetch(
-      `https://api.github.com/users/${GITHUB_USERNAME}/events/public?per_page=10&t=${Date.now()}`,
+      `https://api.github.com/users/${GITHUB_USERNAME}/events/public?per_page=15&t=${Date.now()}`,
       {
         headers: {
           Accept: "application/vnd.github.v3+json",
@@ -84,14 +124,18 @@ export async function fetchGitHubEvents(): Promise<GitHubEvent[]> {
         },
       },
     );
-    if (!res.ok) throw new Error(`GitHub API error: ${res.statusText}`);
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
     const data: GitHubEvent[] = await res.json();
-    eventsCache = { timestamp: Date.now(), data };
-    return data;
+    if (Array.isArray(data) && data.length > 0) {
+      eventsCache = { timestamp: Date.now(), data };
+      setStoredItem("ms_gh_events", data);
+      return data;
+    }
   } catch (err) {
-    console.warn("Failed to fetch GitHub events, using fallback:", err);
-    return eventsCache?.data || [];
+    console.warn("Failed to fetch GitHub events, using cached storage fallback:", err);
   }
+
+  return eventsCache?.data || stored || [];
 }
 
 export async function fetchGitHubProfile(): Promise<{
@@ -102,6 +146,8 @@ export async function fetchGitHubProfile(): Promise<{
     return profileCache.data;
   }
 
+  const stored = getStoredItem<{ public_repos: number; followers: number }>("ms_gh_profile");
+
   try {
     const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}?t=${Date.now()}`, {
       headers: {
@@ -110,13 +156,51 @@ export async function fetchGitHubProfile(): Promise<{
         Pragma: "no-cache",
       },
     });
-    if (!res.ok) throw new Error(`GitHub API error: ${res.statusText}`);
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
     const data = await res.json();
-    const result = { public_repos: data.public_repos, followers: data.followers };
-    profileCache = { timestamp: Date.now(), data: result };
-    return result;
+    if (data && typeof data.public_repos === "number") {
+      const result = { public_repos: data.public_repos, followers: data.followers };
+      profileCache = { timestamp: Date.now(), data: result };
+      setStoredItem("ms_gh_profile", result);
+      return result;
+    }
   } catch (err) {
-    return profileCache?.data || null;
+    console.warn("Failed to fetch GitHub profile, using cached storage fallback:", err);
+  }
+
+  return profileCache?.data || stored || null;
+}
+
+/**
+ * SHA-memoized commit message fetcher.
+ * Saves commit messages by SHA in localStorage to avoid redundant GitHub API rate limits.
+ */
+export async function fetchCommitMessage(repoName: string, sha: string): Promise<string | null> {
+  if (!sha || !repoName) return null;
+
+  const storageKey = `ms_gh_commit_${sha}`;
+  const cachedMsg = getStoredItem<string>(storageKey);
+  if (cachedMsg) return cachedMsg;
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${GITHUB_USERNAME}/${repoName}/commits/${sha}`,
+      {
+        headers: {
+          Accept: "application/vnd.github.v3+json",
+          "Cache-Control": "no-cache",
+        },
+      },
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    const msg = data.commit?.message || null;
+    if (msg) {
+      setStoredItem(storageKey, msg);
+    }
+    return msg;
+  } catch (err) {
+    return null;
   }
 }
 

@@ -71,21 +71,19 @@ export function Nav() {
           </div>
         </div>
 
-        {!avengers && (
-          <nav className="hidden md:flex items-center gap-7 text-muted-foreground">
-            {visibleLinks.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                activeOptions={{ exact: true }}
-                activeProps={{ className: "text-foreground" }}
-                className="hover:text-foreground transition"
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-        )}
+        <nav className="hidden md:flex items-center gap-7 text-muted-foreground">
+          {visibleLinks.map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              activeOptions={{ exact: true }}
+              activeProps={{ className: "text-foreground" }}
+              className="hover:text-foreground transition"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
 
         <div className="hidden md:flex items-center gap-3">
           <FXToggle on={fxEnabled} onToggle={toggleFX} />
@@ -121,7 +119,7 @@ export function Nav() {
         </div>
 
         <button
-          className="md:hidden text-foreground text-xl"
+          className="md:hidden text-foreground text-xl p-2 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
           aria-label="Toggle menu"
           onClick={() => setOpen((o) => !o)}
         >
@@ -131,17 +129,16 @@ export function Nav() {
 
       {open && (
         <div className="md:hidden border-t border-border bg-background font-mono text-xs tracking-[0.18em]">
-          {!avengers &&
-            visibleLinks.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                onClick={() => setOpen(false)}
-                className="block px-5 py-3 border-b border-border text-muted-foreground hover:text-foreground"
-              >
-                {l.label}
-              </Link>
-            ))}
+          {visibleLinks.map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              onClick={() => setOpen(false)}
+              className="block px-5 py-3.5 border-b border-border text-muted-foreground hover:text-foreground hover:bg-white/[0.02]"
+            >
+              {l.label}
+            </Link>
+          ))}
           {/* Mobile Toggles Panel */}
           <div className="flex flex-col gap-3 px-5 py-4 border-b border-border bg-black/20">
             <div className="flex items-center justify-between text-muted-foreground">
@@ -152,7 +149,7 @@ export function Nav() {
               <span>AVENGER MODE</span>
               <button
                 onClick={toggleAvengers}
-                className="flex items-center gap-2 px-3 py-1.5 border border-border text-[11px]"
+                className="flex items-center gap-2 px-3 py-1.5 border border-border text-[11px] cursor-pointer"
               >
                 <span
                   className={`inline-block h-4 w-7 rounded-full border border-border relative transition-colors ${
@@ -169,6 +166,16 @@ export function Nav() {
                   {avengers ? "ON" : "OFF"}
                 </span>
               </button>
+            </div>
+            <div className="pt-2">
+              <a
+                href="/cv.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="block text-center w-full py-2.5 border border-foreground text-foreground hover:bg-foreground hover:text-background transition font-mono text-[11px]"
+              >
+                DOWNLOAD RESUME PDF
+              </a>
             </div>
           </div>
         </div>
