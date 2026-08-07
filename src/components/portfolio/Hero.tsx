@@ -303,10 +303,20 @@ export function Hero() {
       }
     });
 
+    // Load initial cached formatted events if available
+    try {
+      const storedFormatted = localStorage.getItem("ms_formatted_events");
+      if (storedFormatted) {
+        const parsed = JSON.parse(storedFormatted);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setEventsList(parsed);
+        }
+      }
+    } catch (e) {}
+
     // 2. Fetch public events activity feed with SHA-memoized commit resolution
     fetchGitHubEvents().then(async (data) => {
       if (!Array.isArray(data) || data.length === 0) {
-        setEventsList(mockEvents);
         return;
       }
 
@@ -421,6 +431,9 @@ export function Hero() {
       const formatted = await Promise.all(formattedPromises);
       if (formatted.length > 0) {
         setEventsList(formatted);
+        try {
+          localStorage.setItem("ms_formatted_events", JSON.stringify(formatted));
+        } catch (e) {}
       }
     });
   }, []);

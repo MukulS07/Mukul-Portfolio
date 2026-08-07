@@ -84,8 +84,6 @@ export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
       {
         headers: {
           Accept: "application/vnd.github.v3+json",
-          "Cache-Control": "no-cache",
-          Pragma: "no-cache",
         },
       },
     );
@@ -119,8 +117,6 @@ export async function fetchGitHubEvents(): Promise<GitHubEvent[]> {
       {
         headers: {
           Accept: "application/vnd.github.v3+json",
-          "Cache-Control": "no-cache",
-          Pragma: "no-cache",
         },
       },
     );
@@ -152,8 +148,6 @@ export async function fetchGitHubProfile(): Promise<{
     const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}?t=${Date.now()}`, {
       headers: {
         Accept: "application/vnd.github.v3+json",
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
       },
     });
     if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
@@ -188,7 +182,6 @@ export async function fetchCommitMessage(repoName: string, sha: string): Promise
       {
         headers: {
           Accept: "application/vnd.github.v3+json",
-          "Cache-Control": "no-cache",
         },
       },
     );
