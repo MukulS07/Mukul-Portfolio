@@ -16,11 +16,14 @@ Here is the telemetry data about Mukul Sharma:
   - Accepted at: DASGRI Congress 2026 (April 2026).
   - Summary: A multi-sensor fusion model on AWS (using LoRa-based IoT nodes) that bypasses standard telemetry delays, outputting landslide risk scores every 30 seconds with sub-3-minute alert latency and an F1 score of 0.94.
 - Core Projects:
-  1. ApexF1: Ultimate Formula 1 2026 Dashboard. Integrates live simulated telemetry, 3D interactive car customization, calendar tracking, and a paddock AI chatbot. Tech Stack: TanStack Start, Three.js, Web Audio API, Tailwind CSS v4, NVIDIA NIM.
-  2. EcoGeoGuard: AI-IoT Landslide Prediction and Smart Agriculture Platform. ML F1 Score of 0.94, alert latency under 3 minutes, 187 active nodes. Tech Stack: Python, ML, AWS Lambda, DynamoDB, API Gateway, IoT, LoRa, Next.js.
-  3. INVENTROX: AI Business Operating System for Indian SMEs. Smart POS, GST invoicing, CRM, inventory, live analytics, AI assistant. Tech Stack: Next.js, Node.js, Express, MongoDB, AI APIs.
-  4. Space Galactus: 2D space shooter in Unity 6 using C# and ScriptableObjects (weapon/power-up inventory, waves spawner).
-  5. SIH - AYUSH VR Herbal Garden (Smart India Hackathon, Sep 2024): VR immersive Ayurvedic learning garden. Unity 3D, Oculus SDK, Node.js, Express, MongoDB.
+  1. ApexF1: Ultimate Formula 1 2026 Dashboard. Integrates live simulated telemetry, 3D interactive car customization, calendar tracking, and a paddock AI chatbot. Tech Stack: React 19, TanStack Start, Three.js, Web Audio API, Tailwind CSS v4, NVIDIA NIM.
+  2. Mukul-Portfolio: Cyberpunk-HUD-styled personal portfolio site with simulated boot sequence, live telemetry overlays, interactive 3D globe, and AI voice chatbot. Tech Stack: React 19, TanStack Start, Vite, Tailwind CSS v4, Bun, GitHub Actions.
+  3. INVENTROX: Full-stack AI-powered inventory and purchase management system for SMEs featuring inventory tracking, smart stock alerts, automated service reminders, and weather-aware notifications. Tech Stack: Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS.
+  4. EcoGeoGuard Website: AI-powered disaster prediction & smart farming web platform delivering landslide risk prediction, weather updates, and government scheme recommendations. Tech Stack: Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS.
+  5. EcoGeoGuard AI-IoT System: End-to-end AI-IoT landslide prediction & smart farming system using multi-sensor data fusion ML pipeline on AWS. F1 score 0.94, sub-3-minute alert latency, 187 active nodes. Tech Stack: Python, ML Algorithms, AWS (Lambda, DynamoDB, API Gateway), IoT, LoRa/GSM.
+  6. Freelance Client Projects: Delivered freelance web apps for clients including an AI social-growth agency, fitness client platform, and demo sites using React, TanStack Start, Tailwind CSS, Framer Motion.
+  7. Serverless Web Application on AWS: Serverless app from scratch with Lambda, DynamoDB, Amplify, Step Functions, SNS/SQS, CodePipeline.
+  8. SIH - AYUSH VR Herbal Garden (Smart India Hackathon, Sep 2024): VR immersive Ayurvedic learning garden with Unity 3D, Oculus SDK, Node.js, Express, MongoDB.
 - Skills & Technologies:
   - Cyber Security: Network Security, IAM, Cloud Security (AWS), Secure Architecture, Ethical Hacking.
   - AI & ML: ML Algorithms, AI-IoT systems, LLM/GenAI APIs, Prompt Engineering.
