@@ -221,13 +221,74 @@ const projects: Project[] = [
   },
   {
     num: "02",
-    title: "EcoGeoGuard — AI-IoT Landslide Prediction",
+    title: "Mukul-Portfolio — Personal Developer Portfolio",
+    type: "Personal Product",
+    period: "Jul 2026",
+    status: "live",
+    description:
+      "Cyberpunk-HUD-styled personal developer portfolio site featuring a simulated boot sequence, live cursor/scroll telemetry overlays, a rotating 3D wireframe globe, integrated AI voice chatbot assistant, and dedicated interactive resume/CV page.",
+    stats: [
+      { k: "UI Style", v: "Cyberpunk HUD" },
+      { k: "3D Engine", v: "Three.js / Canvas" },
+      { k: "AI Bot", v: "Gemini / TTS" },
+    ],
+    stack: ["React 19", "TanStack Start", "Vite", "Tailwind CSS v4", "Bun", "GitHub Actions"],
+    links: [
+      { label: "live →", href: "https://mukulsharmaworks.online" },
+      { label: "github →", href: "https://github.com/MukulS07/Mukul-Portfolio" },
+    ],
+  },
+  {
+    num: "03",
+    title: "INVENTROX — AI Inventory & Purchase Management System",
+    type: "Personal Product",
+    period: "Jun 2026 – Present",
+    status: "live",
+    video: "/videooutput/My Video-1.mp4",
+    description:
+      "Full-stack AI-powered inventory management platform for SMEs featuring inventory tracking, purchase management, supplier records, AI-assisted demand prediction, smart stock alerts, automated service reminders, and weather-aware notifications.",
+    stats: [
+      { k: "Uptime", v: "99.98%" },
+      { k: "AI Insights", v: "8K+" },
+      { k: "Pricing", v: "₹999/mo" },
+    ],
+    stack: ["Next.js", "Node.js", "Express.js", "MongoDB Atlas", "Python", "AWS", "Firebase"],
+    links: [
+      { label: "live →", href: "https://inventrox.vercel.app/" },
+      {
+        label: "github →",
+        href: "https://github.com/MukulS07/inventrox-os-The-Operating-System-for-Modern-Businesses.",
+      },
+    ],
+  },
+  {
+    num: "04",
+    title: "EcoGeoGuard Website — Disaster Prediction & Smart Farming",
+    type: "Personal Product",
+    period: "Apr 2026 – Present",
+    status: "live",
+    description:
+      "Full-stack web platform delivering AI-powered landslide risk prediction, smart farming insights, real-time weather updates, interactive dashboards, AI chatbot assistance, live sensor data visualization, and government scheme recommendations.",
+    stats: [
+      { k: "Analytics", v: "Real-time" },
+      { k: "Sensors", v: "IoT Live" },
+      { k: "Security", v: "Role-based" },
+    ],
+    stack: ["Next.js", "Node.js", "Express.js", "MongoDB Atlas", "Python", "AWS", "Firebase"],
+    links: [
+      { label: "live →", href: "https://ecogeoguard.vercel.app/" },
+      { label: "github →", href: "https://github.com/MukulS07/ecogeoguard-community-platform" },
+    ],
+  },
+  {
+    num: "05",
+    title: "EcoGeoGuard — AI-IoT Landslide Prediction System",
     type: "Personal Research Project",
     period: "Dec 2025 – May 2026",
     status: "live",
     video: "/videooutput/My Video.mp4",
     description:
-      "End-to-end AI-IoT system for real-time landslide prediction and smart agriculture. Multi-sensor fusion (soil moisture, tilt, vibration, rainfall) feeds an ML pipeline outputting a 0–1 risk score every 30s. Three role dashboards: Farmer, Gov, Admin. Alerts via SMS, app, alarms.",
+      "End-to-end AI-IoT system for real-time landslide prediction and smart agriculture. Multi-sensor fusion (soil moisture, tilt, vibration, rainfall) feeds an ML pipeline outputting a 0–1 risk score every 30s. Research paper accepted at DASGRI Congress 2026.",
     stats: [
       { k: "ML F1 Score", v: "0.94" },
       { k: "Alert Latency", v: "< 3 min" },
@@ -244,30 +305,29 @@ const projects: Project[] = [
     ],
   },
   {
-    num: "03",
-    title: "INVENTROX — AI Business Operating System",
-    type: "Personal Product",
-    period: "2026",
-    status: "live",
-    video: "/videooutput/My Video-1.mp4",
+    num: "06",
+    title: "Freelance Client Projects",
+    type: "Freelance Work",
+    period: "2025 – Present",
+    status: "shipped",
     description:
-      "AI-powered Business OS for Indian SMEs — replaces 4–6 fragmented tools with one platform. Smart inventory, lightning POS, GST invoicing, built-in CRM, live analytics, and an AI assistant for plain-language business queries.",
-    stats: [
-      { k: "Uptime", v: "99.98%" },
-      { k: "AI Insights", v: "8K+" },
-      { k: "Pricing", v: "₹999/mo" },
-    ],
-    stack: ["Next.js", "Node.js", "React", "MongoDB", "AI APIs", "Vercel"],
-    links: [
-      { label: "live →", href: "https://inventrox.vercel.app/" },
-      {
-        label: "github →",
-        href: "https://github.com/MukulS07/inventrox-os-The-Operating-System-for-Modern-Businesses.",
-      },
-    ],
+      "Delivered freelance websites for multiple clients, including an AI-powered content/social-growth agency site, a fitness & gym client platform, and interactive agency demo sites.",
+    stack: ["React", "TanStack Router/Start", "Tailwind CSS", "Framer Motion", "Vite", "Netlify", "Vercel"],
+    links: [],
   },
   {
-    num: "04",
+    num: "07",
+    title: "Serverless Web Application on AWS",
+    type: "Personal Cloud Project",
+    period: "Feb 2025",
+    status: "shipped",
+    description:
+      "Built a complete serverless web app from scratch — Lambda for backend logic, DynamoDB for storage, Amplify for the frontend, Step Functions for workflow automation, SNS/SQS, CodePipeline CI/CD.",
+    stack: ["AWS", "Lambda", "DynamoDB", "Amplify", "Step Functions", "SNS/SQS", "CodePipeline"],
+    links: [],
+  },
+  {
+    num: "08",
     title: "Space Galactus",
     type: "LPU Academic · Team of 3",
     period: "Jan – Apr 2026",
@@ -278,7 +338,7 @@ const projects: Project[] = [
     links: [{ label: "github →", href: "https://github.com/MukulS07" }],
   },
   {
-    num: "05",
+    num: "09",
     title: "SIH — AYUSH VR Herbal Garden",
     type: "Smart India Hackathon",
     period: "Sep 2024",
