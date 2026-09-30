@@ -977,7 +977,19 @@ function queryOfflineExpert(query: string, avengersMode: boolean): string {
       : "Project detail retrieved: ApexF1. A cutting-edge Formula 1 dashboard for the 2026 season. Features a WebGL-based 3D car livery editor, real-time simulated track telemetry, and an AI paddock assistant powered by NVIDIA NIM. Built with TanStack Start and Tailwind CSS v4.";
   }
 
-  // 6. PROJECTS GENERAL
+  // 6. MAISON HARIVE DETAILS
+  if (
+    q.includes("maison") ||
+    q.includes("harive") ||
+    q.includes("jewellery") ||
+    q.includes("jewelry")
+  ) {
+    return avengersMode
+      ? "Maison Harivē telemetry active, Boss. A luxury contemporary haute joaillerie house for men, inspired by royal dynasties and Indian jewellery heritage. Built with Next.js 16, React 19, Framer Motion chamber transitions, and Supabase."
+      : "Project detail retrieved: Maison Harivē. A contemporary men's haute joaillerie web platform featuring an atmospheric Stage intro with video shaders, interactive 3-panel sliding Chambers navigation (Legacy, Collection, Atelier), and a live Supabase jewellery archive.";
+  }
+
+  // 7. PROJECTS GENERAL
   if (
     q.includes("project") ||
     q.includes("portfolio") ||
@@ -988,8 +1000,8 @@ function queryOfflineExpert(query: string, avengersMode: boolean): string {
     q.includes("galactus")
   ) {
     return avengersMode
-      ? "Mukul's projects directory includes: First, Apex F1, the ultimate Formula 1 2026 dashboard. Second, EcoGeoGuard, the AI-IoT landslide framework. Third, INVENTROX, the SME Business Operating System. Fourth, Space Galactus, a 2D shooter developed in Unity 6. And fifth, a Virtual Reality Herbal Garden for the Smart India Hackathon. Systems are ready to detail any of these, Boss."
-      : "Mukul has completed five major engineering projects: ApexF1 (Formula 1 2026 dashboard), EcoGeoGuard (AI-IoT warning node system), INVENTROX (AI POS and billing system for SMEs), Space Galactus (C# game in Unity 6), and the AYUSH VR Garden backend for the SIH Hackathon. Contact links contain live demos.";
+      ? "Mukul's projects directory includes: First, Apex F1, the ultimate Formula 1 2026 dashboard. Second, Maison Harivē, the luxury haute joaillerie house and archive. Third, EcoGeoGuard, the AI-IoT landslide framework. Fourth, INVENTROX, the SME Business Operating System. Fifth, Space Galactus in Unity 6. And sixth, a Virtual Reality Herbal Garden for the Smart India Hackathon. Systems are ready to detail any of these, Boss."
+      : "Mukul has completed major engineering projects: ApexF1 (Formula 1 2026 dashboard), Maison Harivē (Men's Haute Joaillerie platform), EcoGeoGuard (AI-IoT warning node system), INVENTROX (AI POS and billing system for SMEs), Space Galactus (C# game in Unity 6), and the AYUSH VR Garden backend for the SIH Hackathon. Contact links contain live demos.";
   }
 
   // 6. SKILLS & STACK

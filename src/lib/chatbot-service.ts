@@ -17,13 +17,14 @@ Here is the telemetry data about Mukul Sharma:
   - Summary: A multi-sensor fusion model on AWS (using LoRa-based IoT nodes) that bypasses standard telemetry delays, outputting landslide risk scores every 30 seconds with sub-3-minute alert latency and an F1 score of 0.94.
 - Core Projects:
   1. ApexF1: Ultimate Formula 1 2026 Dashboard. Integrates live simulated telemetry, 3D interactive car customization, calendar tracking, and a paddock AI chatbot. Tech Stack: React 19, TanStack Start, Three.js, Web Audio API, Tailwind CSS v4, NVIDIA NIM.
-  2. Mukul-Portfolio: Cyberpunk-HUD-styled personal portfolio site with simulated boot sequence, live telemetry overlays, interactive 3D globe, and AI voice chatbot. Tech Stack: React 19, TanStack Start, Vite, Tailwind CSS v4, Bun, GitHub Actions.
-  3. INVENTROX: Full-stack AI-powered inventory and purchase management system for SMEs featuring inventory tracking, smart stock alerts, automated service reminders, and weather-aware notifications. Tech Stack: Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS.
-  4. EcoGeoGuard Website: AI-powered disaster prediction & smart farming web platform delivering landslide risk prediction, weather updates, and government scheme recommendations. Tech Stack: Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS.
-  5. EcoGeoGuard AI-IoT System: End-to-end AI-IoT landslide prediction & smart farming system using multi-sensor data fusion ML pipeline on AWS. F1 score 0.94, sub-3-minute alert latency, 187 active nodes. Tech Stack: Python, ML Algorithms, AWS (Lambda, DynamoDB, API Gateway), IoT, LoRa/GSM.
-  6. Freelance Client Projects: Delivered freelance web apps for clients including an AI social-growth agency, fitness client platform, and demo sites using React, TanStack Start, Tailwind CSS, Framer Motion.
-  7. Serverless Web Application on AWS: Serverless app from scratch with Lambda, DynamoDB, Amplify, Step Functions, SNS/SQS, CodePipeline.
-  8. SIH - AYUSH VR Herbal Garden (Smart India Hackathon, Sep 2024): VR immersive Ayurvedic learning garden with Unity 3D, Oculus SDK, Node.js, Express, MongoDB.
+  2. Maison Harivē: Contemporary Haute Joaillerie luxury jewellery house platform for men. Atmospheric Stage intro with video shaders, interactive 3-panel sliding Chambers navigation (Legacy, Collection, Atelier), and Supabase-powered luxury archive. Tech Stack: Next.js 16, React 19, Tailwind CSS v4, Framer Motion, Supabase.
+  3. Mukul-Portfolio: Cyberpunk-HUD-styled personal portfolio site with simulated boot sequence, live telemetry overlays, interactive 3D globe, and AI voice chatbot. Tech Stack: React 19, TanStack Start, Vite, Tailwind CSS v4, Bun, GitHub Actions.
+  4. INVENTROX: Full-stack AI-powered inventory and purchase management system for SMEs featuring inventory tracking, smart stock alerts, automated service reminders, and weather-aware notifications. Tech Stack: Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS.
+  5. EcoGeoGuard Website: AI-powered disaster prediction & smart farming web platform delivering landslide risk prediction, weather updates, and government scheme recommendations. Tech Stack: Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS.
+  6. EcoGeoGuard AI-IoT System: End-to-end AI-IoT landslide prediction & smart farming system using multi-sensor data fusion ML pipeline on AWS. F1 score 0.94, sub-3-minute alert latency, 187 active nodes. Tech Stack: Python, ML Algorithms, AWS (Lambda, DynamoDB, API Gateway), IoT, LoRa/GSM.
+  7. Freelance Client Projects: Delivered freelance web apps for clients including Maison Harivē, an AI social-growth agency, fitness client platform, and demo sites using React, Next.js, TanStack Start, Tailwind CSS, Framer Motion.
+  8. Serverless Web Application on AWS: Serverless app from scratch with Lambda, DynamoDB, Amplify, Step Functions, SNS/SQS, CodePipeline.
+  9. SIH - AYUSH VR Herbal Garden (Smart India Hackathon, Sep 2024): VR immersive Ayurvedic learning garden with Unity 3D, Oculus SDK, Node.js, Express, MongoDB.
 - Skills & Technologies:
   - Cyber Security: Network Security, IAM, Cloud Security (AWS), Secure Architecture, Ethical Hacking.
   - AI & ML: ML Algorithms, AI-IoT systems, LLM/GenAI APIs, Prompt Engineering.

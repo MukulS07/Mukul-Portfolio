@@ -5,11 +5,9 @@ import { useRouterState } from "@tanstack/react-router";
  * Futuristic telemetry HUD — fixed bottom-right.
  * Live FPS, cursor coords, scroll %, route, and a scrolling system log.
  * Plus a left-edge audio-spectrum bar driven by sine noise.
+ * High-performance: Direct DOM updates to prevent 120-240Hz React re-render churn!
  */
 export function TelemetryHUD() {
-  const [fps, setFps] = useState(60);
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [scroll, setScroll] = useState(0);
   const [logs, setLogs] = useState<string[]>([
     "boot::ok",
     "vfx::wireframe online",
@@ -17,8 +15,11 @@ export function TelemetryHUD() {
   ]);
   const route = useRouterState({ select: (s) => s.location.pathname });
   const barsRef = useRef<HTMLDivElement | null>(null);
+  const fpsRef = useRef<HTMLSpanElement | null>(null);
+  const coordsRef = useRef<HTMLSpanElement | null>(null);
+  const scrollRef = useRef<HTMLSpanElement | null>(null);
 
-  // FPS + spectrum
+  // FPS + spectrum using rAF without triggering React component re-renders
   useEffect(() => {
     let raf = 0,
       frames = 0,
@@ -26,12 +27,15 @@ export function TelemetryHUD() {
     const tick = (now: number) => {
       frames++;
       if (now - last >= 1000) {
-        setFps(Math.round((frames * 1000) / (now - last)));
+        const measuredFps = Math.round((frames * 1000) / (now - last));
+        if (fpsRef.current) {
+          fpsRef.current.textContent = `${measuredFps}fps`;
+        }
         frames = 0;
         last = now;
       }
       const el = barsRef.current;
-      if (el) {
+      if (el && !document.hidden) {
         const t = now / 1000;
         const children = el.children;
         for (let i = 0; i < children.length; i++) {
@@ -45,16 +49,40 @@ export function TelemetryHUD() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  // mouse + scroll
+  // mouse + scroll with zero React re-render cost
   useEffect(() => {
-    const onMove = (e: MouseEvent) => setCoords({ x: e.clientX, y: e.clientY });
-    const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      setScroll(h > 0 ? Math.min(100, Math.round((window.scrollY / h) * 100)) : 0);
+    let scheduled = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    const updateCoords = () => {
+      scheduled = false;
+      if (coordsRef.current) {
+        coordsRef.current.textContent = `${lastX.toString().padStart(4, "0")},${lastY.toString().padStart(4, "0")}`;
+      }
     };
-    window.addEventListener("mousemove", onMove);
+
+    const onMove = (e: MouseEvent) => {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (!scheduled) {
+        scheduled = true;
+        requestAnimationFrame(updateCoords);
+      }
+    };
+
+    const onScroll = () => {
+      if (scrollRef.current) {
+        const h = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = h > 0 ? Math.min(100, Math.round((window.scrollY / h) * 100)) : 0;
+        scrollRef.current.textContent = `${pct.toString().padStart(3, "0")}%`;
+      }
+    };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("scroll", onScroll);
@@ -77,7 +105,7 @@ export function TelemetryHUD() {
         "uplink::nominal",
       ];
       setLogs((l) => [msgs[Math.floor(Math.random() * msgs.length)], ...l].slice(0, 5));
-    }, 3200);
+    }, 4500);
     return () => clearInterval(id);
   }, []);
 
@@ -113,16 +141,16 @@ export function TelemetryHUD() {
               </span>
               SYS.TELEMETRY
             </span>
-            <span className="tabular-nums">{fps}fps</span>
+            <span ref={fpsRef} className="tabular-nums">60fps</span>
           </div>
           <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 tabular-nums text-muted-foreground">
             <span>CUR</span>
-            <span className="text-foreground text-right">
-              {coords.x.toString().padStart(4, "0")},{coords.y.toString().padStart(4, "0")}
+            <span ref={coordsRef} className="text-foreground text-right">
+              0000,0000
             </span>
             <span>SCR</span>
-            <span className="text-foreground text-right">
-              {scroll.toString().padStart(3, "0")}%
+            <span ref={scrollRef} className="text-foreground text-right">
+              000%
             </span>
             <span>RTE</span>
             <span className="text-foreground text-right truncate">{route}</span>

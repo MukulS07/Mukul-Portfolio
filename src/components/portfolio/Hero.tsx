@@ -52,6 +52,16 @@ const mockEvents: {
     t: "just now",
     tag: "PUSH",
     tagColor: "text-accent",
+    repo: "maison-harive",
+    msg: 'pushed: "feat: luxury jewellery chamber transitions & archive"',
+    note: "main",
+    fullMsg: "Maison Harivē luxury jewellery house website update",
+    link: "https://github.com/MukulS07/maison-harive",
+  },
+  {
+    t: "2h ago",
+    tag: "PUSH",
+    tagColor: "text-accent",
     repo: "Mukul-Portfolio",
     msg: 'pushed: "ci: GitHub Pages deployment & live sync"',
     note: "main",
@@ -239,6 +249,7 @@ export function Hero() {
     Record<string, { online: boolean; latency: number | null; loading: boolean }>
   >({
     ApexF1: { online: true, latency: null, loading: true },
+    "Maison Harivē": { online: true, latency: null, loading: true },
     EcoGeoGuard: { online: true, latency: null, loading: true },
     "INVENTROX OS": { online: true, latency: null, loading: true },
     "Mukul Portfolio": { online: true, latency: null, loading: true },
@@ -249,6 +260,7 @@ export function Hero() {
   useEffect(() => {
     const sites = [
       { name: "ApexF1", url: "https://apex-f1-eosin.vercel.app" },
+      { name: "Maison Harivē", url: "https://github.com/MukulS07/maison-harive" },
       { name: "EcoGeoGuard", url: "https://ecogeoguard.vercel.app/" },
       { name: "INVENTROX OS", url: "https://inventrox.vercel.app/" },
       { name: "Mukul Portfolio", url: "https://github.com/MukulS07/Mukul-Portfolio" },
@@ -506,6 +518,12 @@ export function Hero() {
       activeProjFolder = `~/github/${activeEvent.repo}`;
       activeProjVideo = "/videooutput/My Video-1.mp4";
       activeProjStack = ["Next.js", "Node.js", "Express", "MongoDB", "AI APIs"];
+    } else if (repoLower.includes("maison") || repoLower.includes("harive")) {
+      activeProjName = "Maison Harivē";
+      activeProjSub = "Luxury Men's Haute Joaillerie & Archive";
+      activeProjFolder = `~/github/${activeEvent.repo}`;
+      activeProjVideo = "/videooutput/MAISONHARIVE MAIN WEBSITE.mp4";
+      activeProjStack = ["Next.js 16", "React 19", "Tailwind CSS v4", "Framer Motion", "Supabase"];
     } else if (repoLower.includes("ecogeoguard")) {
       activeProjName = "EcoGeoGuard";
       activeProjSub = "AI-IoT Landslide Prediction Platform";
@@ -516,7 +534,7 @@ export function Hero() {
       activeProjName = "ApexF1";
       activeProjSub = "Formula 1 2026 Telemetry Dashboard";
       activeProjFolder = `~/github/${activeEvent.repo}`;
-      activeProjVideo = "/videooutput/My Video.mp4";
+      activeProjVideo = "/videooutput/apexf1.mp4";
       activeProjStack = ["TanStack Start", "Three.js", "Tailwind CSS v4", "NVIDIA NIM"];
     } else if (repoLower.includes("mukul-portfolio") || repoLower.includes("mukuls07")) {
       activeProjName = "Mukul Portfolio";
@@ -718,6 +736,13 @@ export function Hero() {
                 desc: "Three.js 3D car livery designer, simulated track telemetry, and NVIDIA NIM chatbot.",
                 url: "https://apex-f1-eosin.vercel.app",
                 port: "PORT_80",
+              },
+              {
+                name: "Maison Harivē",
+                sub: "Men's Haute Joaillerie & Archive",
+                desc: "Cinematic jewellery house site with 3-panel chamber transitions, video-text shaders & Supabase.",
+                url: "https://github.com/MukulS07/maison-harive",
+                port: "PORT_443",
               },
               {
                 name: "EcoGeoGuard",

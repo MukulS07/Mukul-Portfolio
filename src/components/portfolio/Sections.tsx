@@ -206,6 +206,7 @@ const projects: Project[] = [
     type: "Personal Product",
     period: "Jul 2026",
     status: "live",
+    video: "/videooutput/apexf1.mp4",
     description:
       "Formula 1 dashboard designed for the upcoming 2026 season. Built with performance, interactivity, and premium aesthetics. Integrates real-time telemetry, 3D interactive model customization in Three.js/WebGL, F1 calendars, driver statistics, and an AI paddock assistant powered by NVIDIA NIM.",
     stats: [
@@ -221,6 +222,25 @@ const projects: Project[] = [
   },
   {
     num: "02",
+    title: "Maison Harivē — Luxury Men's Haute Joaillerie & Archive",
+    type: "Client / Luxury Brand Platform",
+    period: "Aug 2026 – Present",
+    status: "live",
+    video: "/videooutput/MAISONHARIVE MAIN WEBSITE.mp4",
+    description:
+      "Contemporary Haute Joaillerie house for men, inspired by royal dynasties and Indian jewellery heritage. Features a cinematic Stage intro with video-text shaders dissolving into the royal treasury hero, an interactive 3-panel Chambers navigation (Legacy, Collection, Atelier) with physical heavy-door slide physics, founders chronicle, and a Supabase-powered luxury jewellery archive.",
+    stats: [
+      { k: "Design", v: "Haute Joaillerie" },
+      { k: "Motion Engine", v: "Framer Motion" },
+      { k: "Database", v: "Supabase Live" },
+    ],
+    stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Supabase"],
+    links: [
+      { label: "github →", href: "https://github.com/MukulS07/maison-harive" },
+    ],
+  },
+  {
+    num: "03",
     title: "Mukul-Portfolio — Personal Developer Portfolio",
     type: "Personal Product",
     period: "Jul 2026",
@@ -239,7 +259,7 @@ const projects: Project[] = [
     ],
   },
   {
-    num: "03",
+    num: "04",
     title: "INVENTROX — AI Inventory & Purchase Management System",
     type: "Personal Product",
     period: "Jun 2026 – Present",
@@ -262,7 +282,7 @@ const projects: Project[] = [
     ],
   },
   {
-    num: "04",
+    num: "05",
     title: "EcoGeoGuard Website — Disaster Prediction & Smart Farming",
     type: "Personal Product",
     period: "Apr 2026 – Present",
@@ -281,7 +301,7 @@ const projects: Project[] = [
     ],
   },
   {
-    num: "05",
+    num: "06",
     title: "EcoGeoGuard — AI-IoT Landslide Prediction System",
     type: "Personal Research Project",
     period: "Dec 2025 – May 2026",
@@ -305,18 +325,18 @@ const projects: Project[] = [
     ],
   },
   {
-    num: "06",
+    num: "07",
     title: "Freelance Client Projects",
     type: "Freelance Work",
     period: "2025 – Present",
     status: "shipped",
     description:
-      "Delivered freelance websites for multiple clients, including an AI-powered content/social-growth agency site, a fitness & gym client platform, and interactive agency demo sites.",
-    stack: ["React", "TanStack Router/Start", "Tailwind CSS", "Framer Motion", "Vite", "Netlify", "Vercel"],
-    links: [],
+      "Delivered freelance websites for multiple clients, including Maison Harivē (luxury jewellery house platform with custom 3-panel chamber transitions), an AI-powered content/social-growth agency site, a fitness & gym client platform, and interactive agency demo sites.",
+    stack: ["React", "Next.js", "TanStack Router/Start", "Tailwind CSS", "Framer Motion", "Vite", "Supabase"],
+    links: [{ label: "maison github →", href: "https://github.com/MukulS07/maison-harive" }],
   },
   {
-    num: "07",
+    num: "08",
     title: "Serverless Web Application on AWS",
     type: "Personal Cloud Project",
     period: "Feb 2025",
@@ -327,7 +347,7 @@ const projects: Project[] = [
     links: [],
   },
   {
-    num: "08",
+    num: "09",
     title: "Space Galactus",
     type: "LPU Academic · Team of 3",
     period: "Jan – Apr 2026",
@@ -338,7 +358,7 @@ const projects: Project[] = [
     links: [{ label: "github →", href: "https://github.com/MukulS07" }],
   },
   {
-    num: "09",
+    num: "10",
     title: "SIH — AYUSH VR Herbal Garden",
     type: "Smart India Hackathon",
     period: "Sep 2024",

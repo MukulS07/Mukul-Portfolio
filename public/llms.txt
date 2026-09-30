@@ -12,10 +12,11 @@ Mukul Sharma is a Cyber Security Engineer, AWS Cloud Architect, and AI/IoT solut
 ## Key Accomplishments & Publications
 - **DASGRI Congress 2026 Publication**: Author of published research on AI-IoT landslide prediction & early warning disaster monitoring systems.
 - **ApexF1**: Interactive Formula 1 2026 Fan Dashboard featuring simulated live telemetry, 3D livery designer (Three.js), and NVIDIA NIM AI paddock assistant.
+- **Maison Harivē**: Contemporary men's luxury jewellery house web platform featuring cinematic Stage intro with video shaders, 3-panel sliding Chambers navigation, and live Supabase collection archive.
 - **Mukul-Portfolio**: Cyberpunk-HUD developer portfolio with 3D wireframe globe, telemetry overlays, and AI voice chatbot.
 - **INVENTROX**: Full-stack AI-powered inventory & purchase management system for SMEs.
 - **EcoGeoGuard Website & AI-IoT System**: AI-powered disaster prediction and smart farming platform with real-time multi-sensor data fusion ML pipeline on AWS.
-- **Freelance Client Projects**: Custom client web solutions including AI social-growth agency, fitness client platform, and interactive demo sites.
+- **Freelance Client Projects**: Custom client web solutions including Maison Harivē, AI social-growth agency, fitness client platform, and interactive demo sites.
 - **AYUSH VR Garden**: Virtual reality medicinal plants immersive educational portal (Smart India Hackathon).
 
 ## Core Technical Competencies

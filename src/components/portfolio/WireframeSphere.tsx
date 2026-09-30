@@ -139,7 +139,24 @@ export function WireframeSphere() {
     const STIFFNESS = 40;
     const DAMPING = 9;
 
+    // Cache accent color to prevent 60fps forced layout thrashing from getComputedStyle
+    let cachedAccent = "oklch(0.82 0.18 235)";
+    const updateAccent = () => {
+      if (!canvas) return;
+      cachedAccent =
+        window.getComputedStyle(canvas).getPropertyValue("--accent").trim() ||
+        "oklch(0.82 0.18 235)";
+    };
+    updateAccent();
+
+    const themeObserver = new MutationObserver(updateAccent);
+    themeObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
     const draw = (now: number) => {
+      if (document.hidden) {
+        raf = requestAnimationFrame(draw);
+        return;
+      }
       if (document.body.classList.contains("fx-off")) {
         ctx.clearRect(0, 0, w, h);
         raf = requestAnimationFrame(draw);
@@ -185,13 +202,8 @@ export function WireframeSphere() {
         };
       });
 
-      // Get current theme accent color dynamically
-      const accentColor =
-        window.getComputedStyle(canvas).getPropertyValue("--accent").trim() ||
-        "oklch(0.82 0.18 235)";
-
       // edges
-      ctx.strokeStyle = accentColor;
+      ctx.strokeStyle = cachedAccent;
       for (const [a, b] of edges) {
         const pa = proj[a],
           pb = proj[b];
@@ -207,7 +219,7 @@ export function WireframeSphere() {
       }
 
       // vertex dots
-      ctx.fillStyle = accentColor;
+      ctx.fillStyle = cachedAccent;
       for (const p of proj) {
         const front = (p.z + 1) / 2;
         const a = 0.15 + front * 0.55;
@@ -226,6 +238,7 @@ export function WireframeSphere() {
 
     return () => {
       cancelAnimationFrame(raf);
+      themeObserver.disconnect();
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
     };

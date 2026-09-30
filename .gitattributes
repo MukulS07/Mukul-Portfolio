@@ -1,6 +1,5 @@
 # Set default behavior to automatic line ending normalization
 * text=auto
-
 # Enforce LF (Unix-style) line endings for code, styling, and configuration files
 *.js text eol=lf
 *.jsx text eol=lf
@@ -17,3 +16,4 @@
 .env* text eol=lf
 .gitignore text eol=lf
 .prettierrc text eol=lf
+public/videooutput/*.mp4 filter=lfs diff=lfs merge=lfs -text

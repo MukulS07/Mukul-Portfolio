@@ -168,7 +168,36 @@ export function Resume() {
               </div>
             </div>
 
-            {/* Project 2 */}
+            {/* Project 2: Maison Harivē */}
+            <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
+              <div className="flex justify-between items-start flex-wrap gap-1">
+                <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
+                  Maison Harivē — Luxury Men's Haute Joaillerie & Archive
+                </h3>
+                <span className="text-xs text-accent print:text-black print:font-normal">
+                  Aug 2026 – Present
+                </span>
+              </div>
+              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">
+                Client / Luxury Brand Platform
+              </p>
+              <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
+                <li>
+                  Engineered a contemporary luxury jewellery house web platform featuring an atmospheric Stage intro with video-text fill shaders dissolving into the royal treasury hero.
+                </li>
+                <li>
+                  Architected interactive 3-panel Chambers navigation with custom Framer Motion sliding door transitions (Legacy, Collection, Atelier) and founders narrative.
+                </li>
+                <li>
+                  Integrated Supabase for dynamic luxury catalogue and archive collection retrieval with high-performance responsive UI in Tailwind CSS v4.
+                </li>
+              </ul>
+              <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
+                <strong className="text-accent print:text-black">// Tech:</strong> Next.js 16, React 19, TypeScript, Tailwind CSS v4, Framer Motion, Supabase
+              </div>
+            </div>
+
+            {/* Project 3 */}
             <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
               <div className="flex justify-between items-start flex-wrap gap-1">
                 <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
@@ -197,7 +226,7 @@ export function Resume() {
               </div>
             </div>
 
-            {/* Project 3 */}
+            {/* Project 4 */}
             <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
               <div className="flex justify-between items-start flex-wrap gap-1">
                 <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
@@ -226,7 +255,7 @@ export function Resume() {
               </div>
             </div>
 
-            {/* Project 4 */}
+            {/* Project 5 */}
             <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
               <div className="flex justify-between items-start flex-wrap gap-1">
                 <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
@@ -258,7 +287,7 @@ export function Resume() {
             {/* Force page break for printing before the next project to split pages evenly like the PDF */}
             <div className="page-break print:hidden"></div>
 
-            {/* Project 5 */}
+            {/* Project 6 */}
             <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent print:mt-4">
               <div className="flex justify-between items-start flex-wrap gap-1">
                 <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
@@ -287,7 +316,7 @@ export function Resume() {
               </div>
             </div>
 
-            {/* Project 6 */}
+            {/* Project 7 */}
             <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
               <div className="flex justify-between items-start flex-wrap gap-1">
                 <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
@@ -302,18 +331,18 @@ export function Resume() {
               </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
                 <li>
-                  Delivered freelance websites for multiple clients, including an AI-powered content/social-growth agency site, a fitness & gym client platform, and interactive agency demo sites.
+                  Delivered freelance websites for multiple clients, including Maison Harivē (luxury jewellery house platform with custom 3-panel chamber transitions), an AI-powered content/social-growth agency site, and interactive agency demo sites.
                 </li>
                 <li>
-                  Built with React and TanStack Router/Start, styled with Tailwind CSS and Framer Motion, and deployed via Netlify and Vercel.
+                  Built with Next.js, React, TanStack Start, styled with Tailwind CSS and Framer Motion, and deployed via Vercel and Netlify.
                 </li>
               </ul>
               <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> React, TanStack Router/Start, Tailwind CSS, Framer Motion, Vite, Netlify, Vercel
+                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, React, TanStack Start, Tailwind CSS, Framer Motion, Supabase, Vercel
               </div>
             </div>
 
-            {/* Project 7 */}
+            {/* Project 8 */}
             <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
               <div className="flex justify-between items-start flex-wrap gap-1">
                 <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
@@ -339,7 +368,7 @@ export function Resume() {
               </div>
             </div>
 
-            {/* Project 8 */}
+            {/* Project 9 */}
             <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
               <div className="flex justify-between items-start flex-wrap gap-1">
                 <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">

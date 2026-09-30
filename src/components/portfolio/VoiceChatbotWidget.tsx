@@ -1152,6 +1152,16 @@ function queryOfflineExpert(query: string, avengersMode: boolean): string {
       : "ApexF1 is a 2026 Formula 1 dashboard. It features a Three.js WebGL livery editor, simulated track telemetry, and an NVIDIA NIM paddock assistant chatbot.";
   }
   if (
+    q.includes("maison") ||
+    q.includes("harive") ||
+    q.includes("jewellery") ||
+    q.includes("jewelry")
+  ) {
+    return avengersMode
+      ? "Maison Harivē telemetry loaded, Boss. A contemporary luxury haute joaillerie house for men. Features physical sliding chamber doors with Framer Motion, cinematic video shaders, and a Supabase-backed live jewellery archive."
+      : "Maison Harivē is a contemporary men's haute joaillerie web platform. Built with Next.js 16, React 19, Tailwind CSS v4, Framer Motion chamber transitions, and Supabase.";
+  }
+  if (
     q.includes("project") ||
     q.includes("portfolio") ||
     q.includes("shipped") ||
@@ -1161,8 +1171,8 @@ function queryOfflineExpert(query: string, avengersMode: boolean): string {
     q.includes("galactus")
   ) {
     return avengersMode
-      ? "Projects include: ApexF1 (F1 Dashboard), EcoGeoGuard (AI-IoT warning), INVENTROX (SME OS), Space Galactus (C# Unity 6 game), and VR Herbal Garden. Ask for telemetry on any of these, Boss."
-      : "Mukul completed: ApexF1 (F1 Dashboard), EcoGeoGuard (landslide prediction), INVENTROX (business CRM/billing OS), Space Galactus (Unity C# shooter), and VR Herbal Garden (SIH Hackathon).";
+      ? "Projects include: ApexF1 (F1 Dashboard), Maison Harivē (Luxury Jewellery House), EcoGeoGuard (AI-IoT warning), INVENTROX (SME OS), Space Galactus (C# Unity 6 game), and VR Herbal Garden. Ask for telemetry on any of these, Boss."
+      : "Mukul completed: ApexF1 (F1 Dashboard), Maison Harivē (Haute Joaillerie Archive), EcoGeoGuard (landslide prediction), INVENTROX (business CRM/billing OS), Space Galactus (Unity C# shooter), and VR Herbal Garden (SIH Hackathon).";
   }
   if (
     q.includes("skill") ||

@@ -9,31 +9,81 @@ interface ProjectVideoProps {
 export function ProjectVideo({ src, title }: ProjectVideoProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
+  const [, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const [hasStartedLoading, setHasStartedLoading] = useState(false);
+
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
 
+  // 1. Intersection Observer: Only load & play when card is scrolled into view!
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setIsInView(true);
+      setHasStartedLoading(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          setHasStartedLoading(true);
+        } else {
+          setIsInView(false);
+        }
+      },
+      {
+        threshold: 0.2, // 20% in view
+        rootMargin: "100px", // Preload slightly before appearing
+      },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // 2. Play/Pause based on visibility & modal state
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !hasStartedLoading) return;
 
-    video.loop = true; // Enforce native looping property
+    video.loop = true;
 
-    if (!isModalOpen) {
-      video
-        .play()
+    if (isInView && !isModalOpen) {
+      playPromiseRef.current = video.play();
+      playPromiseRef.current
         .then(() => {
           setIsPlaying(true);
         })
         .catch((err) => {
-          console.log("Autoplay pending interaction:", err);
+          if (err.name !== "AbortError") {
+            console.debug("Autoplay suppressed or pending user gesture:", err.message);
+          }
+          setIsPlaying(false);
         });
     } else {
-      video.pause();
-      setIsPlaying(false);
+      if (playPromiseRef.current) {
+        playPromiseRef.current
+          .then(() => {
+            video.pause();
+            setIsPlaying(false);
+          })
+          .catch(() => {
+            video.pause();
+            setIsPlaying(false);
+          });
+      } else {
+        video.pause();
+        setIsPlaying(false);
+      }
     }
-  }, [isModalOpen]);
+  }, [isInView, isModalOpen, hasStartedLoading]);
 
   // Sync mute state
   useEffect(() => {
@@ -44,16 +94,9 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
 
   const handleEnded = () => {
     const video = videoRef.current;
-    if (video) {
+    if (video && isInView) {
       video.currentTime = 0;
-      video
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-        })
-        .catch((err) => {
-          console.log("Loop play failed:", err);
-        });
+      video.play().catch(() => {});
     }
   };
 
@@ -63,13 +106,16 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
     const video = videoRef.current;
     if (!video) return;
 
+    if (!hasStartedLoading) setHasStartedLoading(true);
+
     if (isPlaying) {
       video.pause();
       setIsPlaying(false);
     } else {
-      video.play().then(() => {
-        setIsPlaying(true);
-      });
+      video
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
     }
   };
 
@@ -93,20 +139,11 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
     setIsModalOpen(false);
   };
 
-  // Sync modal video loop
-  useEffect(() => {
-    if (isModalOpen && modalVideoRef.current) {
-      modalVideoRef.current.loop = true;
-    }
-  }, [isModalOpen]);
-
   const handleModalEnded = () => {
     const video = modalVideoRef.current;
     if (video) {
       video.currentTime = 0;
-      video.play().catch((err) => {
-        console.log("Modal loop play failed:", err);
-      });
+      video.play().catch(() => {});
     }
   };
 
@@ -115,8 +152,12 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
   return (
     <>
       <div
+        ref={containerRef}
         className="mt-4 relative aspect-video border border-border bg-black/40 overflow-hidden group/video rounded-sm cursor-pointer hover:border-accent/40 transition-colors duration-300"
-        onMouseEnter={() => setIsHovered(true)}
+        onMouseEnter={() => {
+          setIsHovered(true);
+          if (!hasStartedLoading) setHasStartedLoading(true);
+        }}
         onMouseLeave={() => setIsHovered(false)}
         onClick={openModal}
       >
@@ -126,18 +167,26 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
         {/* Glow vignette */}
         <div className="absolute inset-0 pointer-events-none bg-radial-vignette opacity-20 z-10" />
 
-        <video
-          ref={videoRef}
-          src={src}
-          autoPlay
-          loop
-          onEnded={handleEnded}
-          muted={isMuted}
-          playsInline
-          controlsList="nodownload"
-          onContextMenu={(e) => e.preventDefault()}
-          className="w-full h-full object-cover filter contrast-[1.02]"
-        />
+        {hasStartedLoading ? (
+          <video
+            ref={videoRef}
+            src={src}
+            loop
+            preload="metadata"
+            onEnded={handleEnded}
+            muted={isMuted}
+            playsInline
+            disableRemotePlayback
+            controlsList="nodownload"
+            onContextMenu={(e) => e.preventDefault()}
+            className="w-full h-full object-cover filter contrast-[1.02]"
+          />
+        ) : (
+          <div className="w-full h-full bg-black/80 flex flex-col items-center justify-center font-mono text-[10px] text-muted-foreground p-4">
+            <span className="text-accent/60 mb-1">▶ [FEED_STANDBY]</span>
+            <span className="text-dim text-[9px]">SCROLL INTO VIEW TO STREAM</span>
+          </div>
+        )}
 
         {/* HUD top bar */}
         <div className="absolute top-0 inset-x-0 bg-black/75 px-3 py-1.5 flex justify-between items-center font-mono text-[9px] tracking-wider text-muted-foreground border-b border-border/40 z-20 transition-opacity duration-300 group-hover/video:opacity-100 opacity-80">
@@ -215,8 +264,10 @@ export function ProjectVideo({ src, title }: ProjectVideoProps) {
                 controls
                 autoPlay
                 loop
+                preload="auto"
                 onEnded={handleModalEnded}
                 playsInline
+                disableRemotePlayback
                 controlsList="nodownload"
                 onContextMenu={(e) => e.preventDefault()}
                 className="w-full h-full"

@@ -4,16 +4,16 @@ import { Projects } from "@/components/portfolio/Sections";
 export const Route = createFileRoute("/projects")({
   head: () => ({
     meta: [
-      { title: "Projects — Mukul Sharma | EcoGeoGuard, INVENTROX, Space Galactus" },
+      { title: "Projects — Mukul Sharma | ApexF1, Maison Harivē, EcoGeoGuard, INVENTROX" },
       {
         name: "description",
         content:
-          "Explore innovative projects by Mukul Sharma: EcoGeoGuard (AI Landslide Prediction), INVENTROX (Inventory AI System), Space Galactus, and AYUSH VR Garden.",
+          "Explore innovative projects by Mukul Sharma: ApexF1 (F1 2026 Dashboard), Maison Harivē (Luxury Jewellery House), EcoGeoGuard, and INVENTROX.",
       },
-      { property: "og:title", content: "Projects — Mukul Sharma | EcoGeoGuard & INVENTROX" },
+      { property: "og:title", content: "Projects — Mukul Sharma | ApexF1, Maison Harivē & EcoGeoGuard" },
       {
         property: "og:description",
-        content: "Featured projects: EcoGeoGuard, INVENTROX, Space Galactus, AYUSH VR Garden.",
+        content: "Featured projects: ApexF1, Maison Harivē, EcoGeoGuard, INVENTROX, and Space Galactus.",
       },
       { property: "og:url", content: "https://mukulsharmaworks.online/projects" },
       { property: "og:image", content: "https://mukulsharmaworks.online/portrait.jpg" },

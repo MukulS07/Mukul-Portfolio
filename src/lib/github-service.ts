@@ -232,6 +232,7 @@ export function matchRepoForProject(
     if (firstWord === "ecogeoguard" && repoNameLower.includes("ecogeoguard")) return true;
     if (firstWord === "inventrox" && repoNameLower.includes("inventrox")) return true;
     if (firstWord === "apexf1" && repoNameLower.includes("apexf1")) return true;
+    if ((firstWord === "maison" || firstWord === "maisonharive") && (repoNameLower.includes("maison") || repoNameLower.includes("harive"))) return true;
     if (titleLower.includes("portfolio") && repoNameLower.includes("portfolio")) return true;
 
     // General substring match
