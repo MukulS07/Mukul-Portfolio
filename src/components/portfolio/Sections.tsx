@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Section, TerminalCard } from "./Section";
 import { ProjectVideo } from "./ProjectVideo";
-import { Github, Linkedin, Mail, Phone, MapPin, ExternalLink, Star, GitFork } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, MapPin, ExternalLink, Star, GitFork, RotateCw } from "lucide-react";
 import { fetchGitHubRepos, matchRepoForProject, type GitHubRepo } from "@/lib/github-service";
 
 export function About() {
@@ -13,18 +13,20 @@ export function About() {
             <p>
               <span className="text-accent">$</span> whoami
             </p>
-            <p className="text-foreground">Final-year B.Tech CSE (Cyber Security) @ LPU, Punjab.</p>
+            <p className="text-foreground">
+              Full-Stack Developer (React 19 · Node.js · Next.js) & Final-year B.Tech CSE (Cyber Security) @ LPU.
+            </p>
             <p className="text-muted-foreground">
-              Published researcher — DASGRI Congress 2026. Built
-              <span className="text-accent"> EcoGeoGuard</span> (AI-IoT landslide platform) and{" "}
-              <span className="text-accent">INVENTROX</span> (AI business OS for SMEs). Obsessed
-              with secure, cloud-native systems.
+              Shipped 6+ full-stack platforms end-to-end — including{" "}
+              <span className="text-accent">ApexF1</span> (F1 telemetry & 3D livery dashboard with dual AI),{" "}
+              <span className="text-accent">Inventrox</span> (AI business OS with 99.98% real-time sync across $480K+ transactions), and{" "}
+              <span className="text-accent">EcoGeoGuard</span> (published AI-IoT platform accepted at DASGRI Congress 2026). Currently Data Analyst @ Advit Jewels Limited by Rambhajo.
             </p>
             <p className="text-muted-foreground">
               <span className="text-accent">$</span> focus
               <br />
               <span className="text-foreground">
-                → cyber security · cloud architecture · AI / IoT systems
+                → full-stack web · cloud architecture · AI/IoT systems · secure-by-design
               </span>
             </p>
           </div>
@@ -33,20 +35,24 @@ export function About() {
         <div className="lg:col-span-2 space-y-6">
           <div className="glass-panel p-5">
             <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
-              education · stack
+              education · leadership
             </div>
             <div className="font-mono text-sm">
               <div className="text-foreground">B.Tech · CSE (Cyber Security)</div>
               <div className="text-muted-foreground">Lovely Professional University</div>
-              <div className="text-dim text-xs mt-1">2022 – 2026</div>
+              <div className="text-dim text-xs mt-1">Aug 2022 – Present (Graduating 2026)</div>
             </div>
           </div>
           <div className="glass-panel p-5">
             <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
-              status · interests
+              status · experience
+            </div>
+            <div className="font-mono text-xs text-foreground mb-2">
+              Data Analyst @ Advit Jewels Limited by Rambhajo
+              <div className="text-dim text-[11px]">Sep 2026 – Present</div>
             </div>
             <div className="flex flex-wrap gap-2 font-mono text-xs">
-              {["secure-arch", "cloud", "ai/iot", "game-dev", "research", "open-source"].map(
+              {["react19", "nextjs", "aws", "node/express", "mongodb", "cyber-sec", "ai/ml"].map(
                 (t) => (
                   <span
                     key={t}
@@ -66,58 +72,60 @@ export function About() {
 
 const skillGroups = [
   {
-    name: "Cyber Security",
+    name: "Frontend",
     items: [
-      ["Network Security", 4],
-      ["IAM", 4],
-      ["Cloud Security (AWS)", 4],
-      ["Secure Architecture", 3],
-      ["Ethical Hacking", 3],
+      ["React 19 · Next.js", 5],
+      ["TanStack Start / Query", 5],
+      ["TypeScript", 5],
+      ["Tailwind CSS v4", 5],
+      ["Three.js · GSAP", 4],
+      ["Framer Motion", 4],
     ],
   },
   {
-    name: "AI & ML",
+    name: "Backend",
     items: [
-      ["ML Algorithms", 4],
-      ["AI-IoT", 4],
-      ["LLM / GenAI APIs", 4],
-      ["Prompt Engineering", 4],
+      ["Node.js · Express.js", 5],
+      ["REST APIs", 5],
+      ["Python", 4],
+      ["Java · C/C++", 4],
+    ],
+  },
+  {
+    name: "Databases",
+    items: [
+      ["MongoDB Atlas", 5],
+      ["MySQL", 4],
+      ["Firebase", 4],
+      ["AWS DynamoDB", 4],
     ],
   },
   {
     name: "Cloud & DevOps",
     items: [
-      ["AWS Lambda", 5],
-      ["DynamoDB", 4],
-      ["API Gateway", 4],
-      ["Amplify · SNS · SQS", 4],
-      ["Step Functions · CodePipeline", 3],
-      ["CI/CD · NGINX", 3],
-    ],
-  },
-  {
-    name: "Web / Backend",
-    items: [
-      ["Node.js · Express", 5],
-      ["React · Next.js", 5],
-      ["MongoDB Atlas", 4],
-      ["MySQL", 3],
+      ["AWS (Lambda, API GW)", 5],
+      ["Amplify · CI/CD", 4],
+      ["Vercel · Netlify", 5],
+      ["GitHub Actions", 4],
+      ["NGINX", 4],
     ],
   },
   {
     name: "Mobile & UX",
     items: [
       ["Flutter", 4],
-      ["UI/UX · Figma", 4],
+      ["UI/UX Design", 5],
+      ["Figma", 5],
     ],
   },
   {
-    name: "Languages",
+    name: "Tools & Security",
     items: [
-      ["Python", 5],
-      ["Java", 4],
-      ["C / C++", 4],
-      ["C#", 3],
+      ["Git · GitHub", 5],
+      ["VS Code · IntelliJ", 5],
+      ["Salesforce CLI", 4],
+      ["Unity 3D · Blender", 4],
+      ["Cyber Security", 4],
     ],
   },
 ] as const;
@@ -368,6 +376,24 @@ const projects: Project[] = [
     stack: ["Next.js", "Express", "MongoDB", "Unity 3D", "Blender", "Oculus SDK"],
     links: [],
   },
+  {
+    num: "11",
+    title: "HealthTech Web Layout — Telemedicine & Clinical Diagnostics",
+    type: "Personal Product",
+    period: "Sep 2026",
+    status: "live",
+    description:
+      "Modern clinical telemedicine and AI patient diagnostic interface with automated triage, vital signs streaming, translation support, and clinician workflow dashboards.",
+    stats: [
+      { k: "Telemetry", v: "Vital Signs" },
+      { k: "AI Triage", v: "Automated" },
+      { k: "Security", v: "Role-based" },
+    ],
+    stack: ["React", "TypeScript", "Tailwind CSS", "Vite", "AI Diagnostics"],
+    links: [
+      { label: "github →", href: "https://github.com/MukulS07/healthtech-web-layout" },
+    ],
+  },
 ];
 
 const statusColor: Record<Project["status"], string> = {
@@ -381,19 +407,21 @@ export function Projects() {
   const [viewMode, setViewMode] = useState<"featured" | "all_repos">("featured");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    let active = true;
+  const syncRepos = useCallback(async (force = false) => {
     setLoading(true);
-    fetchGitHubRepos().then((repos) => {
-      if (active) {
-        setGitHubRepos(repos);
-        setLoading(false);
-      }
-    });
-    return () => {
-      active = false;
-    };
+    try {
+      const repos = await fetchGitHubRepos(force);
+      setGitHubRepos(repos);
+    } catch (e) {
+      console.warn("Failed to fetch repos:", e);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    syncRepos(false);
+  }, [syncRepos]);
 
   return (
     <Section id="projects" label="projects/" title="// shipped & in production">
@@ -411,6 +439,17 @@ export function Projects() {
 
         <div className="flex items-center gap-2">
           <button
+            type="button"
+            onClick={() => syncRepos(true)}
+            disabled={loading}
+            className="px-2.5 py-1 rounded border border-border hover:border-accent text-muted-foreground hover:text-accent transition flex items-center gap-1.5 text-xs disabled:opacity-50"
+            title="Force refresh live repositories from GitHub"
+          >
+            <RotateCw className={`w-3 h-3 ${loading ? "animate-spin text-accent" : ""}`} />
+            <span>{loading ? "SYNCING..." : "SYNC REPOS"}</span>
+          </button>
+          <button
+            type="button"
             onClick={() => setViewMode("featured")}
             className={`px-3 py-1.5 rounded border transition ${
               viewMode === "featured"
@@ -421,6 +460,7 @@ export function Projects() {
             Showcase ({projects.length})
           </button>
           <button
+            type="button"
             onClick={() => setViewMode("all_repos")}
             className={`px-3 py-1.5 rounded border transition ${
               viewMode === "all_repos"
@@ -640,6 +680,14 @@ export function Research() {
 
 const timeline = [
   {
+    when: "Sep 2026 – Present",
+    title: "Data Analyst",
+    org: "Advit Jewels Limited by Rambhajo",
+    bullets: [
+      "Analysed business and sales data, building reports and dashboards to support decision-making",
+    ],
+  },
+  {
     when: "Jun – Jul 2025",
     title: "Salesforce Developer Catalyst Plus",
     org: "Trailblazer Connect",
@@ -737,7 +785,7 @@ const certs: Certificate[] = [
 
 export function Experience() {
   return (
-    <Section id="experience" label="experience.log" title="// training · leadership">
+    <Section id="experience" label="experience.log" title="// experience · leadership · training">
       <div className="grid lg:grid-cols-5 gap-6">
         {/* Experience Timeline */}
         <div className="lg:col-span-5 relative">
@@ -842,8 +890,8 @@ export function Contact() {
               <Row k="github" v="github.com/MukulS07" href="https://github.com/MukulS07" />
               <Row
                 k="linkedin"
-                v="linkedin.com/in/mukul-sharma-514634214"
-                href="https://www.linkedin.com/in/mukul-sharma-514634214/"
+                v="linkedin.com/in/mukul-sharma-07m"
+                href="https://www.linkedin.com/in/mukul-sharma-07m"
               />
               <Row k="mobile" v="+91-7737360788" href="tel:+917737360788" />
               <Row k="location" v="Jaipur, IN · IST" />

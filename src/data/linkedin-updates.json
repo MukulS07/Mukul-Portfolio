@@ -1,26 +1,65 @@
 [
   {
-    "date": "2026-07-10T09:00:00Z",
+    "id": "li-1",
+    "date": "2026-09-30T07:00:00Z",
+    "type": "MILESTONE",
+    "text": "Deployed Portfolio v2: Cyberpunk HUD architecture featuring real-time GitHub telemetry, Three.js spatial globe, voice-interactive Gemini assistant, and live system logs.",
+    "link": "https://www.linkedin.com/in/mukul-sharma-07m"
+  },
+  {
+    "id": "li-2",
+    "date": "2026-09-22T14:00:00Z",
+    "type": "PRODUCT",
+    "text": "Shipped HealthTech Web Layout: Telemedicine & AI clinical diagnostic workflow interface with automated triage, vital signs streaming, and role-based clinician security.",
+    "link": "https://www.linkedin.com/in/mukul-sharma-07m"
+  },
+  {
+    "id": "li-3",
+    "date": "2026-09-15T10:30:00Z",
+    "type": "PRODUCT",
+    "text": "ApexF1 update: Launched interactive 2026 Formula 1 technical regulations simulation engine, 3D WebGL car configurator, and NVIDIA NIM paddock intelligence.",
+    "link": "https://www.linkedin.com/in/mukul-sharma-07m"
+  },
+  {
+    "id": "li-4",
+    "date": "2026-08-20T16:00:00Z",
+    "type": "ENGINEERING",
+    "text": "Completed architectural milestone for Maison Harivē Haute Joaillerie platform: cinematic Stage transitions, royal dynasty chambers navigation physics, and Supabase live archive.",
+    "link": "https://www.linkedin.com/in/mukul-sharma-07m"
+  },
+  {
+    "id": "li-5",
+    "date": "2026-08-08T11:00:00Z",
+    "type": "MILESTONE",
+    "text": "Updated full CV and project showcase with latest full-stack systems, AWS serverless microservices, and AI-IoT deployments. Open for high-impact roles!",
+    "link": "https://www.linkedin.com/in/mukul-sharma-07m"
+  },
+  {
+    "id": "li-6",
+    "date": "2026-07-28T09:00:00Z",
     "type": "RESEARCH",
-    "text": "Ecstatic to share that our paper 'EcoGeoGuard: AI-IoT Based Landslide Prediction and Smart Agriculture System' was accepted at the DASGRI Congress 2026! Gratitude to all co-authors.",
+    "text": "Honored to announce our research paper 'EcoGeoGuard: AI-IoT Based Landslide Prediction and Smart Agriculture System' was presented and published at DASGRI Congress 2026!",
     "link": "https://conferenceseries.adroidjournals.com/index.php/ACSET/article/view/53"
   },
   {
-    "date": "2026-07-06T15:30:00Z",
+    "id": "li-7",
+    "date": "2026-07-12T15:30:00Z",
     "type": "MILESTONE",
-    "text": "Officially certified! Completed the Google UX Design Specialization. Excited to apply these human-centered interaction design frameworks to secure cyber systems and IoT dashboards.",
-    "link": "https://www.linkedin.com/in/mukul-sharma-514634214/"
+    "text": "Officially certified: Google UX Design Specialization! Applying human-centered interaction design frameworks to secure cloud systems, industrial IoT, and real-time dashboards.",
+    "link": "https://www.linkedin.com/in/mukul-sharma-07m"
   },
   {
+    "id": "li-8",
     "date": "2026-06-25T11:00:00Z",
     "type": "PRODUCT",
-    "text": "Announcing the release of INVENTROX — an AI-powered Business OS for Indian SMEs. Integrating POS, GST billing, inventory, and analytics into a single dashboard. Check out the link on my portfolio!",
-    "link": "https://www.linkedin.com/in/mukul-sharma-514634214/"
+    "text": "Announcing the release of INVENTROX — an AI-powered Business OS for Indian SMEs. Integrating POS, GST billing, inventory, and analytics into a single dashboard.",
+    "link": "https://www.linkedin.com/in/mukul-sharma-07m"
   },
   {
+    "id": "li-9",
     "date": "2026-06-10T14:00:00Z",
     "type": "ARTICLE",
-    "text": "Just published a short write-up on bridging Cloud Security Protocols (AWS IAM) with embedded LoRa physical nodes for critical safety systems. Read it here.",
-    "link": "https://www.linkedin.com/in/mukul-sharma-514634214/"
+    "text": "Published a technical breakdown: Bridging Cloud Security Protocols (AWS IAM) with embedded LoRa physical nodes for critical safety systems.",
+    "link": "https://www.linkedin.com/in/mukul-sharma-07m"
   }
 ]

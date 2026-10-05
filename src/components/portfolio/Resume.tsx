@@ -44,7 +44,7 @@ export function Resume() {
               Mukul Sharma
             </h1>
             <p className="text-accent font-mono text-xs tracking-[0.2em] uppercase mt-2 print:text-black print:font-bold">
-              Cyber Security · Cloud Architect · AI/IoT Systems
+              Full-Stack Developer | React · Node.js · Next.js
             </p>
           </div>
           <div className="space-y-1 text-xs text-muted-foreground print:text-black print:text-[9pt]">
@@ -55,15 +55,15 @@ export function Resume() {
               <Mail size={12} className="print:hidden" /> mukulsharmaworks@gmail.com
             </a>
             <div className="flex items-center gap-2 print:border-none">
-              <Phone size={12} className="print:hidden" /> +91-7737360788
+              <Phone size={12} className="print:hidden" /> (+91) 7737360788
             </div>
             <a
-              href="https://linkedin.com/in/mukul-sharma-514634214"
+              href="https://linkedin.com/in/mukul-sharma-07m"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2 hover:text-accent transition print:border-none"
             >
-              <Linkedin size={12} className="print:hidden" /> linkedin.com/in/mukul-sharma-514634214
+              <Linkedin size={12} className="print:hidden" /> linkedin.com/in/mukul-sharma-07m
             </a>
             <a
               href="https://github.com/MukulS07"
@@ -84,7 +84,17 @@ export function Resume() {
           </div>
         </header>
 
-        {/* 1. Skills Grid */}
+        {/* 1. Summary */}
+        <section className="resume-section">
+          <h2 className="font-mono text-xs uppercase tracking-[0.22em] text-accent border-b border-border/30 pb-2 mb-3 print:text-black print:border-black print:font-bold print:text-[10pt]">
+            // SUMMARY
+          </h2>
+          <p className="text-xs text-muted-foreground leading-relaxed print:text-black print:text-[9.5pt]">
+            Computer Science undergraduate who has shipped 6+ full-stack platforms end-to-end — from <strong className="text-foreground print:text-black font-semibold">ApexF1</strong>, an interactive dashboard combining real-time telemetry, 3D visualization, and AI-powered assistance, to <strong className="text-foreground print:text-black font-semibold">Inventrox</strong>, a platform consolidating 6 business modules with 99.98% real-time sync at scale. Experienced across React 19, Next.js, Node.js/Express, and MongoDB Atlas, with AWS deployment experience and a Cyber Security specialization informing secure-by-design architecture.
+          </p>
+        </section>
+
+        {/* 2. Skills Grid */}
         <section className="resume-section">
           <h2 className="font-mono text-xs uppercase tracking-[0.22em] text-accent border-b border-border/30 pb-2 mb-4 print:text-black print:border-black print:font-bold print:text-[10pt]">
             // SKILLS
@@ -93,32 +103,28 @@ export function Resume() {
             <div>
               <ul className="space-y-1.5 text-xs text-muted-foreground print:text-black print:text-[9pt]">
                 <li>
-                  <strong className="text-foreground print:text-black">Cyber Security:</strong>{" "}
-                  Network Security, IAM, Cloud Security (AWS), Secure Architecture, Ethical Hacking (learning)
+                  <strong className="text-foreground print:text-black">Frontend:</strong>{" "}
+                  React 19, Next.js, TanStack Start/Router/Query, TypeScript, Tailwind CSS v4, Three.js, GSAP, Framer Motion
                 </li>
                 <li>
-                  <strong className="text-foreground print:text-black">AI & ML:</strong>{" "}
-                  ML Algorithms, AI-IoT, LLM/GenAI APIs, Prompt Engineering
+                  <strong className="text-foreground print:text-black">Backend:</strong>{" "}
+                  Node.js, Express.js, REST APIs
                 </li>
                 <li>
-                  <strong className="text-foreground print:text-black">Mobile & UX:</strong>{" "}
-                  Flutter (AI-integrated apps), UI/UX Design, Figma
+                  <strong className="text-foreground print:text-black">Databases:</strong>{" "}
+                  MongoDB Atlas, MySQL, Firebase
                 </li>
                 <li>
-                  <strong className="text-foreground print:text-black">Languages:</strong>{" "}
-                  Python (primary), Java, C, C++
+                  <strong className="text-foreground print:text-black">Cloud & DevOps:</strong>{" "}
+                  AWS — Lambda, DynamoDB, API Gateway, Amplify, CI/CD, NGINX; Vercel, Netlify, GitHub Actions
                 </li>
               </ul>
             </div>
             <div>
               <ul className="space-y-1.5 text-xs text-muted-foreground print:text-black print:text-[9pt]">
                 <li>
-                  <strong className="text-foreground print:text-black">Cloud & DevOps:</strong>{" "}
-                  AWS — Lambda, DynamoDB, API Gateway, Amplify, SNS, SQS, Step Functions, CodePipeline, CloudWatch, IAM; CI/CD, NGINX
-                </li>
-                <li>
-                  <strong className="text-foreground print:text-black">Web / Backend:</strong>{" "}
-                  Node.js, React, Next.js, Express.js, MongoDB Atlas, MySQL
+                  <strong className="text-foreground print:text-black">Mobile & UX:</strong>{" "}
+                  Flutter, UI/UX Design, Figma
                 </li>
                 <li>
                   <strong className="text-foreground print:text-black">Tools:</strong>{" "}
@@ -126,20 +132,44 @@ export function Resume() {
                 </li>
                 <li>
                   <strong className="text-foreground print:text-black">Soft Skills:</strong>{" "}
-                  Problem-Solving, Team Leadership, Project Management, Adaptability, Logical Thinking
+                  Problem Solving, Agile Collaboration, Cross-Functional Communication
                 </li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* 2. Projects */}
+        {/* 3. Experience */}
         <section className="resume-section">
           <h2 className="font-mono text-xs uppercase tracking-[0.22em] text-accent border-b border-border/30 pb-2 mb-4 print:text-black print:border-black print:font-bold print:text-[10pt]">
-            // PROJECTS
+            // EXPERIENCE
+          </h2>
+          <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
+            <div className="flex justify-between items-start flex-wrap gap-1">
+              <div>
+                <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
+                  Advit Jewels Limited by Rambhajo — Data Analyst
+                </h3>
+              </div>
+              <span className="text-xs text-accent print:text-black print:font-normal">
+                September 2026 – Present
+              </span>
+            </div>
+            <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
+              <li>
+                Analysed business and sales data, building reports and dashboards to support decision-making.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        {/* 4. Projects */}
+        <section className="resume-section">
+          <h2 className="font-mono text-xs uppercase tracking-[0.22em] text-accent border-b border-border/30 pb-2 mb-4 print:text-black print:border-black print:font-bold print:text-[10pt]">
+            // KEY PROJECTS
           </h2>
           <div className="space-y-4 print:space-y-3">
-            {/* Project 1 */}
+            {/* Project 1: ApexF1 */}
             <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
               <div className="flex justify-between items-start flex-wrap gap-1">
                 <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
@@ -154,79 +184,18 @@ export function Resume() {
               </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
                 <li>
-                  Built an interactive Formula 1 fan dashboard featuring simulated live telemetry, a 3D livery designer built with Three.js, and an AI-powered paddock assistant chatbot.
+                  Integrated 2 AI providers — NVIDIA NIM (Minimax-M3) with Gemini fallback — for resilient AI paddock-assistant interactions.
                 </li>
                 <li>
-                  Implemented an interactive 5-light F1 start sequence with synthesized Web Audio, championship standings/calendar views, and a shareable driver card generator.
-                </li>
-                <li>
-                  Integrated the NVIDIA NIM (Minimax-M3) API with Gemini API fallback, built on a TanStack Start + React 19 + Three.js stack.
+                  Built an interactive platform combining 4+ major experiences: simulated telemetry, 3D livery design, race insights, and AI paddock assistance.
                 </li>
               </ul>
               <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> React 19, TanStack Start/Router/Query, TypeScript, Tailwind CSS v4, Three.js, GSAP, NVIDIA NIM API
+                <strong className="text-accent print:text-black">// Tech:</strong> React 19, TanStack Start/Router/Query, TypeScript, Tailwind CSS v4, Three.js, GSAP, NVIDIA NIM API.
               </div>
             </div>
 
-            {/* Project 2: Maison Harivē */}
-            <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
-              <div className="flex justify-between items-start flex-wrap gap-1">
-                <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
-                  Maison Harivē — Luxury Men's Haute Joaillerie & Archive
-                </h3>
-                <span className="text-xs text-accent print:text-black print:font-normal">
-                  Aug 2026 – Present
-                </span>
-              </div>
-              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">
-                Client / Luxury Brand Platform
-              </p>
-              <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
-                <li>
-                  Engineered a contemporary luxury jewellery house web platform featuring an atmospheric Stage intro with video-text fill shaders dissolving into the royal treasury hero.
-                </li>
-                <li>
-                  Architected interactive 3-panel Chambers navigation with custom Framer Motion sliding door transitions (Legacy, Collection, Atelier) and founders narrative.
-                </li>
-                <li>
-                  Integrated Supabase for dynamic luxury catalogue and archive collection retrieval with high-performance responsive UI in Tailwind CSS v4.
-                </li>
-              </ul>
-              <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> Next.js 16, React 19, TypeScript, Tailwind CSS v4, Framer Motion, Supabase
-              </div>
-            </div>
-
-            {/* Project 3 */}
-            <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
-              <div className="flex justify-between items-start flex-wrap gap-1">
-                <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
-                  Mukul-Portfolio — Personal Developer Portfolio
-                </h3>
-                <span className="text-xs text-accent print:text-black print:font-normal">
-                  July 2026
-                </span>
-              </div>
-              <p className="text-dim text-[11px] mt-0.5 print:text-black print:text-[9pt] print:italic">
-                Personal Project
-              </p>
-              <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
-                <li>
-                  Designed and built a cyberpunk-HUD-styled personal portfolio site with a simulated boot sequence, live cursor/scroll telemetry overlays, and a rotating 3D wireframe globe.
-                </li>
-                <li>
-                  Built an integrated AI voice-chatbot assistant and a dedicated interactive resume/CV page using TanStack Start and React 19.
-                </li>
-                <li>
-                  Deployed at mukulsharmaworks.online with automated CI/CD via GitHub Actions.
-                </li>
-              </ul>
-              <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> React 19, TanStack Start, Vite, Tailwind CSS v4, Bun, GitHub Actions
-              </div>
-            </div>
-
-            {/* Project 4 */}
+            {/* Project 2: Inventrox */}
             <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
               <div className="flex justify-between items-start flex-wrap gap-1">
                 <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
@@ -241,21 +210,18 @@ export function Resume() {
               </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
                 <li>
-                  Developed a full-stack AI-powered inventory management platform for SMEs featuring inventory tracking, purchase management, supplier records, and analytics dashboards.
+                  Built a platform consolidating 6 business modules, replacing 4–6 disconnected tools for SME operations.
                 </li>
                 <li>
-                  Integrated AI-assisted demand prediction, smart stock alerts, automated service reminders, and weather-aware notifications using cloud APIs.
-                </li>
-                <li>
-                  Implemented secure authentication, responsive UI, REST APIs, and scalable backend architecture with cloud deployment support.
+                  Delivered 99.98% real-time sync across business operations at scale ($480K+ in transactional data).
                 </li>
               </ul>
               <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS, Firebase, REST APIs
+                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS, Firebase, REST APIs.
               </div>
             </div>
 
-            {/* Project 5 */}
+            {/* Project 3: EcoGeoGuard Website */}
             <div className="border border-border/35 p-4 rounded bg-black/10 hover:border-accent/40 transition print:border-none print:p-0 print:bg-transparent">
               <div className="flex justify-between items-start flex-wrap gap-1">
                 <h3 className="font-sans text-base font-semibold text-foreground print:text-black print:text-[10pt]">
@@ -270,17 +236,11 @@ export function Resume() {
               </p>
               <ul className="list-disc list-inside text-xs text-muted-foreground mt-2 space-y-1 print:text-black print:text-[9pt]">
                 <li>
-                  Designed and developed a full-stack web platform delivering AI-powered landslide risk prediction, smart farming insights, real time weather updates, and government scheme recommendations.
-                </li>
-                <li>
-                  Built secure authentication, interactive dashboards, AI chatbot assistance, live sensor data visualization, and cloud-based APIs.
-                </li>
-                <li>
-                  Developed a scalable cloud architecture with responsive UI, real-time data processing, and modular backend services for future IoT integration.
+                  Developed 1 unified AI platform combining landslide prediction, smart farming, and government scheme recommendations, integrating 5+ AI/ML, cloud, and API services.
                 </li>
               </ul>
               <div className="mt-2 text-xs text-muted-foreground print:text-black print:text-[9pt]">
-                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS, Firebase, REST APIs, AI/ML
+                <strong className="text-accent print:text-black">// Tech:</strong> Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS, Firebase, REST APIs, AI/ML.
               </div>
             </div>
 

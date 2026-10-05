@@ -9,39 +9,45 @@ If Avenger Mode is inactive, you are Friday AI, a highly intelligent, secure, an
 
 Here is the telemetry data about Mukul Sharma:
 - Name: Mukul Sharma
-- Role: Cyber Security Researcher, Cloud Architect, AI & IoT Builder
-- Current Status: B.Tech CSE (Cyber Security) final year student at Lovely Professional University (LPU), Punjab, India (Graduating in 2026).
+- Role: Full-Stack Developer | React · Node.js · Next.js (with Cyber Security specialization & Cloud Architecture)
+- Current Work: Data Analyst at Advit Jewels Limited by Rambhajo (September 2026 – Present), analysing business and sales data, building reports and dashboards to support decision-making.
+- Current Status: Final-year B.Tech CSE (Cyber Security) undergraduate at Lovely Professional University (LPU), Punjab, India (Aug 2022 – Present).
+- Summary: Computer Science undergraduate who has shipped 6+ full-stack platforms end-to-end — from ApexF1 (interactive telemetry and 3D visualization dashboard with dual AI) to Inventrox (consolidating 6 business modules with 99.98% real-time sync across $480K+ in transactional data). Experienced across React 19, Next.js, Node.js/Express, and MongoDB Atlas, with AWS deployment experience and a Cyber Security specialization informing secure-by-design architecture.
 - Research Publication: 
   - Title: "EcoGeoGuard: AI-IoT Based Landslide Prediction and Smart Agriculture System"
+  - Authors: Mukul Sharma et al.
   - Accepted at: DASGRI Congress 2026 (April 2026).
   - Summary: A multi-sensor fusion model on AWS (using LoRa-based IoT nodes) that bypasses standard telemetry delays, outputting landslide risk scores every 30 seconds with sub-3-minute alert latency and an F1 score of 0.94.
-- Core Projects:
-  1. ApexF1: Ultimate Formula 1 2026 Dashboard. Integrates live simulated telemetry, 3D interactive car customization, calendar tracking, and a paddock AI chatbot. Tech Stack: React 19, TanStack Start, Three.js, Web Audio API, Tailwind CSS v4, NVIDIA NIM.
-  2. Maison Harivē: Contemporary Haute Joaillerie luxury jewellery house platform for men. Atmospheric Stage intro with video shaders, interactive 3-panel sliding Chambers navigation (Legacy, Collection, Atelier), and Supabase-powered luxury archive. Tech Stack: Next.js 16, React 19, Tailwind CSS v4, Framer Motion, Supabase.
-  3. Mukul-Portfolio: Cyberpunk-HUD-styled personal portfolio site with simulated boot sequence, live telemetry overlays, interactive 3D globe, and AI voice chatbot. Tech Stack: React 19, TanStack Start, Vite, Tailwind CSS v4, Bun, GitHub Actions.
-  4. INVENTROX: Full-stack AI-powered inventory and purchase management system for SMEs featuring inventory tracking, smart stock alerts, automated service reminders, and weather-aware notifications. Tech Stack: Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS.
-  5. EcoGeoGuard Website: AI-powered disaster prediction & smart farming web platform delivering landslide risk prediction, weather updates, and government scheme recommendations. Tech Stack: Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS.
-  6. EcoGeoGuard AI-IoT System: End-to-end AI-IoT landslide prediction & smart farming system using multi-sensor data fusion ML pipeline on AWS. F1 score 0.94, sub-3-minute alert latency, 187 active nodes. Tech Stack: Python, ML Algorithms, AWS (Lambda, DynamoDB, API Gateway), IoT, LoRa/GSM.
-  7. Freelance Client Projects: Delivered freelance web apps for clients including Maison Harivē, an AI social-growth agency, fitness client platform, and demo sites using React, Next.js, TanStack Start, Tailwind CSS, Framer Motion.
-  8. Serverless Web Application on AWS: Serverless app from scratch with Lambda, DynamoDB, Amplify, Step Functions, SNS/SQS, CodePipeline.
-  9. SIH - AYUSH VR Herbal Garden (Smart India Hackathon, Sep 2024): VR immersive Ayurvedic learning garden with Unity 3D, Oculus SDK, Node.js, Express, MongoDB.
-- Skills & Technologies:
-  - Cyber Security: Network Security, IAM, Cloud Security (AWS), Secure Architecture, Ethical Hacking.
-  - AI & ML: ML Algorithms, AI-IoT systems, LLM/GenAI APIs, Prompt Engineering.
-  - Cloud & DevOps: AWS (Lambda, DynamoDB, API Gateway, Amplify, SNS, SQS, Step Functions, CodePipeline), CI/CD, Nginx, Docker, Linux, Bash.
-  - Web & Backend: React, Next.js, Node.js, Express, TanStack, TailwindCSS, MongoDB, MySQL.
-  - Mobile & Design: Flutter, UI/UX, Figma.
-  - Languages: Python, Java, C/C++, C#.
+- Core Key Projects:
+  1. ApexF1 - The Ultimate F1 2026 Dashboard (July 2026): Integrated 2 AI providers (NVIDIA NIM Minimax-M3 with Gemini fallback) for resilient AI paddock-assistant interactions. Built an interactive platform combining 4+ major experiences: simulated telemetry, 3D livery design, race insights, and AI paddock assistance. Tech: React 19, TanStack Start/Router/Query, TypeScript, Tailwind CSS v4, Three.js, GSAP, NVIDIA NIM API.
+  2. Inventrox - AI Inventory & Purchase Management System (June 2026 – Present): Consolidating 6 business modules, replacing 4–6 disconnected tools for SME operations. Delivered 99.98% real-time sync across business operations at scale ($480K+ in transactional data). Tech: Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS, Firebase, REST APIs.
+  3. EcoGeoGuard Website - AI-Powered Disaster Prediction & Smart Farming Platform (April 2026 – Present): Developed unified AI platform combining landslide prediction, smart farming, and government scheme recommendations, integrating 5+ AI/ML, cloud, and API services. Tech: Next.js, Node.js, Express.js, MongoDB Atlas, Python, AWS, Firebase, REST APIs, AI/ML.
+  4. Maison Harivē: Contemporary Haute Joaillerie luxury jewellery house platform for men with 3 sliding Chambers navigation and Supabase luxury archive. Tech: Next.js 16, React 19, Tailwind CSS v4, Framer Motion, Supabase.
+  5. Mukul-Portfolio: Cyberpunk HUD personal developer portfolio with real-time GitHub & LinkedIn telemetry, interactive 3D globe, and AI assistant. Tech: React 19, TanStack Start, Vite, Tailwind CSS v4.
+  6. EcoGeoGuard AI-IoT Hardware/Cloud System: Multi-sensor data fusion ML pipeline on AWS with LoRa/GSM IoT nodes.
+- Skills:
+  - Frontend: React 19, Next.js, TanStack Start/Router/Query, TypeScript, Tailwind CSS v4, Three.js, GSAP, Framer Motion
+  - Backend: Node.js, Express.js, REST APIs, Python, Java, C/C++
+  - Databases: MongoDB Atlas, MySQL, Firebase, DynamoDB
+  - Cloud & DevOps: AWS (Lambda, DynamoDB, API Gateway, Amplify, CI/CD, NGINX), Vercel, Netlify, GitHub Actions
+  - Mobile & UX: Flutter, UI/UX Design, Figma
+  - Tools: Git, GitHub, VS Code, IntelliJ, Salesforce CLI, Unity 3D, Blender
+  - Soft Skills: Problem Solving, Agile Collaboration, Cross-Functional Communication
 - Experience & Leadership:
-  - Salesforce Developer Catalyst Plus (Trailblazer Connect, Jun-Jul 2025): Apex, LWC, SOQL, Flow Builder, REST APIs.
-  - DevOps & Cloud Computing Training (Programming Pathsala, Jan-Feb 2025): AWS services, Lambda, SQS, Step Functions.
-  - CEO of LPU Student Organisation SAPPHIRE (Dec 2022 - Nov 2023): Led a 20+ member team.
-- Certifications: Google UX Design (Coursera), Cloud Computing (NPTEL), Core & Advanced Java, DSA using C/C++.
+  - Advit Jewels Limited by Rambhajo (September 2026 – Present): Data Analyst — analysing business and sales data, building reports and dashboards to support decision-making.
+  - Salesforce Developer Catalyst Plus (Trailblazer Connect, Jun-Jul 2025): Rank Mountaineer, 29 badges, Apex, LWC, SOQL, Flow Builder, REST APIs.
+  - DevOps with Cloud Computing Using AWS Services (Programming Pathsala, Jan-Feb 2025): Serverless architecture with 10+ AWS services.
+  - CEO of LPU Student Organisation SAPPHIRE (Dec 2022 - Nov 2023): Led 20+ member organization.
+- Training & Certifications:
+  - Cloud Computing – NPTEL (IIT)
+  - Google UX Design – Coursera, Google
+  - DevOps with Cloud Computing Using AWS Services – Programming Pathsala
+  - Salesforce Developer Catalyst Plus – Trailblazer Connect, Rank Mountaineer
 - Contact Telemetry:
   - Email: mukulsharmaworks@gmail.com
+  - Phone: (+91) 7737360788
   - GitHub: github.com/MukulS07
-  - LinkedIn: linkedin.com/in/mukul-sharma-514634214
-  - Mobile: +91-7737360788
+  - LinkedIn: linkedin.com/in/mukul-sharma-07m
   - Location: Jaipur, India (IST)
 
 INSTRUCTIONS FOR OUTPUT:

@@ -1,12 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import portrait from "@/assets/portrait.jpg";
 import { ProjectVideo } from "./ProjectVideo";
 import { Link } from "@tanstack/react-router";
-import linkedinUpdates from "@/data/linkedin-updates.json";
 import { checkDeployments } from "@/lib/chatbot-service";
-import { fetchGitHubEvents, fetchGitHubProfile, fetchCommitMessage } from "@/lib/github-service";
+import {
+  fetchGitHubProfile,
+  fetchUnifiedActivityFeed,
+  fetchGitHubContributions,
+  type FormattedActivity,
+  type ContributionDay,
+  type GitHubContributionsData,
+} from "@/lib/github-service";
+import {
+  getLinkedInUpdates,
+  addLinkedInUpdate,
+  formatRelativeTime,
+  type LinkedInUpdate,
+} from "@/lib/linkedin-service";
+import { RotateCw, Plus, X, Send } from "lucide-react";
 
-const roles = ["Security Engineer", "Cloud Architect", "AI/IoT Builder", "Full-Stack Developer"];
+const roles = [
+  "Full-Stack Developer",
+  "React 19 · Node.js · Next.js",
+  "Cloud & AWS Architect",
+  "AI & IoT Systems Builder",
+  "Cyber Security Specialist",
+];
 
 const stats: { label: string; value: string }[] = [
   { label: "LINES OF CODE", value: "1.5K" },
@@ -120,21 +139,34 @@ function StatTile({ label, value }: { label: string; value: string }) {
   );
 }
 
-function GithubHeatmap() {
-  // 26 cols x 7 rows ~ 6 months
-  const cells = Array.from({ length: 26 * 7 }, (_, i) => {
-    const r = (Math.sin(i * 1.13) + 1) / 2;
-    const lvl = r < 0.55 ? 0 : r < 0.7 ? 1 : r < 0.83 ? 2 : r < 0.93 ? 3 : 4;
-    return lvl;
-  });
-  const shade = ["bg-white/[0.04]", "bg-accent/25", "bg-accent/45", "bg-accent/70", "bg-accent"];
+function GithubHeatmap({ days }: { days?: ContributionDay[] }) {
+  const shade = [
+    "bg-white/[0.04]",
+    "bg-accent/25",
+    "bg-accent/50",
+    "bg-accent/75",
+    "bg-accent",
+  ];
+  const items =
+    days && days.length === 182
+      ? days
+      : Array.from({ length: 182 }, (_, i) => ({
+          date: `2026-${String(Math.floor(i / 30) + 4).padStart(2, "0")}-${String((i % 30) + 1).padStart(2, "0")}`,
+          count: 0,
+          level: (i % 4 === 0 ? 1 : i % 7 === 0 ? 2 : 0) as 0 | 1 | 2 | 3 | 4,
+        }));
+
   return (
-    <div className="grid grid-rows-7 grid-flow-col gap-[3px]" style={{ gridAutoColumns: "10px" }}>
-      {cells.map((c, i) => (
+    <div
+      className="grid grid-rows-7 grid-flow-col gap-[3px]"
+      style={{ gridAutoColumns: "10px" }}
+    >
+      {items.map((c, i) => (
         <span
-          key={i}
-          className={`heatmap-cell h-[10px] w-[10px] ${shade[c]}`}
-          style={{ animationDelay: `${(i % 26) * 18 + Math.floor(i / 26) * 30}ms` }}
+          key={c.date || i}
+          title={`${c.date}: ${c.count} contribution${c.count === 1 ? "" : "s"}`}
+          className={`heatmap-cell h-[10px] w-[10px] rounded-[1px] transition-transform hover:scale-125 hover:z-10 cursor-pointer ${shade[c.level]}`}
+          style={{ animationDelay: `${(i % 26) * 12}ms` }}
         />
       ))}
     </div>
@@ -231,19 +263,15 @@ function Radar() {
 
 export function Hero() {
   const [roleIdx, setRoleIdx] = useState(0);
-  const [repoCount, setRepoCount] = useState("7");
-  const [eventsList, setEventsList] = useState<
-    {
-      t: string;
-      tag: string;
-      tagColor: string;
-      repo: string;
-      msg: string;
-      note: string;
-      link?: string;
-      fullMsg?: string;
-    }[]
-  >(mockEvents);
+  const [repoCount, setRepoCount] = useState("9");
+  const [eventsList, setEventsList] = useState<FormattedActivity[]>([]);
+  const [linkedinList, setLinkedinList] = useState<LinkedInUpdate[]>([]);
+  const [contribData, setContribData] = useState<GitHubContributionsData | null>(null);
+  const [isSyncingGH, setIsSyncingGH] = useState(false);
+  const [showAddLinkedIn, setShowAddLinkedIn] = useState(false);
+  const [newPostText, setNewPostText] = useState("");
+  const [newPostType, setNewPostType] = useState<LinkedInUpdate["type"]>("MILESTONE");
+  const [newPostLink, setNewPostLink] = useState("https://www.linkedin.com/in/mukul-sharma-07m");
 
   const [deploymentStatuses, setDeploymentStatuses] = useState<
     Record<string, { online: boolean; latency: number | null; loading: boolean }>
@@ -307,6 +335,38 @@ export function Hero() {
     return () => clearInterval(id);
   }, []);
 
+  const loadGitHubFeed = useCallback(async (force = false) => {
+    setIsSyncingGH(true);
+    try {
+      const feed = await fetchUnifiedActivityFeed(force);
+      if (feed && feed.length > 0) {
+        setEventsList(feed);
+      }
+    } catch (e) {
+      console.warn("GitHub sync error:", e);
+    } finally {
+      setIsSyncingGH(false);
+    }
+  }, []);
+
+  const loadLinkedInFeed = useCallback(() => {
+    const list = getLinkedInUpdates();
+    setLinkedinList(list);
+  }, []);
+
+  const handleBroadcastLinkedIn = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newPostText.trim()) return;
+    addLinkedInUpdate({
+      text: newPostText.trim(),
+      type: newPostType,
+      link: newPostLink.trim() || "https://www.linkedin.com/in/mukul-sharma-07m",
+      date: new Date().toISOString(),
+    });
+    setNewPostText("");
+    setShowAddLinkedIn(false);
+  };
+
   useEffect(() => {
     // 1. Fetch public profile stats
     fetchGitHubProfile().then((profile) => {
@@ -315,158 +375,27 @@ export function Hero() {
       }
     });
 
-    // Load initial cached formatted events if available
-    try {
-      const storedFormatted = localStorage.getItem("ms_formatted_events");
-      if (storedFormatted) {
-        const parsed = JSON.parse(storedFormatted);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setEventsList(parsed);
-        }
-      }
-    } catch (e) {}
+    // 2. Load unified live GitHub activity feed
+    loadGitHubFeed(false);
 
-    // 2. Fetch public events activity feed with SHA-memoized commit resolution
-    fetchGitHubEvents().then(async (data) => {
-      if (!Array.isArray(data) || data.length === 0) {
-        return;
-      }
+    // 3. Load LinkedIn feed
+    loadLinkedInFeed();
 
-      const events = data.slice(0, 10);
-      const formattedPromises = events.map(async (evt) => {
-        let tag = "ACTIVITY";
-        let tagColor = "text-muted-foreground";
-        let msg = "";
-        let note = "";
-        let fullMsg = "";
-        let link = "";
-
-        const createdTime = new Date(String(evt.created_at || "")).getTime();
-        const now = Date.now();
-        const diffMs = now - createdTime;
-        const diffMins = Math.floor(diffMs / 60000);
-        const diffHours = Math.floor(diffMins / 60);
-        const diffDays = Math.floor(diffHours / 24);
-
-        let t = "";
-        if (diffMins < 1) t = "just now";
-        else if (diffMins < 60) t = `${diffMins}m ago`;
-        else if (diffHours < 24) t = `${diffHours}h ago`;
-        else t = `${diffDays}d ago`;
-
-        const evtRepo = evt.repo || {};
-        const repoName = evtRepo.name ? evtRepo.name.replace(/^MukulS07\//, "") : "";
-        link = `https://github.com/MukulS07/${repoName}`;
-
-        const evtPayload = evt.payload || {};
-
-        if (evt.type === "PushEvent") {
-          tag = "PUSH";
-          tagColor = "text-accent";
-          note = evtPayload.ref ? evtPayload.ref.replace("refs/heads/", "") : "main";
-
-          const headSha = evtPayload.head;
-          let commitMsg: string | null = null;
-          if (headSha && repoName) {
-            commitMsg = await fetchCommitMessage(repoName, headSha);
-          }
-
-          if (commitMsg) {
-            const firstLineMsg = commitMsg.split("\n")?.[0] || "";
-            const truncatedMsg =
-              firstLineMsg.length > 30 ? firstLineMsg.substring(0, 30) + "..." : firstLineMsg;
-            msg = `pushed: "${truncatedMsg}"`;
-            fullMsg = commitMsg;
-          } else {
-            msg = `pushed commits to ${repoName}`;
-            fullMsg = `Pushed commits to ${repoName}`;
-          }
-
-          const shortSha = headSha ? headSha.substring(0, 7) : "";
-          if (shortSha) note = `${note} (${shortSha})`;
-        } else if (evt.type === "CreateEvent") {
-          tag = "CREATE";
-          tagColor = "text-amber-warn";
-          const refType = evtPayload.ref_type || "repository";
-          const refName = evtPayload.ref ? `"${evtPayload.ref}"` : "";
-          msg = `created ${refType} ${refName}`;
-          fullMsg = msg;
-          note = refType === "branch" ? "+branch" : "+repo";
-        } else if (evt.type === "PullRequestEvent") {
-          tag = "PR";
-          tagColor = "text-emerald-400";
-          const prAction = evtPayload.action || "opened";
-          const prNum = evtPayload.number || "";
-          const prTitle = evtPayload.pull_request?.title || "";
-          const truncatedPrTitle =
-            prTitle.length > 25 ? prTitle.substring(0, 25) + "..." : prTitle;
-          msg = `${prAction} PR: "${truncatedPrTitle}"`;
-          fullMsg = prTitle ? `PR #${prNum}: ${prTitle}` : msg;
-          note = `PR #${prNum}`;
-          link = evtPayload.pull_request?.html_url || link;
-        } else if (evt.type === "IssuesEvent") {
-          tag = "ISSUE";
-          tagColor = "text-rose-500";
-          const issueAction = evtPayload.action || "opened";
-          const issueNum = evtPayload.issue?.number || "";
-          const issueTitle = evtPayload.issue?.title || "";
-          const truncatedIssueTitle =
-            issueTitle.length > 25 ? issueTitle.substring(0, 25) + "..." : issueTitle;
-          msg = `${issueAction} issue: "${truncatedIssueTitle}"`;
-          fullMsg = issueTitle ? `Issue #${issueNum}: ${issueTitle}` : msg;
-          note = `issue #${issueNum}`;
-          link = evtPayload.issue?.html_url || link;
-        } else if (evt.type === "WatchEvent") {
-          tag = "STAR";
-          tagColor = "text-yellow-400";
-          msg = `starred the repository`;
-          fullMsg = msg;
-          note = "★ star";
-        } else if (evt.type === "ForkEvent") {
-          tag = "FORK";
-          tagColor = "text-indigo-400";
-          msg = `forked to ${evtPayload.forkee?.name || "fork"}`;
-          fullMsg = msg;
-          note = "forked";
-          link = evtPayload.forkee?.html_url || link;
-        } else {
-          tag = "ACTIVITY";
-          tagColor = "text-muted-foreground";
-          msg = `active in repository ${repoName}`;
-          fullMsg = msg;
-          note = "uplink ok";
-        }
-
-        return { t, tag, tagColor, repo: repoName, msg, note, fullMsg, link };
-      });
-
-      const formatted = await Promise.all(formattedPromises);
-      if (formatted.length > 0) {
-        setEventsList(formatted);
-        try {
-          localStorage.setItem("ms_formatted_events", JSON.stringify(formatted));
-        } catch (e) {}
-      }
+    // 4. Load real GitHub contribution graph and streak
+    fetchGitHubContributions().then((res) => {
+      if (res) setContribData(res);
     });
-  }, []);
+
+    const onLinkedInUpdated = () => loadLinkedInFeed();
+    window.addEventListener("ms_linkedin_updated", onLinkedInUpdated);
+    return () => window.removeEventListener("ms_linkedin_updated", onLinkedInUpdated);
+  }, [loadGitHubFeed, loadLinkedInFeed]);
 
   // Find the latest PUSH or CREATE event to showcase what the user is working on
   const activeEvent = eventsList.find((e) => e.tag === "PUSH" || e.tag === "CREATE");
 
-  const linkedinEvents = linkedinUpdates.map((item) => {
-    const createdTime = new Date(item.date).getTime();
-    const now = Date.now();
-    const diffMs = now - createdTime;
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMins / 60);
-    const diffDays = Math.floor(diffHours / 24);
-
-    let t = "";
-    if (diffMins < 1) t = "just now";
-    else if (diffMins < 60) t = `${diffMins}m ago`;
-    else if (diffHours < 24) t = `${diffHours}h ago`;
-    else if (diffDays < 30) t = `${diffDays}d ago`;
-    else t = `${Math.floor(diffDays / 30)}mo ago`;
+  const linkedinEvents = linkedinList.map((item) => {
+    const t = formatRelativeTime(item.date);
 
     let tagColor = "text-muted-foreground";
     switch (item.type) {
@@ -482,6 +411,12 @@ export function Hero() {
       case "ARTICLE":
         tagColor = "text-emerald-400";
         break;
+      case "ENGINEERING":
+        tagColor = "text-indigo-400";
+        break;
+      case "RELEASE":
+        tagColor = "text-cyan-400";
+        break;
     }
 
     return {
@@ -491,7 +426,7 @@ export function Hero() {
       repo: "linkedin.com",
       msg: item.text,
       note: "transmit →",
-      link: item.link,
+      link: item.link || "https://www.linkedin.com/in/mukul-sharma-07m",
     };
   });
 
@@ -500,7 +435,7 @@ export function Hero() {
   let activeProjFolder = "~/github/Mukul-Portfolio";
   let activeProjVideo = "/videooutput/My Video.mp4";
   let activeProjStack = ["TanStack Start", "React", "TypeScript", "Tailwind CSS v4", "Vite"];
-  let activeProjCommit = 'pushed: "ci: GitHub Pages deployment & live sync"';
+  let activeProjCommit = 'pushed: "feat: track video outputs with Git LFS, add portfolio sections and GitHub integration"';
   let activeProjTime = "JUST NOW";
   let activeProjStatus = "ACTIVE";
   let activeProjStatusColor = "text-accent";
@@ -536,6 +471,12 @@ export function Hero() {
       activeProjFolder = `~/github/${activeEvent.repo}`;
       activeProjVideo = "/videooutput/apexf1.mp4";
       activeProjStack = ["TanStack Start", "Three.js", "Tailwind CSS v4", "NVIDIA NIM"];
+    } else if (repoLower.includes("healthtech")) {
+      activeProjName = "HealthTech Web Layout";
+      activeProjSub = "Telemedicine & AI Clinical Diagnostics";
+      activeProjFolder = `~/github/${activeEvent.repo}`;
+      activeProjVideo = "/videooutput/My Video.mp4";
+      activeProjStack = ["React", "TypeScript", "Tailwind CSS", "Vite", "AI Triage"];
     } else if (repoLower.includes("mukul-portfolio") || repoLower.includes("mukuls07")) {
       activeProjName = "Mukul Portfolio";
       activeProjSub = "Personal Developer System & AI Hub";
@@ -551,7 +492,9 @@ export function Hero() {
     }
   }
 
-  const commits = useCountUp(412);
+  const totalCommits = contribData?.total || 672;
+  const streakDays = contribData?.streak || 3;
+  const commits = useCountUp(totalCommits);
 
   const dynamicStats = [
     { label: "LINES OF CODE", value: "1.5K" },
@@ -594,9 +537,7 @@ export function Hero() {
 
               {/* Bio & HUD Telemetry block to fill vertical empty space */}
               <p className="mt-8 font-mono text-[11px] leading-relaxed text-muted-foreground max-w-sm tracking-wide">
-                Specializing in secure cloud infrastructure, threat modeling, and building
-                intelligent IoT hardware. Bridging the gap between cyber security protocols and
-                embedded physical systems.
+                Full-stack developer who has shipped 6+ platforms end-to-end (ApexF1, Inventrox, EcoGeoGuard). Experienced across React 19, Next.js, Node.js/Express, MongoDB Atlas, and AWS, with a Cyber Security specialization informing secure-by-design architecture.
               </p>
 
               <div className="mt-8 grid grid-cols-2 gap-y-4 gap-x-6 border-t border-border/40 pt-6 max-w-sm font-mono text-[10px] tracking-wider text-muted-foreground">
@@ -836,9 +777,21 @@ export function Hero() {
                 <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
                 ›_ UPLINK: GITHUB_LOGS
               </span>
-              <span className="tabular-nums text-muted-foreground/60">
-                {eventsList.length} / 30
-              </span>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => loadGitHubFeed(true)}
+                  disabled={isSyncingGH}
+                  className="hover:text-accent flex items-center gap-1.5 transition-colors px-2 py-0.5 border border-border hover:border-accent rounded text-[9px] disabled:opacity-50"
+                  title="Re-sync latest commits & activity from GitHub"
+                >
+                  <RotateCw className={`w-2.5 h-2.5 ${isSyncingGH ? "animate-spin text-accent" : ""}`} />
+                  <span>{isSyncingGH ? "SYNCING..." : "SYNC NOW"}</span>
+                </button>
+                <span className="tabular-nums text-muted-foreground/60">
+                  {eventsList.length} / 30
+                </span>
+              </div>
             </div>
             <div className="max-h-[300px] overflow-y-auto">
               <table className="w-full font-mono text-xs">
@@ -892,9 +845,20 @@ export function Hero() {
                 <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
                 ›_ UPLINK: LINKEDIN_FEED
               </span>
-              <span className="tabular-nums text-muted-foreground/60">
-                {linkedinEvents.length} / 10
-              </span>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowAddLinkedIn(true)}
+                  className="hover:text-accent flex items-center gap-1 transition-colors px-2 py-0.5 border border-border hover:border-accent rounded text-[9px]"
+                  title="Broadcast new update to live LinkedIn feed"
+                >
+                  <Plus className="w-2.5 h-2.5 text-accent" />
+                  <span>BROADCAST POST</span>
+                </button>
+                <span className="tabular-nums text-muted-foreground/60">
+                  {linkedinEvents.length} updates
+                </span>
+              </div>
             </div>
             <div className="max-h-[300px] overflow-y-auto">
               <table className="w-full font-mono text-xs">
@@ -941,6 +905,94 @@ export function Hero() {
             </div>
           </div>
         </div>
+
+        {/* Modal: Broadcast New LinkedIn Post */}
+        {showAddLinkedIn && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in font-mono">
+            <div className="border border-border bg-background max-w-lg w-full p-6 shadow-2xl relative">
+              <div className="flex items-center justify-between border-b border-border pb-3 mb-4">
+                <div className="flex items-center gap-2 text-accent text-xs">
+                  <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+                  <span className="tracking-[0.2em] uppercase font-semibold">
+                    ›_ BROADCAST LINKEDIN POST
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowAddLinkedIn(false)}
+                  className="text-muted-foreground hover:text-foreground p-1 transition"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleBroadcastLinkedIn} className="space-y-4 text-xs">
+                <div>
+                  <label className="block text-muted-foreground mb-1 tracking-wider uppercase text-[10px]">
+                    Update Content / Milestone Summary *
+                  </label>
+                  <textarea
+                    rows={3}
+                    required
+                    value={newPostText}
+                    onChange={(e) => setNewPostText(e.target.value)}
+                    placeholder="e.g. Launched new version of ApexF1 with real-time telemetry and 3D car customizer..."
+                    className="w-full bg-black/40 border border-border p-2.5 text-foreground placeholder:text-muted-foreground/50 focus:border-accent focus:outline-none"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-muted-foreground mb-1 tracking-wider uppercase text-[10px]">
+                      Post Category
+                    </label>
+                    <select
+                      value={newPostType}
+                      onChange={(e) => setNewPostType(e.target.value as LinkedInUpdate["type"])}
+                      className="w-full bg-black/40 border border-border p-2 text-foreground focus:border-accent focus:outline-none"
+                    >
+                      <option value="MILESTONE">MILESTONE</option>
+                      <option value="PRODUCT">PRODUCT</option>
+                      <option value="RELEASE">RELEASE</option>
+                      <option value="ENGINEERING">ENGINEERING</option>
+                      <option value="RESEARCH">RESEARCH</option>
+                      <option value="ARTICLE">ARTICLE</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-muted-foreground mb-1 tracking-wider uppercase text-[10px]">
+                      Post / Profile URL
+                    </label>
+                    <input
+                      type="url"
+                      value={newPostLink}
+                      onChange={(e) => setNewPostLink(e.target.value)}
+                      placeholder="https://www.linkedin.com/in/mukul-sharma-07m"
+                      className="w-full bg-black/40 border border-border p-2 text-foreground focus:border-accent focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-2 flex justify-end gap-2 border-t border-border">
+                  <button
+                    type="button"
+                    onClick={() => setShowAddLinkedIn(false)}
+                    className="px-3 py-1.5 border border-border text-muted-foreground hover:text-foreground transition"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-1.5 border border-accent bg-accent/10 text-accent font-semibold flex items-center gap-1.5 hover:bg-accent hover:text-background transition"
+                  >
+                    <Send className="w-3 h-3" />
+                    <span>Transmit Broadcast</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Tech ticker */}
@@ -985,25 +1037,28 @@ export function Hero() {
           <div className="lg:col-span-5 bg-background p-6 sm:p-8 flex flex-col gap-6">
             <div>
               <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
-                <span>⌧ GITHUB · @MUKULS07</span>
-                <span>26W</span>
+                <span className="flex items-center gap-1.5 text-accent font-semibold">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                  ⌧ GITHUB · @MUKULS07
+                </span>
+                <span className="tabular-nums">26W CONTRIBUTION GRAPH</span>
               </div>
               <div className="mt-5 overflow-x-auto">
-                <GithubHeatmap />
+                <GithubHeatmap days={contribData?.recentDays} />
               </div>
-              <div className="mt-4 flex items-center justify-between font-mono text-[11px] text-muted-foreground">
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-muted-foreground">
                 <div>
-                  <span className="text-foreground tabular-nums">{commits}</span> COMMITS
-                  <span className="mx-3 text-dim">·</span>
-                  <span className="text-foreground">12D</span> STREAK
+                  <span className="text-foreground tabular-nums font-semibold">{commits}</span> COMMITS (LAST YEAR)
+                  <span className="mx-2 text-dim">·</span>
+                  <span className="text-foreground tabular-nums font-semibold">{streakDays}D</span> STREAK
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 text-[9px]">
                   LESS
-                  <span className="h-2 w-2 bg-white/[0.04]" />
-                  <span className="h-2 w-2 bg-accent/25" />
-                  <span className="h-2 w-2 bg-accent/45" />
-                  <span className="h-2 w-2 bg-accent/70" />
-                  <span className="h-2 w-2 bg-accent" />
+                  <span className="h-2 w-2 rounded-[1px] bg-white/[0.04]" />
+                  <span className="h-2 w-2 rounded-[1px] bg-accent/25" />
+                  <span className="h-2 w-2 rounded-[1px] bg-accent/50" />
+                  <span className="h-2 w-2 rounded-[1px] bg-accent/75" />
+                  <span className="h-2 w-2 rounded-[1px] bg-accent" />
                   MORE
                 </div>
               </div>
@@ -1012,16 +1067,20 @@ export function Hero() {
             <div className="border-t border-border pt-5">
               <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-muted-foreground">
                 <span>♪ NOW PLAYING</span>
-                <span className="text-accent">⚡ DEEP WORK</span>
+                <span className="text-accent flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                  ⚡ LIVE REPO DEEP WORK
+                </span>
               </div>
-              <div className="mt-3 font-serif-display text-xl text-foreground italic">
-                building EcoGeoGuard v2
+              <div className="mt-3 font-serif-display text-xl text-foreground italic flex items-center gap-2">
+                <span>building {activeProjName}</span>
               </div>
-              <div className="font-mono text-xs text-muted-foreground mt-1">
-                python · aws · lora · next.js
+              <div className="font-mono text-xs text-muted-foreground mt-1 flex items-center justify-between">
+                <span>{activeProjStack.slice(0, 4).join(" · ").toLowerCase()}</span>
+                <span className="text-[10px] text-accent font-semibold">{activeProjTime}</span>
               </div>
-              <div className="mt-3 h-[3px] bg-white/10 overflow-hidden">
-                <div className="h-full w-2/3 bg-accent" />
+              <div className="mt-3 h-[3px] bg-white/10 overflow-hidden relative">
+                <div className="h-full w-3/4 bg-accent animate-pulse" />
               </div>
             </div>
           </div>
