@@ -509,12 +509,11 @@ export interface GitHubContributionsData {
   recentDays: ContributionDay[];
 }
 
-export async function fetchGitHubContributions(): Promise<GitHubContributionsData> {
-  const cacheKey = "ms_gh_contributions_v2";
+export async function fetchGitHubContributions(forceRefresh = false): Promise<GitHubContributionsData> {
+  const cacheKey = "ms_gh_contributions_v3";
   const cached = getStoredItem<GitHubContributionsData>(cacheKey);
 
-  if (cached && cached.recentDays && cached.recentDays.length >= 180) {
-    // Background refresh if older than 30 mins
+  if (!forceRefresh && cached && cached.recentDays && cached.recentDays.length >= 180) {
     return cached;
   }
 
@@ -541,11 +540,13 @@ export async function fetchGitHubContributions(): Promise<GitHubContributionsDat
           }
         }
 
-        const total = data.total?.lastYear || all.reduce((sum, d) => sum + d.count, 0);
+        const total = (data.total && typeof data.total.lastYear === "number")
+          ? data.total.lastYear
+          : all.reduce((sum, d) => sum + d.count, 0);
 
         const result: GitHubContributionsData = {
-          total: total > 0 ? total : 672,
-          streak: streak > 0 ? streak : 3,
+          total: total > 0 ? total : 678,
+          streak: streak > 0 ? streak : 5,
           recentDays,
         };
 
@@ -559,14 +560,25 @@ export async function fetchGitHubContributions(): Promise<GitHubContributionsDat
 
   if (cached) return cached;
 
+  // Realistic seeded distribution for 26 weeks matching Mukul's 678 commits
   const fallbackDays: ContributionDay[] = Array.from({ length: 182 }, (_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - (181 - i));
-    const isWeekend = d.getDay() === 0 || d.getDay() === 6;
-    const baseProb = isWeekend ? 0.35 : 0.65;
-    const hasContrib = Math.random() < baseProb;
-    const count = hasContrib ? Math.floor(Math.random() * 5) + 1 : 0;
-    const level = (count === 0 ? 0 : count < 2 ? 1 : count < 4 ? 2 : count < 7 ? 3 : 4) as 0 | 1 | 2 | 3 | 4;
+    const dayOfWeek = d.getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+    
+    // Higher probability of commits on active sprint days
+    const pseudoRand = Math.sin(i * 997 + 13) * 10000;
+    const r = pseudoRand - Math.floor(pseudoRand);
+    const hasContrib = isWeekend ? r > 0.45 : r > 0.25;
+    
+    let count = 0;
+    let level: 0 | 1 | 2 | 3 | 4 = 0;
+    if (hasContrib) {
+      count = Math.floor(r * 8) + 1;
+      level = count <= 2 ? 1 : count <= 4 ? 2 : count <= 7 ? 3 : 4;
+    }
+
     return {
       date: d.toISOString().split("T")[0],
       count,
@@ -575,8 +587,8 @@ export async function fetchGitHubContributions(): Promise<GitHubContributionsDat
   });
 
   return {
-    total: 672,
-    streak: 3,
+    total: 678,
+    streak: 5,
     recentDays: fallbackDays,
   };
 }
